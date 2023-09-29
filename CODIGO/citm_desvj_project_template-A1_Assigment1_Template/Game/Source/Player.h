@@ -31,6 +31,11 @@ public:
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
 	int pickCoinFxId;
+
+	float movX;
+	float gravity;
+	int flight = 0;
+	bool isflying;
 };
 
 #endif // __PLAYER_H__
