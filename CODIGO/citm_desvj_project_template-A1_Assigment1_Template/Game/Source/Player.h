@@ -33,9 +33,9 @@ public:
 	int pickCoinFxId;
 
 	float movX;
-	float gravity;
-	int flight = 0;
-	bool isflying;
+	float movY;
+	float velY;
+	float acc;
 };
 
 #endif // __PLAYER_H__

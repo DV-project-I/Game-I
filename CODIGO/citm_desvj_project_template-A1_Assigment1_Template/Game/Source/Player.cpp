@@ -43,24 +43,18 @@ bool Player::Start() {
 
 bool Player::Update(float dt)
 {
-	gravity = -6;
-	isflying = false;
+	movY = -GRAVITY_Y -5;
 	movX = 0;
-	flight = 0;
 
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && isflying == false) {
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
 		//
-		isflying = true;
-	}
+		/*acc = 10 - (GRAVITY_Y * dt);
 
-	if (isflying == true && flight == 0) {
-		gravity = 100;
-		flight++;
-	}
+		movY = speed *dt - 2*acc *dt*dt;*/
+		movY += GRAVITY_Y * dt;
+		velY = movY * dt;
+		position.y += velY * dt;
 
-	if (flight >= 220) {
-		isflying = false;
-		flight = 0;		
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
@@ -76,7 +70,7 @@ bool Player::Update(float dt)
 	}
 	
 	
-	b2Vec2 vel = b2Vec2(movX, -gravity);
+	b2Vec2 vel = b2Vec2(movX, movY);
 		//Set the velocity of the pbody of the player
 	pbody->body->SetLinearVelocity(vel);
 	
