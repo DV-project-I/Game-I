@@ -46,12 +46,14 @@ bool Player::Update(float dt)
 	movY = -GRAVITY_Y -5;
 	movX = 0;
 
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !isJumping) {
 		//
 		/*acc = 10 - (GRAVITY_Y * dt);
 
 		movY = speed *dt - 2*acc *dt*dt;*/
-		movY += GRAVITY_Y * dt;
+		bool isJumping = true;
+		movY = -JUMP_INITIAL_VELOCITY;
+		/*movY += GRAVITY_Y * dt;*/
 		velY = movY * dt;
 		position.y += velY * dt;
 
