@@ -43,21 +43,27 @@ bool Player::Start() {
 
 bool Player::Update(float dt)
 {
-	movY = -GRAVITY_Y -5;
-	movX = 0;
-
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !isJumping) {
-		//
-		/*acc = 10 - (GRAVITY_Y * dt);
-
-		movY = speed *dt - 2*acc *dt*dt;*/
-		bool isJumping = true;
-		movY = -JUMP_INITIAL_VELOCITY;
-		/*movY += GRAVITY_Y * dt;*/
-		velY = movY * dt;
-		position.y += velY * dt;
-
+	if (acc <= 0) {
+	movY = -GRAVITY_Y -2 ;
 	}
+	acc--;
+	movX = 0;
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+		acc = -2;
+		movY = acc + 2*GRAVITY_Y * dt * dt;
+	}
+	//if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !isJumping) {
+	//	//
+	//	/*acc = 10 - (GRAVITY_Y * dt);
+
+	//	movY = speed *dt - 2*acc *dt*dt;*/
+	//	bool isJumping = true;
+	//	movY = -JUMP_INITIAL_VELOCITY;
+	//	/*movY += GRAVITY_Y * dt;*/
+	//	velY = movY * dt;
+	//	position.y += velY * dt;
+
+	//}
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 		//
