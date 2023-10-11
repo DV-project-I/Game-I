@@ -82,7 +82,7 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	// Renders the image in the center of the screen 
-	app->render->DrawTexture(img, (int)-200, (int)textPosY);
+	app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
 	float camSpeed = 1; 
 
 	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
