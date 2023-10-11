@@ -43,30 +43,21 @@ bool Player::Start() {
 
 bool Player::Update(float dt)
 {
-	if (acc <= 0) {
-	movY = -GRAVITY_Y -2 ;
-	}
-	acc--;
 	movX = 0;
+	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual
+
+	// Aplicar la gravedad
+	vel.y -= GRAVITY_Y;
+
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
-		acc = -2;
-		movY = acc + 2*GRAVITY_Y * dt * dt;
+		// Aplicar una fuerza hacia arriba para el salto
+		if (vel.y == 0.0f) {  // Asegura que el jugador solo pueda saltar en el suelo
+			vel.y = JUMP_FORCE;  // Establece la velocidad vertical para el salto
+		}
 	}
-	//if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && !isJumping) {
-	//	//
-	//	/*acc = 10 - (GRAVITY_Y * dt);
-
-	//	movY = speed *dt - 2*acc *dt*dt;*/
-	//	bool isJumping = true;
-	//	movY = -JUMP_INITIAL_VELOCITY;
-	//	/*movY += GRAVITY_Y * dt;*/
-	//	velY = movY * dt;
-	//	position.y += velY * dt;
-
-	//}
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		//
+		// Lógica para agacharse
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -74,15 +65,13 @@ bool Player::Update(float dt)
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		movX = speed *dt;
+		movX = speed * dt;
 	}
-	
-	
-	b2Vec2 vel = b2Vec2(movX, movY);
-		//Set the velocity of the pbody of the player
-	pbody->body->SetLinearVelocity(vel);
-	
-	//Update player position in pixels
+
+	vel.x = movX;  // Establece la velocidad horizontal
+
+	pbody->body->SetLinearVelocity(vel);  // Aplica la velocidad al cuerpo del jugador
+
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
@@ -90,6 +79,7 @@ bool Player::Update(float dt)
 
 	return true;
 }
+
 
 bool Player::CleanUp()
 {
