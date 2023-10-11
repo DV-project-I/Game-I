@@ -5,18 +5,21 @@
 #include "Point.h"
 #include "SDL/include/SDL.h"
 
+
+
 struct SDL_Texture;
 
 class Player : public Entity
 {
 public:
-
+	// Constructor
 	Player();
-	
+	// Destructor
 	virtual ~Player();
 
 	bool Awake();
-
+	// Called when the module is activated
+	// Loads the necessary textures for the player
 	bool Start();
 
 	bool Update(float dt);
@@ -29,6 +32,7 @@ public:
 	float speed = 0.2f;
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
+	//Animation* currentAnimation = nullptr;
 	PhysBody* pbody;
 	int pickCoinFxId;
 
