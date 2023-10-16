@@ -48,8 +48,7 @@ bool Player::Update(float dt)
 
 	
 
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
-		// Aplicar una fuerza hacia arriba para el salto
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		  // Asegura que el jugador solo pueda saltar en el suelo
 		if (vel.y == 0) {
 		vel.y = -JUMP_FORCE;
