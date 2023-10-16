@@ -46,14 +46,16 @@ bool Player::Update(float dt)
 	movX = 0;
 	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual
 
-	// Aplicar la gravedad
-	vel.y -= GRAVITY_Y;
+	
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
 		// Aplicar una fuerza hacia arriba para el salto
-		if (vel.y == 0.0f) {  // Asegura que el jugador solo pueda saltar en el suelo
-			vel.y = JUMP_FORCE;  // Establece la velocidad vertical para el salto
+		  // Asegura que el jugador solo pueda saltar en el suelo
+		if (vel.y == 0) {
+		vel.y = -JUMP_FORCE;
 		}
+			  // Establece la velocidad vertical para el salto
+		
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
@@ -69,8 +71,11 @@ bool Player::Update(float dt)
 	}
 
 	vel.x = movX;  // Establece la velocidad horizontal
+	
 
 	pbody->body->SetLinearVelocity(vel);  // Aplica la velocidad al cuerpo del jugador
+
+	vel.y -= GRAVITY_Y;	// Aplicar la gravedad
 
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
