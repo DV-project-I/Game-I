@@ -64,6 +64,7 @@ Player::~Player() {
 
 bool Player::Awake() {
 
+
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
@@ -77,11 +78,14 @@ bool Player::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
+	//texture = app->tex->Load("Assets/personajes/Spritesheet Parca/parca.png");
+
 	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
+
 
 	return true;
 }
@@ -143,6 +147,7 @@ bool Player::Update(float dt)
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
 	currentAnimation->Update();
+	
 	app->render->DrawTexture(texture, position.x, position.y);
 	
 
