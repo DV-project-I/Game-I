@@ -55,8 +55,9 @@ bool Player::Update(float dt)
 	movX = 0;
 	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual
 	
-	if (CheckCollision)
+	if (vel.y == 0)
 	{
+		// Asegura que el jugador solo pueda saltar en el suelo
 		isOnGround = true;
 	}
 	else
@@ -65,10 +66,8 @@ bool Player::Update(float dt)
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isOnGround) {
-		  // Asegura que el jugador solo pueda saltar en el suelo
-
-		vel.y = -JUMP_FORCE;
 		
+		vel.y = -JUMP_FORCE;
 			  // Establece la velocidad vertical para el salto
 		
 	}
