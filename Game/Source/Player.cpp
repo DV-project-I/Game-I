@@ -67,6 +67,7 @@ bool Player::Awake() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
+	currentAnimation = &IdleAnimDer;
 
 	return true;
 }
@@ -114,7 +115,7 @@ bool Player::Update(float dt)
 		
 		vel.y = -JUMP_FORCE;
 		
-		//currentAnimation = &JumpAnim;
+		currentAnimation = &JumpAnim;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
@@ -123,12 +124,12 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		movX = -speed * dt;
-		//currentAnimation = &WalkAnimIzq;
+		currentAnimation = &WalkAnimIzq;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		movX = speed * dt;
-		//currentAnimation = &WalkAnimDer;
+		currentAnimation = &WalkAnimDer;
 	}
 
 	vel.x = movX;  // Establece la velocidad horizontal
@@ -141,7 +142,7 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	//currentAnimation->Update();
+	currentAnimation->Update();
 	app->render->DrawTexture(texture, position.x, position.y);
 	
 
