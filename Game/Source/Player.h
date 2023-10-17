@@ -42,7 +42,7 @@ public:
 	float acc;
 	const float JUMP_INITIAL_VELOCITY = 200.0f;
 	bool isJumping;
-	float JUMP_FORCE = 7.0f;
+	float JUMP_FORCE = 10.0f;
 };
 
 #endif // __PLAYER_H__
