@@ -41,18 +41,34 @@ bool Player::Start() {
 	return true;
 }
 
+bool CheckCollision(const SDL_Rect& rect1, const SDL_Rect& rect2) {
+	// Verifica si rect1 se superpone con rect2
+	if (rect1.x + rect1.w > rect2.x && rect2.x + rect2.w > rect1.x &&
+		rect1.y + rect1.h > rect2.y && rect2.y + rect2.h > rect1.y) {
+		return true; // Hay colisión
+	}
+	return false; // No hay colisión
+}
+
 bool Player::Update(float dt)
 {
 	movX = 0;
 	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual
-
 	
+	if (CheckCollision)
+	{
+		isOnGround = true;
+	}
+	else
+	{
+		isOnGround = false;
+	}
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isOnGround) {
 		  // Asegura que el jugador solo pueda saltar en el suelo
-		if (vel.y <= 0.5 && vel.y >= 0) {
+
 		vel.y = -JUMP_FORCE;
-		}
+		
 			  // Establece la velocidad vertical para el salto
 		
 	}
