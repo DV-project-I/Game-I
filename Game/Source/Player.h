@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
-
+#include "Animation.h"
 
 
 struct SDL_Texture;
@@ -34,7 +34,7 @@ public:
 	float speed = 0.2f;
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
-	//Animation* currentAnimation = nullptr;
+	Animation* currentAnimation = nullptr;
 	PhysBody* pbody;
 	int pickCoinFxId;
 
@@ -46,6 +46,13 @@ public:
 	bool isJumping;
 	bool isOnGround;
 	float JUMP_FORCE = 10.0f;
+
+	Animation IdleAnimIzq;
+	Animation IdleAnimDer;
+	Animation WalkAnimIzq;
+	Animation WalkAnimDer;
+	Animation JumpAnim;
+	Animation AtackAnim;
 };
 
 #endif // __PLAYER_H__

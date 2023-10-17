@@ -8,10 +8,54 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "Animation.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
+	
+	IdleAnimIzq.PushBack({});
+	IdleAnimIzq.PushBack({});
+	IdleAnimIzq.PushBack({});
+	IdleAnimIzq.PushBack({});
+	IdleAnimIzq.speed = 0.15f;
+
+	IdleAnimDer.PushBack({});
+	IdleAnimDer.PushBack({});
+	IdleAnimDer.PushBack({});
+	IdleAnimDer.PushBack({});
+	IdleAnimDer.speed = 0.15f;
+
+	WalkAnimIzq.PushBack({});
+	WalkAnimIzq.PushBack({});
+	WalkAnimIzq.PushBack({});
+	WalkAnimIzq.PushBack({});
+	WalkAnimIzq.speed = 0.15f;
+
+
+	WalkAnimDer.PushBack({});
+	WalkAnimDer.PushBack({});
+	WalkAnimDer.PushBack({});
+	WalkAnimDer.PushBack({});
+	WalkAnimDer.speed = 0.15f;
+
+	JumpAnim.PushBack({});
+	JumpAnim.PushBack({});
+	JumpAnim.PushBack({});
+	JumpAnim.PushBack({});
+	JumpAnim.PushBack({});
+	JumpAnim.PushBack({});
+	JumpAnim.PushBack({});
+	JumpAnim.PushBack({});
+	JumpAnim.PushBack({});
+	JumpAnim.PushBack({});
+	JumpAnim.PushBack({});
+	JumpAnim.PushBack({});
+	JumpAnim.PushBack({});
+	JumpAnim.PushBack({});
+	JumpAnim.PushBack({});
+	JumpAnim.PushBack({});
+	JumpAnim.speed = 0.15f;
 }
 
 Player::~Player() {
@@ -59,6 +103,7 @@ bool Player::Update(float dt)
 	{
 		// Asegura que el jugador solo pueda saltar en el suelo
 		isOnGround = true;
+		
 	}
 	else
 	{
@@ -68,8 +113,8 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isOnGround) {
 		
 		vel.y = -JUMP_FORCE;
-			  // Establece la velocidad vertical para el salto
 		
+		//currentAnimation = &JumpAnim;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
@@ -78,10 +123,12 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		movX = -speed * dt;
+		//currentAnimation = &WalkAnimIzq;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		movX = speed * dt;
+		//currentAnimation = &WalkAnimDer;
 	}
 
 	vel.x = movX;  // Establece la velocidad horizontal
@@ -94,7 +141,9 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
+	//currentAnimation->Update();
 	app->render->DrawTexture(texture, position.x, position.y);
+	
 
 	return true;
 }
