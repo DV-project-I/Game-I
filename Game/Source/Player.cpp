@@ -14,47 +14,47 @@ Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
 	
-	IdleAnimIzq.PushBack({});
-	IdleAnimIzq.PushBack({});
-	IdleAnimIzq.PushBack({});
-	IdleAnimIzq.PushBack({});
+	IdleAnimIzq.PushBack({ 80, 112, 64, 64 });
+	IdleAnimIzq.PushBack({ 96, 112, 64, 64 });
+	IdleAnimIzq.PushBack({ 112, 112, 64, 64 });
+	IdleAnimIzq.PushBack({ 128, 112, 64, 64 });
 	IdleAnimIzq.speed = 0.15f;
 
-	IdleAnimDer.PushBack({});
-	IdleAnimDer.PushBack({});
-	IdleAnimDer.PushBack({});
-	IdleAnimDer.PushBack({});
-	IdleAnimDer.speed = 0.15f;
+	IdleAnimIzq.PushBack({ 80, 112, 64, 64 });
+	IdleAnimIzq.PushBack({ 96, 112, 64, 64 });
+	IdleAnimIzq.PushBack({ 112, 112, 64, 64 });
+	IdleAnimIzq.PushBack({ 128, 112, 64, 64 });
+	IdleAnimIzq.speed = 0.15f;
 
-	WalkAnimIzq.PushBack({});
-	WalkAnimIzq.PushBack({});
-	WalkAnimIzq.PushBack({});
-	WalkAnimIzq.PushBack({});
+	WalkAnimIzq.PushBack({ 0, 112, 64, 64 });
+	WalkAnimIzq.PushBack({ 16, 112, 64, 64 });
+	WalkAnimIzq.PushBack({ 32, 112, 64, 64 });
+	WalkAnimIzq.PushBack({ 48, 112, 64, 64 });
 	WalkAnimIzq.speed = 0.15f;
 
 
-	WalkAnimDer.PushBack({});
-	WalkAnimDer.PushBack({});
-	WalkAnimDer.PushBack({});
-	WalkAnimDer.PushBack({});
-	WalkAnimDer.speed = 0.15f;
+	WalkAnimIzq.PushBack({ 0, 112, 64, 64 });
+	WalkAnimIzq.PushBack({ 16, 112, 64, 64 });
+	WalkAnimIzq.PushBack({ 32, 112, 64, 64 });
+	WalkAnimIzq.PushBack({ 48, 112, 64, 64 });
+	WalkAnimIzq.speed = 0.15f;
 
-	JumpAnim.PushBack({});
-	JumpAnim.PushBack({});
-	JumpAnim.PushBack({});
-	JumpAnim.PushBack({});
-	JumpAnim.PushBack({});
-	JumpAnim.PushBack({});
-	JumpAnim.PushBack({});
-	JumpAnim.PushBack({});
-	JumpAnim.PushBack({});
-	JumpAnim.PushBack({});
-	JumpAnim.PushBack({});
-	JumpAnim.PushBack({});
-	JumpAnim.PushBack({});
-	JumpAnim.PushBack({});
-	JumpAnim.PushBack({});
-	JumpAnim.PushBack({});
+	JumpAnim.PushBack({ 32, 64, 128, 128});
+	JumpAnim.PushBack({ 64, 64, 128, 128});
+	JumpAnim.PushBack({ 96, 64, 128, 128 });
+	JumpAnim.PushBack({ 128, 64, 128, 128 });
+	JumpAnim.PushBack({ 160, 64, 128, 128 });
+	JumpAnim.PushBack({ 192, 64, 128, 128 });
+	JumpAnim.PushBack({ 224, 64, 128, 128 });
+	JumpAnim.PushBack({ 256, 64, 128, 128 });
+	JumpAnim.PushBack({ 288, 64, 128, 128 });
+	JumpAnim.PushBack({ 320, 64, 128, 128 });
+	JumpAnim.PushBack({ 352, 64, 128, 128 });
+	JumpAnim.PushBack({ 384, 64, 128, 128 });
+	JumpAnim.PushBack({ 416, 64, 128, 128 });
+	JumpAnim.PushBack({ 448, 64, 128, 128 });
+	JumpAnim.PushBack({ 480, 64, 128, 128 });
+	JumpAnim.PushBack({ 512, 64, 128, 128 });
 	JumpAnim.speed = 0.15f;
 }
 
