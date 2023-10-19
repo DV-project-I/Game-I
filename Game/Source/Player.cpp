@@ -33,11 +33,11 @@ Player::Player() : Entity(EntityType::PLAYER)
 	WalkAnimIzq.speed = 0.15f;
 
 
-	WalkAnimIzq.PushBack({ 0, 112, 64, 64 });
-	WalkAnimIzq.PushBack({ 16, 112, 64, 64 });
-	WalkAnimIzq.PushBack({ 32, 112, 64, 64 });
-	WalkAnimIzq.PushBack({ 48, 112, 64, 64 });
-	WalkAnimIzq.speed = 0.15f;
+	WalkAnimDer.PushBack({ 0, 112, 64, 64 });
+	WalkAnimDer.PushBack({ 16, 112, 64, 64 });
+	WalkAnimDer.PushBack({ 32, 112, 64, 64 });
+	WalkAnimDer.PushBack({ 48, 112, 64, 64 });
+	WalkAnimDer.speed = 0.15f;
 
 	JumpAnim.PushBack({ 32, 64, 128, 128});
 	JumpAnim.PushBack({ 64, 64, 128, 128});
@@ -55,7 +55,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 	JumpAnim.PushBack({ 448, 64, 128, 128 });
 	JumpAnim.PushBack({ 480, 64, 128, 128 });
 	JumpAnim.PushBack({ 512, 64, 128, 128 });
-	JumpAnim.speed = 0.15f;
+	JumpAnim.speed = 0.3f;
 }
 
 Player::~Player() {
@@ -65,7 +65,7 @@ Player::~Player() {
 bool Player::Awake() {
 
 
-	position.x = parameters.attribute("x").as_int();
+	position.x = parameters.attribute("x").as_int() -10;
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
 	currentAnimation = &IdleAnimDer;
@@ -113,13 +113,13 @@ bool Player::Update(float dt)
 	else
 	{
 		isOnGround = false;
+		currentAnimation = &JumpAnim;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isOnGround) {
 		
 		vel.y = -JUMP_FORCE;
 		
-		currentAnimation = &JumpAnim;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
@@ -128,11 +128,13 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		movX = -speed * dt;
+		if(isOnGround == true)
 		currentAnimation = &WalkAnimIzq;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		movX = speed * dt;
+		if (isOnGround == true)
 		currentAnimation = &WalkAnimDer;
 	}
 
@@ -148,8 +150,9 @@ bool Player::Update(float dt)
 
 	currentAnimation->Update();
 	
-	app->render->DrawTexture(texture, position.x, position.y);
+	app->render->DrawTexture(texture, position.x, position.y, &currentAnimation->GetCurrentFrame());
 	
+	currentAnimation = &IdleAnimDer;
 
 	return true;
 }

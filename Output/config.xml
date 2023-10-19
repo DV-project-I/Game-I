@@ -9,7 +9,7 @@
   </renderer>
 
   <window>
-    <resolution width="1024" height="768" scale="1"/>
+    <resolution width="1024" height="768" scale="3"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
@@ -23,12 +23,9 @@
 
   <scene>
 	  <map path="Assets/Maps/" name="MapTemplate2.tmx"/>
-    <player x="400" y="352" texturepath="Assets/personajes/SpritesheetParca/parca.png"/>
-    <item x="256" y="515" texturepath="Assets/Textures/goldCoin.png"/>
-    <item x="416" y="512" texturepath="Assets/Textures/goldCoin.png"/>
-    <item x="384" y="352" texturepath="Assets/Textures/goldCoin.png"/>
-    <item x="200" y="672" texturepath="Assets/Textures/goldCoin.png"/>
-    <item x="500" y="672" texturepath="Assets/Textures/goldCoin.png"/>
+    <player x="200" y="200" texturepath="Assets/personajes/SpritesheetParca/parca.png"/>
+    <item x="500" y="100" texturepath="Assets/personajes/Torrente/Torrente.png"/>
+  
   </scene>
 
   

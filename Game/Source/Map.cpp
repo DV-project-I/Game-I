@@ -186,7 +186,7 @@ bool Map::Load(SString mapFileName)
     
     // NOTE: Later you have to create a function here to load and create the colliders from the map
 
-    PhysBody* c1 = app->physics->CreateRectangle(224 + 128, 543 + 32, 256, 64, STATIC);
+    PhysBody* c1 = app->physics->CreateRectangle(500, 300, 256, 20, STATIC);
     c1->ctype = ColliderType::PLATFORM;
 
     PhysBody* c2 = app->physics->CreateRectangle(352 + 64, 384 + 32, 128, 64, STATIC);
@@ -195,30 +195,11 @@ bool Map::Load(SString mapFileName)
     PhysBody* c3 = app->physics->CreateRectangle(256, 704 + 32, 576, 64, STATIC);
     c3->ctype = ColliderType::PLATFORM;
 
-    //ListItem<MapLayer*>* mapLayerItem;
-    //mapLayerItem = mapData.maplayers.start;
-    //if (mapLayerItem->data->properties.GetProperty("Suelo") != NULL && mapLayerItem->data->properties.GetProperty("Suelo")->value) {
 
-    //    for (int x = 0; x < mapLayerItem->data->width; x++)
-    //    {
-    //        for (int y = 0; y < mapLayerItem->data->height; y++)
-    //        {
-    //            int gid = mapLayerItem->data->Get(x, y);
-    //            TileSet* tileset = GetTilesetFromTileId(gid);
+    PhysBody* c4 = app->physics->CreateRectangle(500, 336 + 32, 1000, 64, STATIC);
+    c3->ctype = ColliderType::PLATFORM;
 
-    //            SDL_Rect r = tileset->GetTileRect(gid);
-    //            iPoint pos = MapToWorld(x, y);
-
-
-                //app->render->DrawTexture(tileset->texture,
-                //    pos.x,
-                //    pos.y,
-                //    &r);
-    //            PhysBody* c1 = app->physics->CreateRectangle(pos.x, pos.y, mapLayerItem->data->width, mapLayerItem->data->height, STATIC);
-    //            c1->ctype = ColliderType::PLATFORM;
-    //        }
-    //    }
-    //}
+  
 
     LOG("Layers----");
    
