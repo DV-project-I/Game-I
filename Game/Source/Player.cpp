@@ -103,7 +103,11 @@ bool Player::Update(float dt)
 {
 	movX = 0;
 	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual
-	
+
+	if (vel.y == 0 && vel.x == 0) {
+
+		currentAnimation = &IdleAnimIzq;
+	}
 	if (vel.y == 0)
 	{
 		// Asegura que el jugador solo pueda saltar en el suelo
@@ -152,7 +156,7 @@ bool Player::Update(float dt)
 	
 	app->render->DrawTexture(texture, position.x, position.y, &currentAnimation->GetCurrentFrame());
 	
-	currentAnimation = &IdleAnimDer;
+	
 
 	return true;
 }
