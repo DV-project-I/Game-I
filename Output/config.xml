@@ -22,7 +22,7 @@
   </audio>
 
   <scene>
-	  <map path="Assets/Maps/" name="MapTemplate2.tmx"/>
+	<map path="Assets/Maps/" name="MapTemplate2.tmx"/>
     <player x="200" y="200" texturepath="Assets/personajes/SpritesheetParca/parca.png"/>
     <item x="500" y="100" texturepath="Assets/personajes/Torrente/Torrente.png"/>
   

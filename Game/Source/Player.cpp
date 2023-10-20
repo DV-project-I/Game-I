@@ -65,7 +65,7 @@ Player::~Player() {
 bool Player::Awake() {
 
 
-	position.x = parameters.attribute("x").as_int() -10;
+	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
 	currentAnimation = &IdleAnimDer;
@@ -80,7 +80,7 @@ bool Player::Start() {
 
 	//texture = app->tex->Load("Assets/personajes/Spritesheet Parca/parca.png");
 
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x , position.y, 8, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 
@@ -117,6 +117,7 @@ bool Player::Update(float dt)
 	else
 	{
 		isOnGround = false;
+		
 		currentAnimation = &JumpAnim;
 	}
 
@@ -134,6 +135,7 @@ bool Player::Update(float dt)
 		movX = -speed * dt;
 		if(isOnGround == true)
 		currentAnimation = &WalkAnimIzq;
+		
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
@@ -154,7 +156,7 @@ bool Player::Update(float dt)
 
 	currentAnimation->Update();
 	
-	app->render->DrawTexture(texture, position.x, position.y, &currentAnimation->GetCurrentFrame());
+	app->render->DrawTexture(texture, position.x +8, position.y +8, &currentAnimation->GetCurrentFrame());
 	
 	
 
