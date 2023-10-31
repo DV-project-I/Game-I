@@ -18,13 +18,13 @@ Player::Player() : Entity(EntityType::PLAYER)
 	IdleAnimIzq.PushBack({ 96, 112, 16, 16 });
 	IdleAnimIzq.PushBack({ 112, 112, 16, 16 });
 	IdleAnimIzq.PushBack({ 128, 112, 16, 16 });
-	IdleAnimIzq.speed = 0.15f;
+	IdleAnimIzq.speed = 0.05f;
 
 	IdleAnimIzq.PushBack({ 80, 112, 16, 16 });
 	IdleAnimIzq.PushBack({ 96, 112, 16, 16 });
 	IdleAnimIzq.PushBack({ 112, 112, 16, 16 });
 	IdleAnimIzq.PushBack({ 128, 112, 16, 16 });
-	IdleAnimIzq.speed = 0.15f;
+	IdleAnimIzq.speed = 0.05f;
 
 	WalkAnimIzq.PushBack({ 0, 112, 16, 16 });
 	WalkAnimIzq.PushBack({ 16, 112, 16, 16 });
@@ -39,11 +39,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 	WalkAnimDer.PushBack({ 48, 112, 16, 16 });
 	WalkAnimDer.speed = 0.15f;
 
-	JumpAnim.PushBack({ 32, 64, 32, 32});
-	JumpAnim.PushBack({ 64, 64, 32, 32 });
-	JumpAnim.PushBack({ 96, 64, 32, 32 });
-	JumpAnim.PushBack({ 128, 64, 32, 32 });
-	JumpAnim.PushBack({ 160, 64, 32, 32 });
+	
 	JumpAnim.PushBack({ 192, 64, 32, 32 });
 	JumpAnim.PushBack({ 224, 64, 32, 32 });
 	JumpAnim.PushBack({ 256, 64, 32, 32 });
@@ -54,7 +50,6 @@ Player::Player() : Entity(EntityType::PLAYER)
 	JumpAnim.PushBack({ 416, 64, 32, 32 });
 	JumpAnim.PushBack({ 448, 64, 32, 32 });
 	JumpAnim.PushBack({ 480, 64, 32, 32 });
-	JumpAnim.PushBack({ 512, 64, 32, 32 });
 	JumpAnim.speed = 0.3f;
 }
 
