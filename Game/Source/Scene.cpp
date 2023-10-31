@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Player.h"
+#include "Physics.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -104,9 +105,11 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		app->render->camera.x += (int)ceil(camSpeed * dt);
 
-	app->render->camera.x = -player->position.x;
-	app->render->camera.y = -player->position.y;
+	/*app->render->camera.x = -player->position.x;
+	app->render->camera.y = -player->position.y;*/
 
+	/*app -> render -> camera.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
+	app ->render -> camera.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;*/
 	return true;
 }
 

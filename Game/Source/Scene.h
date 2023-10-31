@@ -40,7 +40,7 @@ private:
 	uint texW, texH;
 	uint windowW, windowH;
 	Player* player;
-
+	PhysBody* pbody;
 };
 
 #endif // __SCENE_H__
