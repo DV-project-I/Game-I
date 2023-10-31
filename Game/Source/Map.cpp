@@ -11,6 +11,8 @@
 #include <math.h>
 #include "SDL_image/include/SDL_image.h"
 
+#include <iostream>
+
 Map::Map() : Module(), mapLoaded(false)
 {
     name.Create("map");
@@ -48,13 +50,21 @@ bool Map::Update(float dt)
 
     while (mapLayerItem != NULL) {
 
-        if (mapLayerItem->data->properties.GetProperty("Draw") != NULL && mapLayerItem->data->properties.GetProperty("Draw")->value) {
-
-            for (int x = 0; x < mapLayerItem->data->width; x++)
+        if (mapLayerItem->data->properties.GetProperty("Draw") != NULL && mapLayerItem->data->properties.GetProperty("Draw")->value) 
+        {
+            SDL_Rect const camera = app->render->camera;
+            iPoint const cameraPos = WorldToMap(camera.x * -1, camera.y * -1);
+            iPoint const cameraSize = WorldToMap(camera.w -camera.x ,   camera.h - camera.y);
+            for (int x = cameraPos.x; x < cameraSize.x; x++)
             {
-                for (int y = 0; y < mapLayerItem->data->height; y++)
+                for (int y = cameraPos.y; y < cameraSize.y; y++)
                 {
                     int gid = mapLayerItem->data->Get(x, y);
+                    
+                    if (gid == 0)
+                    {
+                        continue;
+                    }
                     TileSet* tileset = GetTilesetFromTileId(gid);
 
                     SDL_Rect r = tileset->GetTileRect(gid);
@@ -64,6 +74,7 @@ bool Map::Update(float dt)
                         pos.x,
                         pos.y,
                         &r);
+                   
                 }
             }
         }
@@ -89,8 +100,8 @@ iPoint Map::WorldToMap(int x, int y)
 {
     iPoint ret(0, 0);
 
-    //
-
+    ret.x = x / mapData.tileWidth;
+    ret.y = y / mapData.tileHeight;
     return ret;
 }
 
@@ -183,23 +194,52 @@ bool Map::Load(SString mapFileName)
     {
         ret = LoadAllLayers(mapFileXML.child("map"));
     }
-    
+
+    int lio = 0;
     // NOTE: Later you have to create a function here to load and create the colliders from the map
+    for (int i = 0; i < mapData.maplayers.Count(); i++)
+    {
+        auto currentLayer = mapData.maplayers[i];
+        if (currentLayer)
+        {
+            Properties::Property *prop = currentLayer->properties.GetProperty("Suelo");
+            if (!prop || !prop->value)
+            {
+                continue;
+            }
+            std::cout << "lio: " << lio++ << std::endl;
 
-    PhysBody* c1 = app->physics->CreateRectangle(500, 300, 256, 20, STATIC);
-    c1->ctype = ColliderType::PLATFORM;
+            for (int x = 0; x < currentLayer->width; x++)
+            {
+                for (int y = 0; y < currentLayer->height; y++)
+                {
+                    int gid = currentLayer->Get(x, y);
 
-    PhysBody* c2 = app->physics->CreateRectangle(352 + 64, 384 + 32, 128, 64, STATIC);
-    c2->ctype = ColliderType::PLATFORM;
+                    //if (gid == 567)
+                    if(gid != 0)
+                    {
+                        TileSet* tileset = GetTilesetFromTileId(gid);
 
-    PhysBody* c3 = app->physics->CreateRectangle(256, 704 + 32, 576, 64, STATIC);
-    c3->ctype = ColliderType::PLATFORM;
+                        SDL_Rect const tileSize = tileset->GetTileRect(gid);
+                        iPoint const worldPosition =
+                        {
+                            MapToWorld(x, y).x + tileSize.w / 2,
+                            MapToWorld(x, y).y + tileSize.h / 2
+                        };
+                        ListItem<PhysBody *> *pBody= mapData.m_collisiones.Add(app->physics->CreateRectangle(worldPosition.x, worldPosition.y, tileSize.w, tileSize.h, STATIC));
+                        pBody->data->ctype = ColliderType::PLATFORM;
 
+                    }
+                    else if (gid == 100)
+                    {
+                        // Create death trigger
+                    }
+                }
+             }
 
-    PhysBody* c4 = app->physics->CreateRectangle(500, 336 + 32, 1000, 64, STATIC);
-    c3->ctype = ColliderType::PLATFORM;
-
-  
+            break;
+        }
+    }
 
     LOG("Layers----");
    

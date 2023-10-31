@@ -95,6 +95,7 @@ struct MapData
 	MapTypes type;
 
 	List<MapLayer*> maplayers;
+	List<PhysBody*> m_collisiones;
 };
 
 class Map : public Module
