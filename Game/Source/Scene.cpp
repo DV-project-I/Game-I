@@ -90,7 +90,7 @@ bool Scene::Update(float dt)
 {
 	// Renders the image in the center of the screen 
 	app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
-	float camSpeed = 1; 
+	float camSpeed = 0.25f; 
 
 	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		app->render->camera.y -= (int)ceil(camSpeed * dt);
