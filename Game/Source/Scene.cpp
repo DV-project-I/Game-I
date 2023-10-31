@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Map.h"
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -89,7 +90,7 @@ bool Scene::Update(float dt)
 {
 	// Renders the image in the center of the screen 
 	app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
-	float camSpeed = 0.25f; 
+	float camSpeed = 1; 
 
 	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		app->render->camera.y -= (int)ceil(camSpeed * dt);
@@ -103,7 +104,8 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		app->render->camera.x += (int)ceil(camSpeed * dt);
 
-	
+	app->render->camera.x = -player->position.x;
+	app->render->camera.y = -player->position.y;
 
 	return true;
 }
