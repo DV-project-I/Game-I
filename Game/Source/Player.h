@@ -28,7 +28,7 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
-
+	void PlayerDeath();
 
 public:
 	float speed = 0.2f;
@@ -38,6 +38,7 @@ public:
 	PhysBody* pbody;
 	int pickCoinFxId;
 
+	bool IsDeath = false;
 	float movX;
 	float movY;
 	float velY;

@@ -155,7 +155,9 @@ bool Player::Update(float dt)
 	
 	app->render->DrawTexture(texture, position.x +8, position.y +8, &currentAnimation->GetCurrentFrame());
 	
-	
+	if (IsDeath == true) {
+		PlayerDeath();
+	}
 
 	return true;
 }
@@ -182,9 +184,21 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision UNKNOWN");
 		break;
 	case ColliderType::INSTAKILL:
+		IsDeath = true;
 		LOG("Collision INSTAKILL");
 		break;
 	}
 	
 
 }
+
+void Player :: PlayerDeath()
+{
+	position.x = 200;
+	position.y = 300;
+	IsDeath = false;
+}
+
+	
+
+

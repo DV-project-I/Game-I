@@ -330,7 +330,7 @@ bool Map:: LoadObjectGroups(pugi :: xml_node mapNode)
 
     for (pugi::xml_node objectNode = mapNode.child("objectgroup"); objectNode && ret; objectNode = objectNode.next_sibling("objectgroup"))
     {    
-        if (objectNode.attribute("id").as_int() == 9) {
+        if (objectNode.attribute("id").as_int() == 11) {
             LOG("Kill");
 
             for (pugi::xml_node objectIt = objectNode.child("object"); objectIt != NULL; objectIt = objectIt.next_sibling("object")) {
