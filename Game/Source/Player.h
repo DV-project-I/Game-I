@@ -55,6 +55,7 @@ public:
 	Animation JumpAnim;
 	Animation AtackAnim;
 	Animation DeathAnim;
+	Animation JumpAnimIzq;
 };
 
 #endif // __PLAYER_H__

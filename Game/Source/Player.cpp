@@ -26,10 +26,10 @@ Player::Player() : Entity(EntityType::PLAYER)
 	IdleAnimIzq.PushBack({ 128, 112, 16, 16 });
 	IdleAnimIzq.speed = 0.05f;
 
-	WalkAnimIzq.PushBack({ 0, 112, 16, 16 });
-	WalkAnimIzq.PushBack({ 16, 112, 16, 16 });
-	WalkAnimIzq.PushBack({ 32, 112, 16, 16 });
-	WalkAnimIzq.PushBack({ 48, 112, 16, 16 });
+	WalkAnimIzq.PushBack({ 0, 128, 16, 16 });
+	WalkAnimIzq.PushBack({ 16, 128, 16, 16 });
+	WalkAnimIzq.PushBack({ 32, 128, 16, 16 });
+	WalkAnimIzq.PushBack({ 48, 128, 16, 16 });
 	WalkAnimIzq.speed = 0.15f;
 
 
@@ -51,6 +51,25 @@ Player::Player() : Entity(EntityType::PLAYER)
 	JumpAnim.PushBack({ 128, 80, 16, 16 });
 	JumpAnim.PushBack({ 144, 80, 16, 16 });
 	JumpAnim.speed = 0.8f;
+
+	JumpAnimIzq.PushBack({ 0, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 16, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 32, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 48, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 64, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 80, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 96, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 112, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 128, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 144, 64, 16, 16 });
+	JumpAnimIzq.speed = 0.8f;
+
+	DeathAnim.PushBack({ 0, 160, 16, 16 });
+	DeathAnim.PushBack({ 16, 160, 16, 16 });
+	DeathAnim.PushBack({ 32, 160, 16, 16 });
+	DeathAnim.PushBack({ 48, 160, 16, 16 });
+	DeathAnim.PushBack({ 64, 160, 16, 16 });
+	DeathAnim.speed = 0.8f;
 }
 
 Player::~Player() {
