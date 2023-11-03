@@ -196,6 +196,7 @@ void Player :: PlayerDeath()
 {
 	position.x = 200;
 	position.y = 300;
+	currentAnimation = &DeathAnim;
 	IsDeath = false;
 }
 
