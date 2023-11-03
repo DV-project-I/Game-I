@@ -20,7 +20,8 @@ Map::Map() : Module(), mapLoaded(false)
 
 // Destructor
 Map::~Map()
-{}
+{
+}
 
 // Called before render is available
 bool Map::Awake(pugi::xml_node& config)
@@ -31,7 +32,8 @@ bool Map::Awake(pugi::xml_node& config)
     return ret;
 }
 
-bool Map::Start() {
+bool Map::Start() 
+{
 
     //Calls the functon to load the map, make sure that the filename is assigned
     SString mapPath = path;
@@ -48,7 +50,8 @@ bool Map::Update(float dt)
     ListItem<MapLayer*>* mapLayerItem;
     mapLayerItem = mapData.maplayers.start;
 
-    while (mapLayerItem != NULL) {
+    while (mapLayerItem != NULL)
+    {
 
         if (mapLayerItem->data->properties.GetProperty("Draw") != NULL && mapLayerItem->data->properties.GetProperty("Draw")->value) 
         {
@@ -197,50 +200,11 @@ bool Map::Load(SString mapFileName)
 
     int lio = 0;
     // NOTE: Later you have to create a function here to load and create the colliders from the map
-    for (int i = 0; i < mapData.maplayers.Count(); i++)
-    {
-        auto currentLayer = mapData.maplayers[i];
-        if (currentLayer)
-        {
-            Properties::Property *prop = currentLayer->properties.GetProperty("Suelo");
-            if (!prop || !prop->value)
-            {
-                continue;
-            }
-            std::cout << "lio: " << lio++ << std::endl;
+    if (ret == true) {
 
-            for (int x = 0; x < currentLayer->width; x++)
-            {
-                for (int y = 0; y < currentLayer->height; y++)
-                {
-                    int gid = currentLayer->Get(x, y);
-
-                    //if (gid == 567)
-                    if(gid != 0)
-                    {
-                        TileSet* tileset = GetTilesetFromTileId(gid);
-
-                        SDL_Rect const tileSize = tileset->GetTileRect(gid);
-                        iPoint const worldPosition =
-                        {
-                            MapToWorld(x, y).x + tileSize.w / 2,
-                            MapToWorld(x, y).y + tileSize.h / 2
-                        };
-                        ListItem<PhysBody *> *pBody= mapData.m_collisiones.Add(app->physics->CreateRectangle(worldPosition.x, worldPosition.y, tileSize.w, tileSize.h, STATIC));
-                        pBody->data->ctype = ColliderType::PLATFORM;
-
-                    }
-                    else if (gid == 100)
-                    {
-                        // Create death trigger
-                    }
-                }
-             }
-
-            break;
-        }
+        ret = LoadObjectGroups(mapFileXML.child("map"));
     }
-
+   /* PhysBody patata  app->physics->CreateRectangle(worldPosition.x, worldPosition.y, tileSize.w, tileSize.h, STATIC));*/
     LOG("Layers----");
    
     
@@ -255,7 +219,8 @@ bool Map::Load(SString mapFileName)
         ListItem<TileSet*>* tileset;
         tileset = mapData.tilesets.start;
 
-        while (tileset != NULL) {
+        while (tileset != NULL) 
+        {
             LOG("name : %s firstgid : %d",tileset->data->name.GetString(), tileset->data->firstgid);
             LOG("tile width : %d tile height : %d", tileset->data->tileWidth, tileset->data->tileHeight);
             LOG("spacing : %d margin : %d", tileset->data->spacing, tileset->data->margin);
@@ -265,7 +230,8 @@ bool Map::Load(SString mapFileName)
         ListItem<MapLayer*>* mapLayer;
         mapLayer = mapData.maplayers.start;
 
-        while (mapLayer != NULL) {
+        while (mapLayer != NULL)
+        {
             LOG("id : %d name : %s", mapLayer->data->id, mapLayer->data->name.GetString());
             LOG("Layer width : %d Layer height : %d", mapLayer->data->width, mapLayer->data->height);
             mapLayer = mapLayer->next;
@@ -302,7 +268,8 @@ bool Map::LoadMap(pugi::xml_node mapFile)
     return ret;
 }
 
-bool Map::LoadTileSet(pugi::xml_node mapFile){
+bool Map::LoadTileSet(pugi::xml_node mapFile)
+{
 
     bool ret = true; 
 
@@ -358,7 +325,42 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
     return ret;
 }
 
-bool Map::LoadAllLayers(pugi::xml_node mapNode) {
+void LoadObjectGroups(pugi :: xml_node mapNode)
+{
+    bool ret = true;
+    for (pugi::xml_node objectNode = mapNode.child("objectgroup"); objectNode && ret; objectNode = objectNode.next_sibling("objectgroup"))
+    {
+      
+
+        if (objectNode.attribute("id").as_int() == 9) {
+            LOG("Kill");
+
+            for (pugi : txm1 _node objectIt - objectNode.child("object"); objectIt I - NULL; objectIt - objectIt.next_sibling("object")) (
+                int x = objectIt.attribute("x").as_int();
+            int y = objectIt.attribute("y").as_int();
+            int width - objectIt.attribute("width").as_int(); int height - objectit.attribute("height").as_int();
+            x += width / 2;
+            y += height / 2;
+            PhysBody * c1 - app - ›physics->CreateRectangle(x, y, width, height, STATIC);
+            c1->type = ColliderType: : INSTAKILL;
+            +O - D
+        else {
+            for (pugi : txm1_node objectIt - objectNode.child("object"); objectIt I - NULL; objectIt - objectIt.next_sibling("object")) {
+                int x = objectit.attribute("x").as_int();
+                int y = objectIt.attribute("y").as_int();
+                int width = objectIt.attribute("width").as_int);
+            int height - objectIt.attribute("height*").as_int();
+            I
+                x += width / 2;
+            y += height / 2;
+            PhysBody* c1 - app - ›physics - ›CreateRectangle(x, y, width, height, STATIC) :
+                c1->ctype = ColliderType : : PLATFORM;
+            }
+        }
+    }
+}
+bool Map::LoadAllLayers(pugi::xml_node mapNode) 
+{
     bool ret = true;
 
     for (pugi::xml_node layerNode = mapNode.child("layer"); layerNode && ret; layerNode = layerNode.next_sibling("layer"))
@@ -397,7 +399,8 @@ Properties::Property* Properties::GetProperty(const char* name)
 
     while (item)
     {
-        if (item->data->name == name) {
+        if (item->data->name == name) 
+       {
             p = item->data;
             break;
         }
