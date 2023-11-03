@@ -105,10 +105,10 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		app->render->camera.x += (int)ceil(camSpeed * dt);
 	
-	if (player->position.x < app->win->screenSurface->w / 3) {
+	/*if (player->position.x < app->win->screenSurface->w / 3) {
 		player->position.x = app->win->screenSurface->w / 3;
-	}
-	app->render->camera.x = -player->position.x *2 -3 +app->win ->screenSurface->w /2;
+	}*/
+	app->render->camera.x = (-player->position.x)* app->win->GetScale() +512; /**2 - 3 + app->win->screenSurface->w / 2;*/
 	app->render->camera.y = -player->position.y ;
 
 	/*app -> render -> camera.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
