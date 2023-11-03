@@ -109,7 +109,7 @@ bool Scene::Update(float dt)
 		player->position.x = app->win->screenSurface->w / 3;
 	}*/
 	app->render->camera.x = (-player->position.x)* app->win->GetScale() +512; /**2 - 3 + app->win->screenSurface->w / 2;*/
-	app->render->camera.y = -player->position.y ;
+	app->render->camera.y = (-player->position.y)* app->win->GetScale() + 384;
 
 	/*app -> render -> camera.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	app ->render -> camera.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;*/
