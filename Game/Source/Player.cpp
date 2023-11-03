@@ -40,16 +40,16 @@ Player::Player() : Entity(EntityType::PLAYER)
 	WalkAnimDer.speed = 0.15f;
 
 	
-	JumpAnim.PushBack({ 192, 64, 32, 32 });
-	JumpAnim.PushBack({ 224, 64, 32, 32 });
-	JumpAnim.PushBack({ 256, 64, 32, 32 });
-	JumpAnim.PushBack({ 288, 64, 32, 32 });
-	JumpAnim.PushBack({ 320, 64, 32, 32 });
-	JumpAnim.PushBack({ 352, 64, 32, 32 });
-	JumpAnim.PushBack({ 384, 64, 32, 32 });
-	JumpAnim.PushBack({ 416, 64, 32, 32 });
-	JumpAnim.PushBack({ 448, 64, 32, 32 });
-	JumpAnim.PushBack({ 480, 64, 32, 32 });
+	JumpAnim.PushBack({ 0, 80, 16, 16 });
+	JumpAnim.PushBack({ 16, 80, 16, 16 });
+	JumpAnim.PushBack({ 32, 80, 16, 16 });
+	JumpAnim.PushBack({ 48, 80, 16, 16 });
+	JumpAnim.PushBack({ 64, 80, 16, 16 });
+	JumpAnim.PushBack({ 80, 80, 16, 16 });
+	JumpAnim.PushBack({ 96, 80, 16, 16 });
+	JumpAnim.PushBack({ 112, 80, 16, 16 });
+	JumpAnim.PushBack({ 128, 80, 16, 16 });
+	JumpAnim.PushBack({ 144, 80, 16, 16 });
 	JumpAnim.speed = 0.3f;
 }
 
