@@ -50,7 +50,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 	JumpAnim.PushBack({ 112, 80, 16, 16 });
 	JumpAnim.PushBack({ 128, 80, 16, 16 });
 	JumpAnim.PushBack({ 144, 80, 16, 16 });
-	JumpAnim.speed = 0.15f;
+	JumpAnim.speed = 0.8f;
 }
 
 Player::~Player() {
