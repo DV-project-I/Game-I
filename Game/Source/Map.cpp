@@ -4,7 +4,7 @@
 #include "Textures.h"
 #include "Map.h"
 #include "Physics.h"
-
+#include "Window.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -56,11 +56,9 @@ bool Map::Update(float dt)
         if (mapLayerItem->data->properties.GetProperty("Draw") != NULL && mapLayerItem->data->properties.GetProperty("Draw")->value) 
         {
             SDL_Rect const camera = app->render->camera;
-            /*iPoint const cameraPos = WorldToMap((camera.x + 512) * -1, (camera.y +384)* -1);
-            iPoint const cameraSize = WorldToMap(camera.w -camera.x ,   camera.h - camera.y);*/
-
-            iPoint const cameraPos = WorldToMap(((camera.x ) * -1)/3, ((camera.y) * -1)/3);
-            iPoint const cameraSize = WorldToMap((camera.w - camera.x +50)/3, (camera.h - camera.y +50)/3);
+            
+            iPoint const cameraPos = WorldToMap(((camera.x ) * -1)/ app->win->GetScale(), ((camera.y) * -1)/ app->win->GetScale());
+            iPoint const cameraSize = WorldToMap((camera.w - camera.x +50)/ app->win->GetScale(), (camera.h - camera.y +50)/ app->win->GetScale());
             for (int x = cameraPos.x; x < cameraSize.x; x++)
             {
                 for (int y = cameraPos.y; y < cameraSize.y; y++)
