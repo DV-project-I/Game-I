@@ -97,6 +97,7 @@ bool CheckCollision(const SDL_Rect& rect1, const SDL_Rect& rect2) {
 bool Player::Update(float dt)
 {
 	movX = 0;
+
 	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual
 
 	if (vel.y == 0 && vel.x == 0) {
@@ -180,5 +181,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
+	case ColliderType::INSTAKILL:
+		LOG("Collision INSTAKILL");
+		break;
 	}
+	
+
 }

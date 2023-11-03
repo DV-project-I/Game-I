@@ -122,6 +122,7 @@ public:
     // Load new map
 	bool Load(SString mapFileName);
 
+	bool LoadObjectGroups(pugi::xml_node mapNode);
 
 	iPoint MapToWorld(int x, int y) const;
 	iPoint Map::WorldToMap(int x, int y);

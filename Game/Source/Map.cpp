@@ -56,7 +56,7 @@ bool Map::Update(float dt)
         if (mapLayerItem->data->properties.GetProperty("Draw") != NULL && mapLayerItem->data->properties.GetProperty("Draw")->value) 
         {
             SDL_Rect const camera = app->render->camera;
-            iPoint const cameraPos = WorldToMap(camera.x * -1, camera.y * -1);
+            iPoint const cameraPos = WorldToMap((camera.x +200) * -1, (camera.y +200 )* -1);
             iPoint const cameraSize = WorldToMap(camera.w -camera.x ,   camera.h - camera.y);
             for (int x = cameraPos.x; x < cameraSize.x; x++)
             {
@@ -197,8 +197,6 @@ bool Map::Load(SString mapFileName)
     {
         ret = LoadAllLayers(mapFileXML.child("map"));
     }
-
-    int lio = 0;
     // NOTE: Later you have to create a function here to load and create the colliders from the map
     if (ret == true) {
 
@@ -325,39 +323,51 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
     return ret;
 }
 
-void LoadObjectGroups(pugi :: xml_node mapNode)
+bool Map:: LoadObjectGroups(pugi :: xml_node mapNode)
 {
     bool ret = true;
-    for (pugi::xml_node objectNode = mapNode.child("objectgroup"); objectNode && ret; objectNode = objectNode.next_sibling("objectgroup"))
-    {
-      
 
+    for (pugi::xml_node objectNode = mapNode.child("objectgroup"); objectNode && ret; objectNode = objectNode.next_sibling("objectgroup"))
+    {    
         if (objectNode.attribute("id").as_int() == 9) {
             LOG("Kill");
 
-            for (pugi : txm1 _node objectIt - objectNode.child("object"); objectIt I - NULL; objectIt - objectIt.next_sibling("object")) (
+            for (pugi::xml_node objectIt = objectNode.child("object"); objectIt != NULL; objectIt = objectIt.next_sibling("object")) {
+
                 int x = objectIt.attribute("x").as_int();
-            int y = objectIt.attribute("y").as_int();
-            int width - objectIt.attribute("width").as_int(); int height - objectit.attribute("height").as_int();
-            x += width / 2;
-            y += height / 2;
-            PhysBody * c1 - app - ›physics->CreateRectangle(x, y, width, height, STATIC);
-            c1->type = ColliderType: : INSTAKILL;
-            +O - D
-        else {
-            for (pugi : txm1_node objectIt - objectNode.child("object"); objectIt I - NULL; objectIt - objectIt.next_sibling("object")) {
-                int x = objectit.attribute("x").as_int();
                 int y = objectIt.attribute("y").as_int();
-                int width = objectIt.attribute("width").as_int);
-            int height - objectIt.attribute("height*").as_int();
-            I
+
+                int width = objectIt.attribute("width").as_int();
+                int height = objectIt.attribute("height").as_int();
+
                 x += width / 2;
-            y += height / 2;
-            PhysBody* c1 - app - ›physics - ›CreateRectangle(x, y, width, height, STATIC) :
-                c1->ctype = ColliderType : : PLATFORM;
+                y += height / 2;
+
+                PhysBody* c1 = app->physics->CreateRectangle(x, y, width, height, STATIC);
+
+                c1->ctype = ColliderType::INSTAKILL;
+
+            }
+        }
+        else {
+            for (pugi::xml_node objectIt = objectNode.child("object"); objectIt != NULL; objectIt = objectIt.next_sibling("object")) {
+
+                int x = objectIt.attribute("x").as_int();
+                int y = objectIt.attribute("y").as_int();
+
+                int width = objectIt.attribute("width").as_int();
+                int height = objectIt.attribute("height").as_int();
+
+                x += width / 2;
+                y += height / 2;
+                
+
+                PhysBody* c1 = app->physics->CreateRectangle(x, y, width, height, STATIC);
+                c1->ctype = ColliderType :: PLATFORM;
             }
         }
     }
+    return true;
 }
 bool Map::LoadAllLayers(pugi::xml_node mapNode) 
 {
