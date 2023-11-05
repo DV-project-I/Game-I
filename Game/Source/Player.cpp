@@ -73,7 +73,8 @@ Player::Player() : Entity(EntityType::PLAYER)
 	DeathAnim.PushBack({ 48, 160, 16, 16 });
 	DeathAnim.PushBack({ 64, 160, 16, 16 });
 	DeathAnim.speed = 0.1f;
-	DeathAnim.loop = true;
+	DeathAnim.loop = false;
+	
 }
 
 Player::~Player() {
@@ -120,7 +121,11 @@ bool CheckCollision(const SDL_Rect& rect1, const SDL_Rect& rect2) {
 bool Player::Update(float dt)
 {
 	movX = 0;
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN ) {
+
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+		IsDeath = true;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN ) {
 		God = !God;
 	}
 	
@@ -133,6 +138,8 @@ bool Player::Update(float dt)
 	}
 
 	if (God == true) {
+
+		IsDeath = false;
 		speed = 0.5f;
 		movY = 0;
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -149,14 +156,13 @@ bool Player::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 			movY = speed * dt;
 			
-		}
-		IsDeath = false;
+		}		
 		vel.x = movX;
 		vel.y = movY;
 		pbody->body->SetLinearVelocity(vel);
 	}
-	else {
-		speed = 0.3f;
+	else if(IsDeath == false) {
+		speed = 0.25f;
 		if (vel.y == 0) {
 			isOnGround = true;
 			/*currentAnimation = &IdleAnimIzq;*/
@@ -175,7 +181,6 @@ bool Player::Update(float dt)
 			if (isOnGround == true)
 				currentAnimation = &WalkAnimIzq;
 			if (isOnGround == false) {
-
 				currentAnimation = &JumpAnimIzq;
 			}
 		}
@@ -186,7 +191,6 @@ bool Player::Update(float dt)
 			if (isOnGround == true)
 				currentAnimation = &WalkAnimDer;
 			if (isOnGround == false) {
-
 				currentAnimation = &JumpAnim;
 			}
 		}
@@ -201,8 +205,8 @@ bool Player::Update(float dt)
 	}
 	
 	if (IsDeath == true) {
-		PlayerDeath();
-		//pbody->body->SetTransform(b2Vec2(200, 300), 360);
+		PlayerDeath();	
+		
 	}
 	
 
@@ -247,14 +251,21 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	
 
 }
+void Player ::SetPosition(int x, int y) {
+	position.x = x;
+	position.y = y;
+	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
+	IsDeath = false;
+	DeathAnim.Reset();
+}
 
 void Player :: PlayerDeath()
-{	
-	position.x = parameters.attribute("x").as_int();
-	position.y = parameters.attribute("y").as_int();
-	/*pbody->body->SetTransform(b2Vec2(parameters.attribute("x").as_int(), parameters.attribute("y").as_int()), 0);*/
+{			
 	currentAnimation = &DeathAnim;
-	IsDeath = false;
+	if (currentAnimation->HasFinished() == true) {
+		SetPosition(parameters.attribute("x").as_int(), parameters.attribute("y").as_int());
+	}
 	
 }
 
