@@ -119,8 +119,11 @@ bool CheckCollision(const SDL_Rect& rect1, const SDL_Rect& rect2) {
 
 bool Player::Update(float dt)
 {
-		
 	movX = 0;
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN ) {
+		God = !God;
+	}
+	
 
 	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual
 
@@ -129,35 +132,58 @@ bool Player::Update(float dt)
 		currentAnimation = &IdleAnimIzq;
 	}
 
-	// Asegura que el jugador solo pueda saltar en el suelo
-	if (vel.y == 0){		
-		isOnGround = true;		
+	if (God == true) {
+		speed = 0.5f;
+		movY = 0;
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			movX = -speed * dt;
+			
+		}		
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			movX = speed * dt;			
+		}
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+			movY = -speed * dt;
+			
+		}		
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			movY = speed * dt;
+			
+		}
+		IsDeath = false;
+		vel.x = movX;
+		vel.y = movY;
+		pbody->body->SetLinearVelocity(vel);
 	}
-	//Esta en el aire, Animacion salto
-	else{
-		isOnGround = false;		
-		currentAnimation = &JumpAnim;
-	}
+	else {
+		// Asegura que el jugador solo pueda saltar en el suelo
+		if (vel.y == 0) {
+			isOnGround = true;
+		}
+		//Esta en el aire, Animacion salto
+		else {
+			isOnGround = false;
+			currentAnimation = &JumpAnim;
+		}
 
-	//Espacio = saltar
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isOnGround) {		
-		vel.y = -JUMP_FORCE;		
-	}
-	//Andar izquierda
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		movX = -speed * dt;
-		if(isOnGround == true)
-		currentAnimation = &WalkAnimIzq;		
-	}
+		//Espacio = saltar
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isOnGround) {
+			vel.y = -JUMP_FORCE;
+		}
+		//Andar izquierda
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			movX = -speed * dt;
+			if (isOnGround == true)
+				currentAnimation = &WalkAnimIzq;
+		}
 
-	//Andar derecha
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		movX = speed * dt;
-		if (isOnGround == true)
-		currentAnimation = &WalkAnimDer;
-	}
-
-	// Establece la velocidad horizontal
+		//Andar derecha
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			movX = speed * dt;
+			if (isOnGround == true)
+				currentAnimation = &WalkAnimDer;
+		}
+		// Establece la velocidad horizontal
 	vel.x = movX; 
 	
 	// Aplica la velocidad al cuerpo del jugador
@@ -165,6 +191,10 @@ bool Player::Update(float dt)
 
 	// Aplicar la gravedad
 	vel.y -= GRAVITY_Y;	
+	}
+	
+
+	
 
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
