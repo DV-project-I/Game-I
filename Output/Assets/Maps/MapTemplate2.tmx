@@ -73866,9 +73866,5 @@
   </properties>
   <object id="104" x="576" y="752" width="80" height="16"/>
   <object id="105" x="832" y="752" width="80" height="16"/>
-  <object id="107" x="1072" y="1648" width="48" height="16"/>
-  <object id="108" x="1200" y="1648" width="96" height="16"/>
-  <object id="109" x="1376" y="1648" width="96" height="16"/>
-  <object id="110" x="1552" y="1648" width="48" height="16"/>
  </objectgroup>
 </map>
