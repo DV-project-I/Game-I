@@ -31,7 +31,7 @@ public:
 	void PlayerDeath();
 
 public:
-	float speed = 0.2f;
+	float speed;
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
 	Animation* currentAnimation = nullptr;

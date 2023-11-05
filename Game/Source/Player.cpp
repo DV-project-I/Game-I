@@ -15,11 +15,11 @@ Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
 	
-	IdleAnimIzq.PushBack({ 80, 112, 16, 16 });
-	IdleAnimIzq.PushBack({ 96, 112, 16, 16 });
-	IdleAnimIzq.PushBack({ 112, 112, 16, 16 });
-	IdleAnimIzq.PushBack({ 128, 112, 16, 16 });
-	IdleAnimIzq.speed = 0.05f;
+	IdleAnimDer.PushBack({ 80, 112, 16, 16 });
+	IdleAnimDer.PushBack({ 96, 112, 16, 16 });
+	IdleAnimDer.PushBack({ 112, 112, 16, 16 });
+	IdleAnimDer.PushBack({ 128, 112, 16, 16 });
+	IdleAnimDer.speed = 0.05f;
 
 	IdleAnimIzq.PushBack({ 80, 112, 16, 16 });
 	IdleAnimIzq.PushBack({ 96, 112, 16, 16 });
@@ -54,18 +54,18 @@ Player::Player() : Entity(EntityType::PLAYER)
 	JumpAnim.speed = 0.3f;
 	JumpAnim.loop = true;
 
-	//JumpAnimIzq.PushBack({ 0, 64, 16, 16 });
-	//JumpAnimIzq.PushBack({ 16, 64, 16, 16 });
-	//JumpAnimIzq.PushBack({ 32, 64, 16, 16 });
-	//JumpAnimIzq.PushBack({ 48, 64, 16, 16 });
-	//JumpAnimIzq.PushBack({ 64, 64, 16, 16 });
-	//JumpAnimIzq.PushBack({ 80, 64, 16, 16 });
-	//JumpAnimIzq.PushBack({ 96, 64, 16, 16 });
-	//JumpAnimIzq.PushBack({ 112, 64, 16, 16 });
-	//JumpAnimIzq.PushBack({ 128, 64, 16, 16 });
-	//JumpAnimIzq.PushBack({ 144, 64, 16, 16 });
-	//JumpAnimIzq.speed = 0.3f;
-	//JumpAnimIzq.loop = true;
+	JumpAnimIzq.PushBack({ 0, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 16, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 32, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 48, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 64, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 80, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 96, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 112, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 128, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 144, 64, 16, 16 });
+	JumpAnimIzq.speed = 0.3f;
+	JumpAnimIzq.loop = true;
 
 	DeathAnim.PushBack({ 0, 160, 16, 16 });
 	DeathAnim.PushBack({ 16, 160, 16, 16 });
@@ -129,7 +129,7 @@ bool Player::Update(float dt)
 
 	//Estas quieto salta la IDLE
 	if (vel.y == 0 && vel.x == 0 && IsDeath == false ) {
-		currentAnimation = &IdleAnimIzq;
+		currentAnimation = &IdleAnimDer;
 	}
 
 	if (God == true) {
@@ -156,18 +156,18 @@ bool Player::Update(float dt)
 		pbody->body->SetLinearVelocity(vel);
 	}
 	else {
-		// Asegura que el jugador solo pueda saltar en el suelo
-
-		//Esta en el aire, Animacion salto
-
-
+		speed = 0.3f;
+		if (vel.y == 0) {
+			isOnGround = true;
+			/*currentAnimation = &IdleAnimIzq;*/
+		}
+		else {
+			isOnGround = false;
+		}
 		//Espacio = saltar
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isOnGround) {
-			vel.y = -JUMP_FORCE;
-			
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isOnGround == true ) {
+			vel.y = -JUMP_FORCE;			
 			currentAnimation = &JumpAnim;
-
-
 		}
 		//Andar izquierda
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -176,7 +176,7 @@ bool Player::Update(float dt)
 				currentAnimation = &WalkAnimIzq;
 			if (isOnGround == false) {
 
-				currentAnimation = &JumpAnim;
+				currentAnimation = &JumpAnimIzq;
 			}
 		}
 
@@ -200,7 +200,10 @@ bool Player::Update(float dt)
 	vel.y -= GRAVITY_Y;	
 	}
 	
-
+	if (IsDeath == true) {
+		PlayerDeath();
+		//pbody->body->SetTransform(b2Vec2(200, 300), 360);
+	}
 	
 
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
@@ -210,10 +213,7 @@ bool Player::Update(float dt)
 	
 	app->render->DrawTexture(texture, position.x +8, position.y +8, &currentAnimation->GetCurrentFrame());
 	
-	if (IsDeath == true) {
-		PlayerDeath();
-		//pbody->body->SetTransform(b2Vec2(200, 300), 360);
-	}
+	
 	return true;
 }
 
@@ -233,8 +233,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		//app->audio->PlayFx(pickCoinFxId);
 		break;
 	case ColliderType::PLATFORM:
-		isOnGround = true;
 		LOG("Collision PLATFORM");
+		currentAnimation = &IdleAnimDer;
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
@@ -249,10 +249,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 }
 
 void Player :: PlayerDeath()
-{
-	
-	position.x = 200;
-	position.y = 300;
+{	
+	position.x = parameters.attribute("x").as_int();
+	position.y = parameters.attribute("y").as_int();
+	/*pbody->body->SetTransform(b2Vec2(parameters.attribute("x").as_int(), parameters.attribute("y").as_int()), 0);*/
 	currentAnimation = &DeathAnim;
 	IsDeath = false;
 	
