@@ -10,6 +10,7 @@
 #include "Physics.h"
 #include "Animation.h"
 
+
 Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
@@ -50,26 +51,29 @@ Player::Player() : Entity(EntityType::PLAYER)
 	JumpAnim.PushBack({ 112, 80, 16, 16 });
 	JumpAnim.PushBack({ 128, 80, 16, 16 });
 	JumpAnim.PushBack({ 144, 80, 16, 16 });
-	JumpAnim.speed = 0.8f;
+	JumpAnim.speed = 0.3f;
+	JumpAnim.loop = true;
 
-	JumpAnimIzq.PushBack({ 0, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 16, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 32, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 48, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 64, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 80, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 96, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 112, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 128, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 144, 64, 16, 16 });
-	JumpAnimIzq.speed = 0.8f;
+	//JumpAnimIzq.PushBack({ 0, 64, 16, 16 });
+	//JumpAnimIzq.PushBack({ 16, 64, 16, 16 });
+	//JumpAnimIzq.PushBack({ 32, 64, 16, 16 });
+	//JumpAnimIzq.PushBack({ 48, 64, 16, 16 });
+	//JumpAnimIzq.PushBack({ 64, 64, 16, 16 });
+	//JumpAnimIzq.PushBack({ 80, 64, 16, 16 });
+	//JumpAnimIzq.PushBack({ 96, 64, 16, 16 });
+	//JumpAnimIzq.PushBack({ 112, 64, 16, 16 });
+	//JumpAnimIzq.PushBack({ 128, 64, 16, 16 });
+	//JumpAnimIzq.PushBack({ 144, 64, 16, 16 });
+	//JumpAnimIzq.speed = 0.3f;
+	//JumpAnimIzq.loop = true;
 
 	DeathAnim.PushBack({ 0, 160, 16, 16 });
 	DeathAnim.PushBack({ 16, 160, 16, 16 });
 	DeathAnim.PushBack({ 32, 160, 16, 16 });
 	DeathAnim.PushBack({ 48, 160, 16, 16 });
 	DeathAnim.PushBack({ 64, 160, 16, 16 });
-	DeathAnim.speed = 0.8f;
+	DeathAnim.speed = 0.1f;
+	DeathAnim.loop = true;
 }
 
 Player::~Player() {
@@ -98,7 +102,7 @@ bool Player::Start() {
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 
-	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
+	//pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
 
 	return true;
@@ -115,57 +119,52 @@ bool CheckCollision(const SDL_Rect& rect1, const SDL_Rect& rect2) {
 
 bool Player::Update(float dt)
 {
+		
 	movX = 0;
 
 	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual
 
-	if (vel.y == 0 && vel.x == 0) {
-
+	//Estas quieto salta la IDLE
+	if (vel.y == 0 && vel.x == 0 && IsDeath == false ) {
 		currentAnimation = &IdleAnimIzq;
 	}
-	if (vel.y == 0)
-	{
-		// Asegura que el jugador solo pueda saltar en el suelo
-		isOnGround = true;
-		
+
+	// Asegura que el jugador solo pueda saltar en el suelo
+	if (vel.y == 0){		
+		isOnGround = true;		
 	}
-	else
-	{
-		isOnGround = false;
-		
+	//Esta en el aire, Animacion salto
+	else{
+		isOnGround = false;		
 		currentAnimation = &JumpAnim;
-
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isOnGround) {
-		
-		vel.y = -JUMP_FORCE;
-		
+	//Espacio = saltar
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isOnGround) {		
+		vel.y = -JUMP_FORCE;		
 	}
-
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		// Lógica para agacharse
-	}
-
+	//Andar izquierda
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		movX = -speed * dt;
 		if(isOnGround == true)
-		currentAnimation = &WalkAnimIzq;
-		
+		currentAnimation = &WalkAnimIzq;		
 	}
 
+	//Andar derecha
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		movX = speed * dt;
 		if (isOnGround == true)
 		currentAnimation = &WalkAnimDer;
 	}
 
-	vel.x = movX;  // Establece la velocidad horizontal
+	// Establece la velocidad horizontal
+	vel.x = movX; 
 	
+	// Aplica la velocidad al cuerpo del jugador
+	pbody->body->SetLinearVelocity(vel);  
 
-	pbody->body->SetLinearVelocity(vel);  // Aplica la velocidad al cuerpo del jugador
-
-	vel.y -= GRAVITY_Y;	// Aplicar la gravedad
+	// Aplicar la gravedad
+	vel.y -= GRAVITY_Y;	
 
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
@@ -176,8 +175,8 @@ bool Player::Update(float dt)
 	
 	if (IsDeath == true) {
 		PlayerDeath();
+		//pbody->body->SetTransform(b2Vec2(200, 300), 360);
 	}
-
 	return true;
 }
 
@@ -194,7 +193,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	{
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
-		app->audio->PlayFx(pickCoinFxId);
+		//app->audio->PlayFx(pickCoinFxId);
 		break;
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
@@ -213,10 +212,12 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 void Player :: PlayerDeath()
 {
+	
 	position.x = 200;
 	position.y = 300;
 	currentAnimation = &DeathAnim;
 	IsDeath = false;
+	
 }
 
 	

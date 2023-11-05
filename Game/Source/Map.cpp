@@ -57,7 +57,7 @@ bool Map::Update(float dt)
         {
             SDL_Rect const camera = app->render->camera;
             
-            iPoint const cameraPos = WorldToMap(((camera.x ) * -1)/ app->win->GetScale(), ((camera.y) * -1)/ app->win->GetScale());
+            iPoint const cameraPos = WorldToMap(-camera.x / app->win->GetScale(), ((camera.y) * -1)/ app->win->GetScale());
             iPoint const cameraSize = WorldToMap((camera.w - camera.x +50)/ app->win->GetScale(), (camera.h - camera.y +50)/ app->win->GetScale());
             for (int x = cameraPos.x; x < cameraSize.x; x++)
             {
