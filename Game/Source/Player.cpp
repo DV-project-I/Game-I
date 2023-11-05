@@ -157,24 +157,27 @@ bool Player::Update(float dt)
 	}
 	else {
 		// Asegura que el jugador solo pueda saltar en el suelo
-		if (vel.y == 0) {
-			isOnGround = true;
-		}
+
 		//Esta en el aire, Animacion salto
-		else {
-			isOnGround = false;
-			currentAnimation = &JumpAnim;
-		}
+
 
 		//Espacio = saltar
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isOnGround) {
 			vel.y = -JUMP_FORCE;
+			
+			currentAnimation = &JumpAnim;
+
+
 		}
 		//Andar izquierda
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			movX = -speed * dt;
 			if (isOnGround == true)
 				currentAnimation = &WalkAnimIzq;
+			if (isOnGround == false) {
+
+				currentAnimation = &JumpAnim;
+			}
 		}
 
 		//Andar derecha
@@ -182,6 +185,10 @@ bool Player::Update(float dt)
 			movX = speed * dt;
 			if (isOnGround == true)
 				currentAnimation = &WalkAnimDer;
+			if (isOnGround == false) {
+
+				currentAnimation = &JumpAnim;
+			}
 		}
 		// Establece la velocidad horizontal
 	vel.x = movX; 
@@ -226,6 +233,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		//app->audio->PlayFx(pickCoinFxId);
 		break;
 	case ColliderType::PLATFORM:
+		isOnGround = true;
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::UNKNOWN:
