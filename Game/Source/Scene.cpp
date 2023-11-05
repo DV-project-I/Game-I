@@ -106,7 +106,7 @@ bool Scene::Update(float dt)
 		app->render->camera.x += (int)ceil(camSpeed * dt);
 	
 	
-	app->render->camera.x = (-player->position.x)* app->win->GetScale() +512; /**2 - 3 + app->win->screenSurface->w / 2;*/
+	app->render->camera.x = (-player->position.x)* app->win->GetScale() +512; /**2 - 3 + app->win->screenSurface->w / 2;*/		
 	app->render->camera.y = (-player->position.y)* app->win->GetScale() + 384;
 
 	/*app -> render -> camera.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;

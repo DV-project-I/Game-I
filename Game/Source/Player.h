@@ -36,7 +36,7 @@ public:
 	SDL_Texture* texture = NULL;
 	Animation* currentAnimation = nullptr;
 	PhysBody* pbody;
-	int pickCoinFxId;
+	//int pickCoinFxId;
 
 	bool IsDeath = false;
 	float movX;
