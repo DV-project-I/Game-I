@@ -21,10 +21,10 @@ Player::Player() : Entity(EntityType::PLAYER)
 	IdleAnimDer.PushBack({ 128, 112, 16, 16 });
 	IdleAnimDer.speed = 0.05f;
 
-	IdleAnimIzq.PushBack({ 80, 112, 16, 16 });
-	IdleAnimIzq.PushBack({ 96, 112, 16, 16 });
-	IdleAnimIzq.PushBack({ 112, 112, 16, 16 });
-	IdleAnimIzq.PushBack({ 128, 112, 16, 16 });
+	IdleAnimIzq.PushBack({ 80, 128, 16, 16 });
+	IdleAnimIzq.PushBack({ 96, 128, 16, 16 });
+	IdleAnimIzq.PushBack({ 112, 128, 16, 16 });
+	IdleAnimIzq.PushBack({ 128, 128, 16, 16 });
 	IdleAnimIzq.speed = 0.05f;
 
 	WalkAnimIzq.PushBack({ 0, 128, 16, 16 });
@@ -254,7 +254,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");		
-		currentAnimation = &IdleAnimDer;
+
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
