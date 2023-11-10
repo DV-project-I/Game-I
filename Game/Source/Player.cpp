@@ -133,8 +133,11 @@ bool Player::Update(float dt)
 	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual
 
 	//Estas quieto salta la IDLE
-	if (vel.y == 0 && vel.x == 0 && IsDeath == false ) {
+	if (vel.y == 0 && vel.x == 0 && IsDeath == false && currentAnimation == &WalkAnimDer) {
 		currentAnimation = &IdleAnimDer;
+	}
+	if (vel.y == 0 && vel.x == 0 && IsDeath == false && currentAnimation == &WalkAnimIzq) {
+		currentAnimation = &IdleAnimIzq;
 	}
 
 	if (God == true) {
@@ -142,6 +145,7 @@ bool Player::Update(float dt)
 		IsDeath = false;
 		speed = 0.5f;
 		movY = 0;
+
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			movX = -speed * dt;
 			
@@ -163,6 +167,7 @@ bool Player::Update(float dt)
 	}
 	else if(IsDeath == false) {
 		speed = 0.25f;
+
 		if (vel.y == 0) {
 			isOnGround = true;
 			/*currentAnimation = &IdleAnimIzq;*/
@@ -204,6 +209,17 @@ bool Player::Update(float dt)
 	vel.y -= GRAVITY_Y;	
 	}
 	
+	//ATAQUE BASICO MELÉ
+	if (app->input->GetMouseButtonDown(1) == KEY_DOWN) {
+
+		PhysBody *ataque = app->physics->CreateRectangle(position.x +30, position.y +15, 8, 16, bodyType::DYNAMIC);
+
+		
+		
+
+	}
+
+
 	if (IsDeath == true) {
 		PlayerDeath();	
 		
@@ -237,7 +253,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		//app->audio->PlayFx(pickCoinFxId);
 		break;
 	case ColliderType::PLATFORM:
-		LOG("Collision PLATFORM");
+		LOG("Collision PLATFORM");		
 		currentAnimation = &IdleAnimDer;
 		break;
 	case ColliderType::UNKNOWN:
@@ -265,6 +281,7 @@ void Player :: PlayerDeath()
 	currentAnimation = &DeathAnim;
 	if (currentAnimation->HasFinished() == true) {
 		SetPosition(parameters.attribute("x").as_int(), parameters.attribute("y").as_int());
+		
 	}
 	
 }

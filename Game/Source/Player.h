@@ -40,6 +40,8 @@ public:
 	PhysBody* pbody;
 	//int pickCoinFxId;
 
+	PhysBody* ataque;
+
 	bool God;
 	bool IsDeath = false;
 	float movX;
