@@ -133,12 +133,13 @@ bool Player::Update(float dt)
 	b2Vec2 vel = pbody->body->GetLinearVelocity(); // Obtener la velocidad actual
 
 	//Estas quieto salta la IDLE
-	if (vel.y == 0 && vel.x == 0 && IsDeath == false && currentAnimation == &WalkAnimDer) {
-		currentAnimation = &IdleAnimDer;
-	}
 	if (vel.y == 0 && vel.x == 0 && IsDeath == false && currentAnimation == &WalkAnimIzq) {
 		currentAnimation = &IdleAnimIzq;
 	}
+	if (vel.y == 0 && vel.x == 0 && IsDeath == false && currentAnimation == &WalkAnimDer) {
+		currentAnimation = &IdleAnimDer;
+	}
+	
 
 	if (God == true) {
 
@@ -253,8 +254,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		//app->audio->PlayFx(pickCoinFxId);
 		break;
 	case ColliderType::PLATFORM:
-		LOG("Collision PLATFORM");		
-
+		LOG("Collision PLATFORM");
+		currentAnimation = &IdleAnimDer;
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
