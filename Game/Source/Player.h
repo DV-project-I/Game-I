@@ -35,6 +35,7 @@ public:
 public:
 	float speed;
 	const char* texturePath;
+	int hp;
 	SDL_Texture* texture = NULL;
 	Animation* currentAnimation = nullptr;
 	PhysBody* pbody;

@@ -97,6 +97,8 @@ bool Player::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
+
+	hp = 10;
 	//texture = app->tex->Load("Assets/personajes/Spritesheet Parca/parca.png");
 
 	pbody = app->physics->CreateCircle(position.x , position.y, 8, bodyType::DYNAMIC);
@@ -212,12 +214,15 @@ bool Player::Update(float dt)
 	
 	//ATAQUE BASICO MELÉ
 	if (app->input->GetMouseButtonDown(1) == KEY_DOWN) {
+		currentAnimation = &AtackAnim;
 
-		PhysBody *ataque = app->physics->CreateRectangle(position.x +30, position.y +15, 8, 16, bodyType::DYNAMIC);
+		PhysBody *ataque = app->physics->CreateRectangle(position.x +30, position.y +15, 8, 16, bodyType::STATIC);
+			
 
-		
-		
+	}
 
+	if (hp <= 0) {
+		IsDeath == true;
 	}
 
 
