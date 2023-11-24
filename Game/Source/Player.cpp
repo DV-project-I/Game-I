@@ -76,12 +76,12 @@ Player::Player() : Entity(EntityType::PLAYER)
 	DeathAnim.loop = false;
 
 	AtackAnim.PushBack({ 0, 0, 32, 32 });
-	AtackAnim.PushBack({ 32, 32, 32, 32 });
-	AtackAnim.PushBack({ 64, 64, 32, 32 });
-	AtackAnim.PushBack({ 96, 96, 32, 32 });
-	AtackAnim.PushBack({ 128, 128, 32, 32 });
+	AtackAnim.PushBack({ 32, 0, 32, 32 });
+	AtackAnim.PushBack({ 64, 0, 32, 32 });
+	AtackAnim.PushBack({ 96, 0, 32, 32 });
+	AtackAnim.PushBack({ 128, 0, 32, 32 });
 	AtackAnim.speed = 0.1f;
-	AtackAnim.loop = false;
+	AtackAnim.loop = true;
 	
 }
 
@@ -222,6 +222,7 @@ bool Player::Update(float dt)
 	
 	//ATAQUE BASICO MELÉ
 	if (app->input->GetMouseButtonDown(1) == KEY_DOWN) {
+
 		currentAnimation = &AtackAnim;
 
 		PhysBody *ataque = app->physics->CreateRectangle(position.x +30, position.y +15, 8, 16, bodyType::STATIC);
