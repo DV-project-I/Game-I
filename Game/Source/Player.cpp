@@ -74,6 +74,14 @@ Player::Player() : Entity(EntityType::PLAYER)
 	DeathAnim.PushBack({ 64, 160, 16, 16 });
 	DeathAnim.speed = 0.1f;
 	DeathAnim.loop = false;
+
+	AtackAnim.PushBack({ 0, 0, 32, 32 });
+	AtackAnim.PushBack({ 32, 32, 32, 32 });
+	AtackAnim.PushBack({ 64, 64, 32, 32 });
+	AtackAnim.PushBack({ 96, 96, 32, 32 });
+	AtackAnim.PushBack({ 128, 128, 32, 32 });
+	AtackAnim.speed = 0.1f;
+	AtackAnim.loop = false;
 	
 }
 

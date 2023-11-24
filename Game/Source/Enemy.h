@@ -1,5 +1,5 @@
-#ifndef __PLAYER_H__
-#define __PLAYER_H__
+#ifndef __ENEMY_H__
+#define __ENEMY_H__
 
 #include "Entity.h"
 #include "Point.h"
@@ -9,13 +9,13 @@
 
 struct SDL_Texture;
 
-class Player : public Entity
+class Enemy : public Entity
 {
 public:
 	// Constructor
-	Player();
+	Enemy();
 	// Destructor
-	virtual ~Player();
+	virtual ~Enemy();
 
 	bool Awake();
 	// Called when the module is activated
@@ -62,7 +62,6 @@ public:
 	Animation AtackAnim;
 	Animation DeathAnim;
 	Animation JumpAnimIzq;
-
 };
 
 #endif // __PLAYER_H__
