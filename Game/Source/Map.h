@@ -7,6 +7,14 @@
 
 #include "PugiXml\src\pugixml.hpp"
 
+enum MapTypes
+{
+	MAPTYPE_UNKNOWN = 0,
+	MAPTYPE_ORTHOGONAL,
+	MAPTYPE_ISOMETRIC,
+	MAPTYPE_STAGGERED
+};
+
 // Ignore Terrain Types and Tile Types for now, but we want the image!
 struct TileSet
 {
@@ -23,15 +31,6 @@ struct TileSet
 	SDL_Rect GetTileRect(int gid) const;
 };
 
-//  We create an enum for map type, just for convenience,
-// NOTE: Platformer game will be of type ORTHOGONAL
-enum MapTypes
-{
-	MAPTYPE_UNKNOWN = 0,
-	MAPTYPE_ORTHOGONAL,
-	MAPTYPE_ISOMETRIC,
-	MAPTYPE_STAGGERED
-};
 
 struct Properties
 {
