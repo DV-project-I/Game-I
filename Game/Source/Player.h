@@ -39,9 +39,11 @@ public:
 	SDL_Texture* texture = NULL;
 	Animation* currentAnimation = nullptr;
 	PhysBody* pbody;
+	PhysBody* ataque;
+
 	//int pickCoinFxId;
 
-	PhysBody* ataque;
+	
 
 	bool God;
 	bool IsDeath = false;

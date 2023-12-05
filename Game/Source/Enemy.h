@@ -12,14 +12,13 @@ struct SDL_Texture;
 class Enemy : public Entity
 {
 public:
-	// Constructor
+	
 	Enemy();
-	// Destructor
+	
 	virtual ~Enemy();
 
 	bool Awake();
-	// Called when the module is activated
-	// Loads the necessary textures for the player
+	
 	bool Start();
 
 	bool Update(float dt);
@@ -28,9 +27,6 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
-	void PlayerDeath();
-
-	void SetPosition(int x, int y);
 
 public:
 	float speed;
@@ -43,8 +39,7 @@ public:
 
 	PhysBody* ataque;
 
-	bool God;
-	bool IsDeath = false;
+
 	float movX;
 	float movY;
 	float velY;
@@ -64,4 +59,4 @@ public:
 	Animation JumpAnimIzq;
 };
 
-#endif // __PLAYER_H__
+#endif // __ENEMY_H__
