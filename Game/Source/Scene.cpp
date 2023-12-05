@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "Physics.h"
 
 #include "Defs.h"
@@ -38,6 +39,11 @@ bool Scene::Awake(pugi::xml_node& config)
 	if (config.child("player")) {
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 		player->parameters = config.child("player");
+	}
+
+	if (config.child("enemy")) {
+		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+		enemy->parameters = config.child("enemy");
 	}
 
 	if (config.child("map")) {

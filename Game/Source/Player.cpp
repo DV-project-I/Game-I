@@ -96,7 +96,7 @@ bool Player::Awake() {
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
 	currentAnimation = &IdleAnimDer;
-
+	
 	return true;
 }
 
@@ -113,6 +113,9 @@ bool Player::Start() {
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 
+	ataque = app->physics->CreateRectangle(0, 0, 8, 16, bodyType::STATIC);
+	pbody->listener = this;
+	pbody->ctype = ColliderType::ITEM;
 	//pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
 
@@ -222,11 +225,26 @@ bool Player::Update(float dt)
 	
 	//ATAQUE BASICO MELÉ
 	if (app->input->GetMouseButtonDown(1) == KEY_DOWN) {
-
 		currentAnimation = &AtackAnim;
 
-		PhysBody *ataque = app->physics->CreateRectangle(position.x +30, position.y +15, 8, 16, bodyType::STATIC);
+		Timer veteputo;
+		veteputo.Start();
+
+		int x = position.x +16;
+		int y =	position.y;
+
+	
+
+		b2Vec2 newPos(x, y);
+
+		ataque->body->SetTransform(newPos, ataque->body->GetAngle());
 			
+		int patata = veteputo.ReadSec();
+
+		if (patata == 7) {
+			b2Vec2 ResetPos(0,0);
+			ataque->body->SetTransform(ResetPos, ataque->body->GetAngle());
+		}
 
 	}
 
