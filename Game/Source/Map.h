@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "List.h"
+#include "Pathfinding.h"
 #include "Point.h"
 
 #include "PugiXml\src\pugixml.hpp"
@@ -140,6 +141,7 @@ public:
 	MapData mapData;
 	SString name;
 	SString path;
+	PathFinding* pathfinding;
 private:
 
 	bool mapLoaded;

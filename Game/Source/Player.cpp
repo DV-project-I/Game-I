@@ -81,7 +81,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 	AtackAnim.PushBack({ 96, 0, 32, 32 });
 	AtackAnim.PushBack({ 128, 0, 32, 32 });
 	AtackAnim.speed = 0.1f;
-	AtackAnim.loop = true;
+	AtackAnim.loop = false;
 	
 }
 
@@ -245,7 +245,8 @@ bool Player::Update(float dt)
 			b2Vec2 ResetPos(0,0);
 			ataque->body->SetTransform(ResetPos, ataque->body->GetAngle());
 		}
-
+		AtackAnim.Reset();
+		
 	}
 
 	if (hp <= 0) {
@@ -301,20 +302,21 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 }
 void Player ::SetPosition(int x, int y) {
+	DeathAnim.Reset();
 	position.x = x;
 	position.y = y;
 	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
+	pbody->body->SetTransform(newPos, pbody->body->GetAngle());	
+	
 	IsDeath = false;
-	DeathAnim.Reset();
+	
 }
 
 void Player :: PlayerDeath()
 {			
 	currentAnimation = &DeathAnim;
-	if (currentAnimation->HasFinished() == true) {
-		SetPosition(parameters.attribute("x").as_int(), parameters.attribute("y").as_int());
-		
+	if (currentAnimation->HasFinished() == true) {		
+		SetPosition(parameters.attribute("x").as_int(), parameters.attribute("y").as_int());		
 	}
 	
 }
