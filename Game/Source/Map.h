@@ -3,8 +3,9 @@
 
 #include "Module.h"
 #include "List.h"
-#include "Pathfinding.h"
 #include "Point.h"
+#include "DynArray.h"
+#include "Pathfinding.h"
 
 #include "PugiXml\src\pugixml.hpp"
 
@@ -29,7 +30,17 @@ struct TileSet
 	int tilecount;
 
 	SDL_Texture* texture;
-	SDL_Rect GetTileRect(int gid) const;
+	SDL_Rect GetRect(uint gid) {
+		SDL_Rect rect = { 0 };
+
+		int relativeIndex = gid - firstgid;
+		rect.w = tileWidth;
+		rect.h = tileHeight;
+		rect.x = margin + (tileWidth + spacing) * (relativeIndex % columns);
+		rect.y = margin + (tileHeight + spacing) * (relativeIndex / columns);
+
+		return rect;
+	}
 };
 
 
@@ -68,7 +79,6 @@ struct MapLayer
 	int width;
 	int height;
 	uint* data;
-
 	Properties properties;
 
 	MapLayer() : data(NULL)
