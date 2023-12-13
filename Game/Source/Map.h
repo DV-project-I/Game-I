@@ -30,6 +30,7 @@ struct TileSet
 	int tilecount;
 
 	SDL_Texture* texture;
+
 	SDL_Rect GetRect(uint gid) {
 		SDL_Rect rect = { 0 };
 
@@ -135,16 +136,27 @@ public:
 	bool LoadObjectGroups(pugi::xml_node mapNode);
 
 	iPoint MapToWorld(int x, int y) const;
+
 	iPoint Map::WorldToMap(int x, int y);
 
-private:
-
 	bool LoadMap(pugi::xml_node mapFile);
+
 	bool LoadTileSet(pugi::xml_node mapFile);
+
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
+
 	bool LoadAllLayers(pugi::xml_node mapNode);
+
 	TileSet* GetTilesetFromTileId(int gid) const;
+
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
+
+	void CreateNavigationMap(int& width, int& height, uchar** buffer) const;
+
+	
+
+	int GetTileWidth();
+	int GetTileHeight();
 
 public: 
 
@@ -155,6 +167,9 @@ public:
 private:
 
 	bool mapLoaded;
+	MapLayer* navigationLayer;
+	int blockedGid = 49; //!!!! make sure that you assign blockedGid according to your map
+
 };
 
 #endif // __MAP_H__

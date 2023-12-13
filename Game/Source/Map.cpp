@@ -7,6 +7,7 @@
 #include "Window.h"
 #include "Defs.h"
 #include "Log.h"
+#include "Scene.h"
 
 #include <math.h>
 #include "SDL_image/include/SDL_image.h"
@@ -38,12 +39,23 @@ bool Map::Start()
     //Calls the functon to load the map, make sure that the filename is assigned
     SString mapPath = path;
     mapPath += name;
-    bool ret = Load(mapPath);
-    return ret;
+    Load(mapPath);
+
+    pathfinding = new PathFinding();
+
+    //Initialize the navigation map
+    uchar* navigationMap = NULL;
+    CreateNavigationMap(mapData.width, mapData.height, &navigationMap);
+    pathfinding->SetNavigationMap((uint)mapData.width, (uint)mapData.height, navigationMap);
+    RELEASE_ARRAY(navigationMap);
+
+    return true;
 }
 
 bool Map::Update(float dt)
 {
+    bool ret = true;
+
     if(mapLoaded == false)
         return false;
 
@@ -71,7 +83,7 @@ bool Map::Update(float dt)
                     }
                     TileSet* tileset = GetTilesetFromTileId(gid);
 
-                    SDL_Rect r = tileset->GetTileRect(gid);
+                    SDL_Rect r = tileset->GetRect(gid);
                     iPoint pos = MapToWorld(x, y);
 
                     app->render->DrawTexture(tileset->texture,
@@ -87,7 +99,7 @@ bool Map::Update(float dt)
 
     }
 
-    return true;
+    return ret;
 }
 
 iPoint Map::MapToWorld(int x, int y) const
@@ -110,18 +122,18 @@ iPoint Map::WorldToMap(int x, int y)
 }
 
 // Get relative Tile rectangle
-SDL_Rect TileSet::GetTileRect(int gid) const
-{
-    SDL_Rect rect = { 0 };
-    int relativeIndex = gid - firstgid;
-
-    rect.w = tileWidth;
-    rect.h = tileHeight;
-    rect.x = margin + (tileWidth + spacing) * (relativeIndex % columns);
-    rect.y = margin + (tileWidth + spacing) * (relativeIndex / columns);
-
-    return rect;
-}
+//SDL_Rect TileSet::GetRect(uint gid) const
+//{
+//    SDL_Rect rect = { 0 };
+//    int relativeIndex = gid - firstgid;
+//
+//    rect.w = tileWidth;
+//    rect.h = tileHeight;
+//    rect.x = margin + (tileWidth + spacing) * (relativeIndex % columns);
+//    rect.y = margin + (tileWidth + spacing) * (relativeIndex / columns);
+//
+//    return rect;
+//}
 
 TileSet* Map::GetTilesetFromTileId(int gid) const
 {
@@ -146,6 +158,8 @@ bool Map::CleanUp()
 {
     LOG("Unloading map");
 
+    pathfinding->CleanUp();
+
 	ListItem<TileSet*>* item;
 	item = mapData.tilesets.start;
 
@@ -162,6 +176,7 @@ bool Map::CleanUp()
 
     while (layerItem != NULL)
     {
+        //RELEASE(layerItem->data->tiles);
         RELEASE(layerItem->data);
         layerItem = layerItem->next;
     }
@@ -235,6 +250,99 @@ bool Map::Load(SString mapFileName)
             LOG("Layer width : %d Layer height : %d", mapLayer->data->width, mapLayer->data->height);
             mapLayer = mapLayer->next;
         }
+        for (pugi::xml_node tilesetNode = mapFileXML.child("map").child("tileset"); tilesetNode != NULL; tilesetNode = tilesetNode.next_sibling("tileset")) {
+
+            TileSet* tileset = new TileSet();
+
+            //Load Tileset attributes
+            tileset->name = tilesetNode.attribute("name").as_string();
+            tileset->firstgid = tilesetNode.attribute("firstgid").as_int();
+            tileset->margin = tilesetNode.attribute("margin").as_int();
+            tileset->spacing = tilesetNode.attribute("spacing").as_int();
+            tileset->tileWidth = tilesetNode.attribute("tilewidth").as_int();
+            tileset->tileHeight = tilesetNode.attribute("tileheight").as_int();
+            tileset->columns = tilesetNode.attribute("columns").as_int();
+            tileset->tilecount = tilesetNode.attribute("tilecount").as_int();
+
+            //Load Tileset image
+            SString mapTex = path;
+            mapTex += tilesetNode.child("image").attribute("source").as_string();
+            tileset->texture = app->tex->Load(mapTex.GetString());
+
+            mapData.tilesets.Add(tileset);
+
+        }
+           for (pugi::xml_node layerNode = mapFileXML.child("map").child("layer"); layerNode != NULL; layerNode = layerNode.next_sibling("layer")) {
+
+            // L06: DONE 4: Implement a function that loads a single layer layer
+            //Load the attributes and saved in a new MapLayer
+            MapLayer* mapLayer = new MapLayer();
+            mapLayer->id = layerNode.attribute("id").as_int();
+            mapLayer->name = layerNode.attribute("name").as_string();
+            mapLayer->width = layerNode.attribute("width").as_int();
+            mapLayer->height = layerNode.attribute("height").as_int();
+
+            //L08: DONE 6 Call Load Layer Properties
+            LoadProperties(layerNode, mapLayer->properties);
+
+            //Reserve the memory for the data 
+            mapLayer->data = new uint[mapLayer->width * mapLayer->height];
+            memset(mapLayer->data, 0, mapLayer->width * mapLayer->height);
+
+            //Iterate over all the tiles and assign the values in the data array
+            int i = 0;
+            for (pugi::xml_node tileNode = layerNode.child("data").child("tile"); tileNode != NULL; tileNode = tileNode.next_sibling("tile")) {
+                mapLayer->data[i] = tileNode.attribute("gid").as_uint();
+                i++;
+            }
+
+            //add the layer to the map
+            mapData.maplayers.Add(mapLayer);
+        }
+             if (ret == true)
+        {
+            LOG("Successfully parsed map XML file :%s", mapFileName.GetString());
+            LOG("width : %d height : %d", mapData.width, mapData.height);
+           // LOG("tile_width : %d tile_height : %d", mapData.tilewidth, mapData.tileheight);
+
+            LOG("Tilesets----");
+
+            ListItem<TileSet*>* tileset;
+            tileset = mapData.tilesets.start;
+            while (tileset != NULL) {
+                //iterate the tilesets
+                LOG("name : %s firstgid : %d",tileset->data->name.GetString(), tileset->data->firstgid);
+                //LOG("tile width : %d tile height : %d", tileset->data->tilewidth, tileset->data->tileheight);
+                LOG("spacing : %d margin : %d", tileset->data->spacing, tileset->data->margin);
+                tileset = tileset->next;
+            }
+
+            LOG("Layers----");
+
+            ListItem<MapLayer*>* mapLayer;
+            mapLayer = mapData.maplayers.start;
+
+            while (mapLayer != NULL) {
+                LOG("id : %d name : %s", mapLayer->data->id, mapLayer->data->name.GetString());
+                LOG("Layer width : %d Layer height : %d", mapLayer->data->width, mapLayer->data->height);
+                mapLayer = mapLayer->next;
+            }
+        }
+
+        // Find the navigation layer
+        ListItem<MapLayer*>* mapLayerItem;
+        mapLayerItem = mapData.maplayers.start;
+        navigationLayer = mapLayerItem->data;
+
+        //Search the layer in the map that contains information for navigation
+        while (mapLayerItem != NULL) {
+            if (mapLayerItem->data->properties.GetProperty("Navigation") != NULL && mapLayerItem->data->properties.GetProperty("Navigation")->value) {
+                navigationLayer = mapLayerItem->data;
+                break;
+            }
+            mapLayerItem = mapLayerItem->next;
+        }
+
     }
 
     if(mapFileXML) mapFileXML.reset();
@@ -421,34 +529,43 @@ Properties::Property* Properties::GetProperty(const char* name)
     return p;
 }
 
-//void Map::CreateNavigationMap(int& width, int& height, uchar** buffer) const
-//{
-//    bool ret = false;
-//
-//    //Sets the size of the map. The navigation map is a unidimensional array 
-//    uchar* navigationMap = new uchar[navigationLayer->width * navigationLayer->height];
-//    //reserves the memory for the navigation map
-//    memset(navigationMap, 1, navigationLayer->width * navigationLayer->height);
-//
-//    for (int x = 0; x < mapData.width; x++)
-//    {
-//        for (int y = 0; y < mapData.height; y++)
-//        {
-//            //i is the index of x,y coordinate in a unidimensional array that represents the navigation map
-//            int i = (y * navigationLayer->width) + x;
-//
-//            //Gets the gid of the map in the navigation layer
-//            int gid = navigationLayer->Get(x, y);
-//
-//            //If the gid is a blockedGid is an area that I cannot navigate, so is set in the navigation map as 0, all the other areas can be navigated
-//            //!!!! make sure that you assign blockedGid according to your map
-//            if (gid == blockedGid) navigationMap[i] = 0;
-//            else navigationMap[i] = 1;
-//        }
-//    }
-//
-//    *buffer = navigationMap;
-//    width = mapData.width;
-//    height = mapData.height;
-//
-//}
+int Map::GetTileWidth() {
+    return mapData.tileWidth;
+}
+int Map::GetTileHeight() {
+    return mapData.tileHeight;
+}
+
+void Map::CreateNavigationMap(int& width, int& height, uchar** buffer) const
+{
+    bool ret = false;
+
+    //Sets the size of the map. The navigation map is a unidimensional array 
+    uchar* navigationMap = new uchar[navigationLayer->width * navigationLayer->height];
+    //reserves the memory for the navigation map
+    memset(navigationMap, 1, navigationLayer->width * navigationLayer->height);
+
+    for (int x = 0; x < mapData.width; x++)
+    {
+        for (int y = 0; y < mapData.height; y++)
+        {
+            //i is the index of x,y coordinate in a unidimensional array that represents the navigation map
+            int i = (y * navigationLayer->width) + x;
+
+            //Gets the gid of the map in the navigation layer
+            int gid = navigationLayer->Get(x, y);
+
+            //If the gid is a blockedGid is an area that I cannot navigate, so is set in the navigation map as 0, all the other areas can be navigated
+            //!!!! make sure that you assign blockedGid according to your map
+            if (gid == blockedGid) navigationMap[i] = 0;
+            else navigationMap[i] = 1;
+        }
+    }
+
+    *buffer = navigationMap;
+    width = mapData.width;
+    height = mapData.height;
+
+}
+
+
