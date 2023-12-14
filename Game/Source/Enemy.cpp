@@ -9,11 +9,17 @@
 #include "Point.h"
 #include "Physics.h"
 #include "Animation.h"
+#include "Pathfinding.h"
 
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
 	name.Create("enemy");
-
+	IdleAnimDer.PushBack({ 0, 0, 0, 0 });
+	IdleAnimDer.PushBack({ 0, 0, 0, 0 });
+	IdleAnimDer.PushBack({ 0, 0, 0, 0 });
+	IdleAnimDer.PushBack({ 0, 0, 0, 0 });
+	IdleAnimDer.PushBack({ 0, 0, 0, 0 });
+	
 }
 
 Enemy::~Enemy() {
@@ -22,7 +28,7 @@ Enemy::~Enemy() {
 
 bool Enemy::Awake() {
 
-
+PathFinding path;
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
@@ -36,6 +42,8 @@ bool Enemy::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
+	
+	
 
 	hp = 10;
 	//texture = app->tex->Load("Assets/personajes/Spritesheet Parca/parca.png");
@@ -54,7 +62,7 @@ bool Enemy::Start() {
 bool Enemy::Update(float dt) {
 
 
-
+	
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
