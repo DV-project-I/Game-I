@@ -177,7 +177,7 @@ ListItem<PathNode>* PathList::Find(const iPoint& point) const
 	ListItem<PathNode>* item = list.start;
 	while(item)
 	{
-		if(item->data.pos == point)
+		if(item->data.pos == point	)
 			return item;
 		item = item->next;
 	}

@@ -119,11 +119,11 @@ bool Scene::Update(float dt)
 
 	iPoint origin = iPoint(player->position.x, player->position.y);
 
-	iPoint origin2 = iPoint(player->position.x +5, player->position.y );
+	iPoint origin2 = iPoint(player->position.x +70, player->position.y );
 	//If mouse button is pressed modify player position
 	if (app->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
 		
-		app->map->pathfinding->CreatePath(origin, origin2);
+		app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x,origin.y), app->map->WorldToMap(origin2.x,origin2.y));
 	}
 
 	// L13: Get the latest calculated path and draw
