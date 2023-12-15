@@ -246,7 +246,7 @@ bool Player::Update(float dt)
 			ataque->body->SetTransform(ResetPos, ataque->body->GetAngle());
 		}
 		
-		
+		AtackAnim.Reset();
 		
 	}
 
@@ -265,7 +265,7 @@ bool Player::Update(float dt)
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
 	currentAnimation->Update();
-	AtackAnim.Reset();
+	
 	app->render->DrawTexture(texture, position.x +8, position.y +8, &currentAnimation->GetCurrentFrame());
 	
 	
