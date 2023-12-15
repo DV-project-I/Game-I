@@ -176,7 +176,7 @@ bool Map::CleanUp()
 
     while (layerItem != NULL)
     {
-        //RELEASE(layerItem->data->tiles);
+        RELEASE(layerItem->data->data);
         RELEASE(layerItem->data);
         layerItem = layerItem->next;
     }

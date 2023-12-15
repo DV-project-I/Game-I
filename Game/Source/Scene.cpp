@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Physics.h"
+#include "Entity.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -28,6 +29,7 @@ bool Scene::Awake(pugi::xml_node& config)
 	LOG("Loading Scene");
 	bool ret = true;
 
+	
 	// iterate all objects in the scene
 	// Check https://pugixml.org/docs/quickstart.html#access
 	for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
@@ -59,7 +61,7 @@ bool Scene::Awake(pugi::xml_node& config)
 bool Scene::Start()
 {
 	// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
-	img = app->tex->Load("Assets/Textures/fondoDani.png");
+	img = app->tex->Load("Assets/Textures/goldCoin.png");
 	
 	//Music is commented so that you can add your own music
 	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
@@ -115,6 +117,22 @@ bool Scene::Update(float dt)
 	app->render->camera.x = (-player->position.x)* app->win->GetScale() +512; /**2 - 3 + app->win->screenSurface->w / 2;*/		
 	app->render->camera.y = (-player->position.y)* app->win->GetScale() + 384;
 
+	iPoint origin = iPoint(player->position.x, player->position.y);
+
+	iPoint origin2 = iPoint(player->position.x +5, player->position.y );
+	//If mouse button is pressed modify player position
+	if (app->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
+		
+		app->map->pathfinding->CreatePath(origin, origin2);
+	}
+
+	// L13: Get the latest calculated path and draw
+	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		app->render->DrawTexture(img, pos.x, pos.y);
+	}
 	/*app -> render -> camera.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	app ->render -> camera.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;*/
 	return true;
