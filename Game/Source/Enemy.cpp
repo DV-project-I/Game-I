@@ -10,6 +10,9 @@
 #include "Physics.h"
 #include "Animation.h"
 #include "Pathfinding.h"
+#include "Player.h"
+#include "Map.h"
+#include "Entity.h"
 
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
@@ -28,6 +31,8 @@ Enemy::~Enemy() {
 
 bool Enemy::Awake() {
 
+
+	
 PathFinding path;
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
@@ -41,7 +46,7 @@ bool Enemy::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
-
+	camino = app->tex->Load("../Assets/Textures/camino.png");
 	
 	
 
@@ -61,10 +66,38 @@ bool Enemy::Start() {
 
 bool Enemy::Update(float dt) {
 
+	b2Vec2 vel;
+	vel.y = -GRAVITY_Y;
+
+	iPoint origin = iPoint(this->position.x, this->position.y);
+	iPoint origin2 = iPoint(app->scene->player->position.x, app->scene->player->position.y);
+
+
+	//If mouse button is pressed modify player position
+	
+
+	app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
+	
+
+	// L13: Get the latest calculated path and draw
+	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+		
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		app->render->DrawTexture(camino, pos.x, pos.y);
+
+		movX = (pos.x - this->position.x)/100;
+		vel.x = movX;
+	}
 
 	
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+
+	pbody->body->SetLinearVelocity(vel);
+
+	this->position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
+	this->position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+	
 
 	app->render->DrawTexture(texture, position.x +3 , position.y);
 	return true;
