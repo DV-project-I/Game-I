@@ -44,7 +44,7 @@ public:
 	//int pickCoinFxId;
 
 	
-
+	bool left;
 	bool God;
 	bool IsDeath = false;
 	float movX;
@@ -61,7 +61,8 @@ public:
 	Animation WalkAnimIzq;
 	Animation WalkAnimDer;
 	Animation JumpAnim;
-	Animation AtackAnim;
+	Animation AtackAnimDer;
+	Animation AtackAnimIzq;
 	Animation DeathAnim;
 	Animation JumpAnimIzq;
 

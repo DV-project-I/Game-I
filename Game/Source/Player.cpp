@@ -75,13 +75,21 @@ Player::Player() : Entity(EntityType::PLAYER)
 	DeathAnim.speed = 0.1f;
 	DeathAnim.loop = false;
 
-	AtackAnim.PushBack({ 0, 0, 32, 32 });
-	AtackAnim.PushBack({ 32, 0, 32, 32 });
-	AtackAnim.PushBack({ 64, 0, 32, 32 });
-	AtackAnim.PushBack({ 96, 0, 32, 32 });
-	AtackAnim.PushBack({ 128, 0, 32, 32 });
-	AtackAnim.speed = 0.1f;
-	AtackAnim.loop = false;
+	AtackAnimDer.PushBack({ 0, 0, 32, 32 });
+	AtackAnimDer.PushBack({ 32, 0, 32, 32 });
+	AtackAnimDer.PushBack({ 64, 0, 32, 32 });
+	AtackAnimDer.PushBack({ 96, 0, 32, 32 });
+	AtackAnimDer.PushBack({ 128, 0, 32, 32 });
+	AtackAnimDer.speed = 0.1f;
+	AtackAnimDer.loop = false;
+
+	AtackAnimIzq.PushBack({ 0, 0, 32, 32 });
+	AtackAnimIzq.PushBack({ 32, 0, 32, 32 });
+	AtackAnimIzq.PushBack({ 64, 0, 32, 32 });
+	AtackAnimIzq.PushBack({ 96, 0, 32, 32 });
+	AtackAnimIzq.PushBack({ 128, 0, 32, 32 });
+	AtackAnimIzq.speed = 0.1f;
+	AtackAnimIzq.loop = false;
 	
 }
 
@@ -134,7 +142,7 @@ bool CheckCollision(const SDL_Rect& rect1, const SDL_Rect& rect2) {
 bool Player::Update(float dt)
 {
 	movX = 0;
-
+	
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		IsDeath = true;
 	}
@@ -148,9 +156,11 @@ bool Player::Update(float dt)
 	//Estas quieto salta la IDLE
 	if (vel.y == 0 && vel.x == 0 && IsDeath == false && currentAnimation == &WalkAnimIzq) {
 		currentAnimation = &IdleAnimIzq;
+		left = true;
 	}
 	if (vel.y == 0 && vel.x == 0 && IsDeath == false && currentAnimation == &WalkAnimDer) {
 		currentAnimation = &IdleAnimDer;
+		left = false;
 	}
 	
 
@@ -224,30 +234,15 @@ bool Player::Update(float dt)
 	}
 	
 	//ATAQUE BASICO MELÉ
-	if (app->input->GetMouseButtonDown(1) == KEY_DOWN) {
-		currentAnimation = &AtackAnim;
-
-		Timer veteputo;
-		veteputo.Start();
-
-		int x = position.x +16;
-		int y =	position.y;
-
-	
-
-		b2Vec2 newPos(x, y);
-
-		ataque->body->SetTransform(newPos, ataque->body->GetAngle());
-			
-		int patata = veteputo.ReadSec();
-
-		if (patata == 7) {
-			b2Vec2 ResetPos(0,0);
-			ataque->body->SetTransform(ResetPos, ataque->body->GetAngle());
-		}
+	if (left = true && app->input->GetMouseButtonDown(1) == KEY_DOWN ) {
+		currentAnimation = &AtackAnimIzq;
 		
-		AtackAnim.Reset();
-		
+		AtackAnimIzq.Reset();
+	}
+	if (left = false && app->input->GetMouseButtonDown(1) == KEY_DOWN) {
+		currentAnimation = &AtackAnimDer;
+
+		AtackAnimDer.Reset();
 	}
 
 	if (hp <= 0) {
@@ -266,7 +261,7 @@ bool Player::Update(float dt)
 
 	currentAnimation->Update();
 	
-	app->render->DrawTexture(texture, position.x +8, position.y +8, &currentAnimation->GetCurrentFrame());
+	app->render->DrawTexture(texture, position.x +8, position.y +9, &currentAnimation->GetCurrentFrame());
 	
 	
 	return true;
