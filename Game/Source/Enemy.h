@@ -55,7 +55,8 @@ public:
 	Animation WalkAnimIzq;
 	Animation WalkAnimDer;
 	Animation JumpAnim;
-	Animation AtackAnim;
+	Animation AtackAnimDer;
+	Animation AtackAnimIzq;
 	Animation DeathAnim;
 	Animation JumpAnimIzq;
 

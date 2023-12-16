@@ -39,6 +39,20 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
 	WalkAnimDer.speed = 0.3f;
 	WalkAnimDer.loop = true;
 	
+	IdleAnimDer.PushBack({ 125, 100, 25, 25 });
+	IdleAnimDer.speed = 0.3f;
+	IdleAnimDer.loop = true;
+	IdleAnimIzq.PushBack({ 150, 100, 25, 25 });
+	IdleAnimIzq.speed = 0.3f;
+	IdleAnimIzq.loop = true;
+
+	AtackAnimIzq.PushBack({ 150, 100, 25, 25 });
+	AtackAnimIzq.speed = 0.3f;
+	AtackAnimIzq.loop = true;
+
+	AtackAnimDer.PushBack({ 150, 100, 25, 25 });
+	AtackAnimDer.speed = 0.3f;
+	AtackAnimDer.loop = true;
 }
 
 Enemy::~Enemy() {
@@ -88,14 +102,19 @@ bool Enemy::Update(float dt) {
 	iPoint origin = iPoint(this->position.x, this->position.y);
 	iPoint origin2 = iPoint(app->scene->player->position.x, app->scene->player->position.y);
 
+	if (vel.y == 0 && vel.x == 0 && currentAnimation == &WalkAnimIzq) {
+		currentAnimation = &IdleAnimIzq;
+	}
+	if (vel.y == 0 && vel.x == 0 && currentAnimation == &WalkAnimDer) {
+		currentAnimation = &IdleAnimDer;
+	}
 
-	//If mouse button is pressed modify player position
 	
-
+	
+	//COSAS DEL PATHFINDING
 	app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
 	
-
-	// L13: Get the latest calculated path and draw
+	// DIBUJAR EL PATH
 	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
 	for (uint i = 0; i < path->Count(); ++i)
 	{
@@ -103,14 +122,14 @@ bool Enemy::Update(float dt) {
 		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 		app->render->DrawTexture(camino, pos.x, pos.y);
 
-		movX = (pos.x - this->position.x)/50;
+		movX = (pos.x - this->position.x)/25;
 		vel.x = movX;
 	}
 
 	if (vel.x < 0) {
 		currentAnimation = &WalkAnimIzq;
 	}
-	if (vel.x >= 0) {
+	if (vel.x > 0) {
 		currentAnimation = &WalkAnimDer;
 	}
 	
