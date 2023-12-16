@@ -14,11 +14,11 @@
 Bat::Bat() : Entity(EntityType::BAT)
 {
 	name.Create("bat");
-	Batfly.PushBack({ 0, 0, 0, 0 });
-	Batfly.PushBack({ 0, 0, 0, 0 });
-	Batfly.PushBack({ 0, 0, 0, 0 });
-	Batfly.PushBack({ 0, 0, 0, 0 });
-	Batfly.PushBack({ 0, 0, 0, 0 });
+	Batfly.PushBack({ 0, 0, 32, 32 });
+	Batfly.PushBack({ 32, 0, 32, 32 });
+	Batfly.PushBack({ 64, 0, 32, 32 });
+	Batfly.PushBack({ 96, 0, 32, 32 });
+	Batfly.PushBack({ 128, 0, 32, 32 });
 
 }
 
