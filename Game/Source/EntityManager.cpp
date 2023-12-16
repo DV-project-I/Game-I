@@ -90,6 +90,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		break;
 	case EntityType::ENEMY:
 		entity = new Enemy();
+
+	case EntityType::BAT:
+		entity = new Bat();
 	default:
 		break;
 	}
