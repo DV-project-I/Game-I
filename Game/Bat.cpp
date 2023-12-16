@@ -18,7 +18,8 @@ Bat::Bat() : Entity(EntityType::BAT)
 	Batfly.PushBack({ 32, 0, 32, 32 });
 	Batfly.PushBack({ 64, 0, 32, 32 });
 	Batfly.PushBack({ 96, 0, 32, 32 });
-	Batfly.PushBack({ 128, 0, 32, 32 });
+	Batfly.speed = 0.1f;
+	Batfly.loop = true;
 
 }
 
@@ -65,8 +66,9 @@ bool Bat::Update(float dt) {
 
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+	currentAnimation->Update();
 
-	app->render->DrawTexture(texture, position.x + 3, position.y);
+	app->render->DrawTexture(texture, position.x + 3, position.y, &currentAnimation->GetCurrentFrame());
 	return true;
 }
 

@@ -10,6 +10,7 @@
 #include "Enemy.h"
 #include "Physics.h"
 #include "Entity.h"
+#include "../bat.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -46,6 +47,11 @@ bool Scene::Awake(pugi::xml_node& config)
 	if (config.child("enemy")) {
 		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
 		enemy->parameters = config.child("enemy");
+	}
+
+	if (config.child("bat")) {
+		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
+		bat->parameters = config.child("bat");
 	}
 
 	if (config.child("map")) {

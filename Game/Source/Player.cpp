@@ -15,71 +15,71 @@ Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
 	
-	IdleAnimDer.PushBack({ 80, 112, 16, 16 });
-	IdleAnimDer.PushBack({ 96, 112, 16, 16 });
-	IdleAnimDer.PushBack({ 112, 112, 16, 16 });
-	IdleAnimDer.PushBack({ 128, 112, 16, 16 });
+	IdleAnimDer.PushBack({ 0, 160, 32, 32 });
+	IdleAnimDer.PushBack({ 32, 160, 32, 32 });
+	IdleAnimDer.PushBack({ 64, 160, 32, 32 });
+	IdleAnimDer.PushBack({ 96, 160, 32, 32 });
 	IdleAnimDer.speed = 0.05f;
 
-	IdleAnimIzq.PushBack({ 80, 128, 16, 16 });
-	IdleAnimIzq.PushBack({ 96, 128, 16, 16 });
-	IdleAnimIzq.PushBack({ 112, 128, 16, 16 });
-	IdleAnimIzq.PushBack({ 128, 128, 16, 16 });
+	IdleAnimIzq.PushBack({ 0, 192, 32, 32 });
+	IdleAnimIzq.PushBack({ 32, 192, 32, 32 });
+	IdleAnimIzq.PushBack({ 64, 192, 32, 32 });
+	IdleAnimIzq.PushBack({ 96, 192, 32, 32 });
 	IdleAnimIzq.speed = 0.05f;
 
-	WalkAnimIzq.PushBack({ 0, 128, 16, 16 });
-	WalkAnimIzq.PushBack({ 16, 128, 16, 16 });
-	WalkAnimIzq.PushBack({ 32, 128, 16, 16 });
-	WalkAnimIzq.PushBack({ 48, 128, 16, 16 });
+	WalkAnimIzq.PushBack({ 0, 224, 32, 32 });
+	WalkAnimIzq.PushBack({ 32, 224, 32, 32 });
+	WalkAnimIzq.PushBack({ 64, 224, 32, 32 });
+	WalkAnimIzq.PushBack({ 96, 224, 32, 32 });
 	WalkAnimIzq.speed = 0.15f;
 
 
-	WalkAnimDer.PushBack({ 0, 112, 16, 16 });
-	WalkAnimDer.PushBack({ 16, 112, 16, 16 });
-	WalkAnimDer.PushBack({ 32, 112, 16, 16 });
-	WalkAnimDer.PushBack({ 48, 112, 16, 16 });
+	WalkAnimDer.PushBack({ 0, 256, 32, 32 });
+	WalkAnimDer.PushBack({ 32, 256, 32, 32 });
+	WalkAnimDer.PushBack({ 64, 256, 32, 32 });
+	WalkAnimDer.PushBack({ 96, 256, 32, 32 });
 	WalkAnimDer.speed = 0.15f;
 
 	
-	JumpAnim.PushBack({ 0, 80, 16, 16 });
-	JumpAnim.PushBack({ 16, 80, 16, 16 });
-	JumpAnim.PushBack({ 32, 80, 16, 16 });
-	JumpAnim.PushBack({ 48, 80, 16, 16 });
-	JumpAnim.PushBack({ 64, 80, 16, 16 });
-	JumpAnim.PushBack({ 80, 80, 16, 16 });
-	JumpAnim.PushBack({ 96, 80, 16, 16 });
-	JumpAnim.PushBack({ 112, 80, 16, 16 });
-	JumpAnim.PushBack({ 128, 80, 16, 16 });
-	JumpAnim.PushBack({ 144, 80, 16, 16 });
+	JumpAnim.PushBack({ 0, 96, 32, 32 });
+	JumpAnim.PushBack({ 32, 96, 32, 32 });
+	JumpAnim.PushBack({ 64, 96, 32, 32 });
+	JumpAnim.PushBack({ 96, 96, 32, 32 });
+	JumpAnim.PushBack({ 128, 96, 32, 32 });
+	JumpAnim.PushBack({ 160, 96, 32, 32 });
+	JumpAnim.PushBack({ 192, 96, 32, 32 });
+	JumpAnim.PushBack({ 224, 96, 32, 32 });
+	JumpAnim.PushBack({ 256, 96, 32, 32 });
+	JumpAnim.PushBack({ 288, 96, 32, 32 });
 	JumpAnim.speed = 0.3f;
 	JumpAnim.loop = true;
 
-	JumpAnimIzq.PushBack({ 0, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 16, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 32, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 48, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 64, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 80, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 96, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 112, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 128, 64, 16, 16 });
-	JumpAnimIzq.PushBack({ 144, 64, 16, 16 });
+	JumpAnimIzq.PushBack({ 0, 128, 32, 32 });
+	JumpAnimIzq.PushBack({ 32, 128, 32, 32 });
+	JumpAnimIzq.PushBack({ 64, 128, 32, 32 });
+	JumpAnimIzq.PushBack({ 96, 128, 32, 32 });
+	JumpAnimIzq.PushBack({ 128, 128, 32, 32 });
+	JumpAnimIzq.PushBack({ 160, 128, 32, 32 });
+	JumpAnimIzq.PushBack({ 192, 128, 32, 32 });
+	JumpAnimIzq.PushBack({ 224, 128, 32, 32 });
+	JumpAnimIzq.PushBack({ 256, 128, 32, 32 });
+	JumpAnimIzq.PushBack({ 288, 128, 32, 32 });
 	JumpAnimIzq.speed = 0.3f;
 	JumpAnimIzq.loop = true;
 
-	DeathAnim.PushBack({ 0, 160, 16, 16 });
-	DeathAnim.PushBack({ 16, 160, 16, 16 });
-	DeathAnim.PushBack({ 32, 160, 16, 16 });
-	DeathAnim.PushBack({ 48, 160, 16, 16 });
-	DeathAnim.PushBack({ 64, 160, 16, 16 });
+	DeathAnim.PushBack({ 0, 288, 32, 32 });
+	DeathAnim.PushBack({ 32, 288, 32, 32 });
+	DeathAnim.PushBack({ 64, 288, 32, 32 });
+	DeathAnim.PushBack({ 96, 288, 32, 32 });
+	DeathAnim.PushBack({ 128, 288, 32, 32 });
 	DeathAnim.speed = 0.1f;
 	DeathAnim.loop = false;
 
-	AtackAnimDer.PushBack({ 0, 0, 32, 32 });
-	AtackAnimDer.PushBack({ 32, 0, 32, 32 });
-	AtackAnimDer.PushBack({ 64, 0, 32, 32 });
-	AtackAnimDer.PushBack({ 96, 0, 32, 32 });
-	AtackAnimDer.PushBack({ 128, 0, 32, 32 });
+	AtackAnimDer.PushBack({ 0, 33, 32, 32 });
+	AtackAnimDer.PushBack({ 32, 33, 32, 32 });
+	AtackAnimDer.PushBack({ 64, 33, 32, 32 });
+	AtackAnimDer.PushBack({ 96, 33, 32, 32 });
+	AtackAnimDer.PushBack({ 128, 33, 32, 32 });
 	AtackAnimDer.speed = 0.1f;
 	AtackAnimDer.loop = false;
 
@@ -90,6 +90,14 @@ Player::Player() : Entity(EntityType::PLAYER)
 	AtackAnimIzq.PushBack({ 128, 0, 32, 32 });
 	AtackAnimIzq.speed = 0.1f;
 	AtackAnimIzq.loop = false;
+
+	AtackAnimDer.PushBack({ 0, 32, 32, 32 });
+	AtackAnimDer.PushBack({ 32, 32, 32, 32 });
+	AtackAnimDer.PushBack({ 64, 32, 32, 32 });
+	AtackAnimDer.PushBack({ 96, 32, 32, 32 });
+	AtackAnimDer.PushBack({ 128, 32, 32, 32 });
+	AtackAnimDer.speed = 0.1f;
+	AtackAnimDer.loop = false;
 	
 }
 
@@ -234,16 +242,29 @@ bool Player::Update(float dt)
 	}
 	
 	//ATAQUE BASICO MELÉ
-	if (left = true && app->input->GetMouseButtonDown(1) == KEY_DOWN ) {
-		currentAnimation = &AtackAnimIzq;
+	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimIzq || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimIzq) {
+		currentAnimation = &AtackAnimDer;
 		
 		AtackAnimIzq.Reset();
+		
 	}
-	if (left = false && app->input->GetMouseButtonDown(1) == KEY_DOWN) {
-		currentAnimation = &AtackAnimDer;
+	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimDer || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimDer) {
+		
+		currentAnimation = &AtackAnimIzq;
 
 		AtackAnimDer.Reset();
 	}
+
+
+	if (vel.y == 0 && vel.x == 0 && IsDeath == false && currentAnimation == &WalkAnimIzq) {
+		currentAnimation = &IdleAnimIzq;
+		left = true;
+	}
+	if (vel.y == 0 && vel.x == 0 && IsDeath == false && currentAnimation == &WalkAnimDer) {
+		currentAnimation = &IdleAnimDer;
+		left = false;
+	}
+
 
 	if (hp <= 0) {
 		IsDeath == true;
@@ -256,8 +277,8 @@ bool Player::Update(float dt)
 	}
 	
 
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 24;
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 24;
 
 	currentAnimation->Update();
 	
