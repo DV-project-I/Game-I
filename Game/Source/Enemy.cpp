@@ -25,6 +25,19 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
 	WalkAnimIzq.PushBack({ 125, 0, 25, 25 });
 	WalkAnimIzq.PushBack({ 150, 0, 25, 25 });
 	WalkAnimIzq.PushBack({ 175, 0, 25, 25 });
+	WalkAnimIzq.speed = 0.3f;
+	WalkAnimIzq.loop = true;
+
+	WalkAnimDer.PushBack({ 175, 25, 25, 25 });
+	WalkAnimDer.PushBack({ 150, 25, 25, 25 });
+	WalkAnimDer.PushBack({ 125, 25, 25, 25 });	
+	WalkAnimDer.PushBack({ 100, 25, 25, 25 });
+	WalkAnimDer.PushBack({ 75, 25, 25, 25 });
+	WalkAnimDer.PushBack({ 50, 25, 25, 25 });	
+	WalkAnimDer.PushBack({ 25, 25, 25, 25 });
+	WalkAnimDer.PushBack({ 0, 25, 25, 25 });
+	WalkAnimDer.speed = 0.3f;
+	WalkAnimDer.loop = true;
 	
 }
 
@@ -94,7 +107,14 @@ bool Enemy::Update(float dt) {
 		vel.x = movX;
 	}
 
+	if (vel.x < 0) {
+		currentAnimation = &WalkAnimIzq;
+	}
+	if (vel.x >= 0) {
+		currentAnimation = &WalkAnimDer;
+	}
 	
+	currentAnimation->Update();
 
 	pbody->body->SetLinearVelocity(vel);
 
@@ -102,7 +122,7 @@ bool Enemy::Update(float dt) {
 	this->position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 	
 
-	app->render->DrawTexture(texture, position.x +3 , position.y);
+	app->render->DrawTexture(texture, position.x +3 , position.y, &currentAnimation->GetCurrentFrame());
 	return true;
 }
 
