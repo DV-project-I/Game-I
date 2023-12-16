@@ -57,6 +57,12 @@ public:
 	Animation AtackAnim;
 	Animation DeathAnim;
 	Animation JumpAnimIzq;
+
+	Animation Batfly;
+	Animation BatAtack;
+	Animation TreeWalk;
+	Animation TreeAtack;
+
 };
 
 #endif // __ENEMY_H__
