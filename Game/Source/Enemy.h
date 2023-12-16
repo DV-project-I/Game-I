@@ -50,6 +50,8 @@ public:
 	bool isOnGround;
 	float JUMP_FORCE = 10.0f;
 
+	bool Ataca;
+
 	Animation IdleAnimIzq;
 	Animation IdleAnimDer;
 	Animation WalkAnimIzq;

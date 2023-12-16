@@ -39,20 +39,34 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
 	WalkAnimDer.speed = 0.3f;
 	WalkAnimDer.loop = true;
 	
-	IdleAnimDer.PushBack({ 125, 100, 25, 25 });
+	IdleAnimDer.PushBack({ 150, 100, 25, 25 });
 	IdleAnimDer.speed = 0.3f;
 	IdleAnimDer.loop = true;
-	IdleAnimIzq.PushBack({ 150, 100, 25, 25 });
+	IdleAnimIzq.PushBack({ 175, 100, 25, 25 });
 	IdleAnimIzq.speed = 0.3f;
 	IdleAnimIzq.loop = true;
 
-	AtackAnimIzq.PushBack({ 150, 100, 25, 25 });
+	AtackAnimIzq.PushBack({ 0, 50, 25, 25 });
+	AtackAnimIzq.PushBack({ 25, 50, 25, 25 });
+	AtackAnimIzq.PushBack({ 50, 50, 25, 25 });
+	AtackAnimIzq.PushBack({ 75, 50, 25, 25 });
+	AtackAnimIzq.PushBack({ 100, 50, 25, 25 });	
+	AtackAnimIzq.PushBack({ 125, 50, 25, 25 });
+	AtackAnimIzq.PushBack({ 150, 50, 25, 25 });
+	AtackAnimIzq.PushBack({ 175, 50, 25, 25 });
 	AtackAnimIzq.speed = 0.3f;
-	AtackAnimIzq.loop = true;
+	AtackAnimIzq.loop = false;
 
-	AtackAnimDer.PushBack({ 150, 100, 25, 25 });
+	AtackAnimDer.PushBack({ 175, 75, 25, 25 });
+	AtackAnimDer.PushBack({ 150, 75, 25, 25 });
+	AtackAnimDer.PushBack({ 125, 75, 25, 25 });
+	AtackAnimDer.PushBack({ 100, 75, 25, 25 });	
+	AtackAnimDer.PushBack({ 75, 75, 25, 25 });	
+	AtackAnimDer.PushBack({ 50, 75, 25, 25 });
+	AtackAnimDer.PushBack({ 25, 75, 25, 25 });
+	AtackAnimDer.PushBack({ 0,  75, 25, 25 });
 	AtackAnimDer.speed = 0.3f;
-	AtackAnimDer.loop = true;
+	AtackAnimDer.loop = false;
 }
 
 Enemy::~Enemy() {
@@ -124,14 +138,35 @@ bool Enemy::Update(float dt) {
 
 		movX = (pos.x - this->position.x)/25;
 		vel.x = movX;
+
+		if (pos.x - this->position.x < 20) {
+			Ataca = true;
+		}
 	}
 
-	if (vel.x < 0) {
+	if (vel.x < 0 ) {
 		currentAnimation = &WalkAnimIzq;
 	}
 	if (vel.x > 0) {
 		currentAnimation = &WalkAnimDer;
 	}
+
+	/*if (Ataca = true && vel.x == 0 && currentAnimation == &WalkAnimDer) {
+		currentAnimation = &AtackAnimDer;
+		if (AtackAnimDer.HasFinished()) {			
+			AtackAnimDer.Reset();
+			Ataca = false;
+		}
+	
+	}
+	if (Ataca = true && vel.x == 0 && currentAnimation == &WalkAnimIzq) {
+		currentAnimation = &AtackAnimIzq;
+		if (AtackAnimIzq.HasFinished()) {		
+			AtackAnimIzq.Reset();
+			Ataca = false;			
+		}
+		
+	}*/
 	
 	currentAnimation->Update();
 

@@ -51,10 +51,13 @@ public:
 	float movY;
 	float velY;
 	float acc;
+
 	const float JUMP_INITIAL_VELOCITY = 200.0f;
 	bool isJumping;
 	bool isOnGround;
 	float JUMP_FORCE = 10.0f;
+
+
 
 	Animation IdleAnimIzq;
 	Animation IdleAnimDer;
