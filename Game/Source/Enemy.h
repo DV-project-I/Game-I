@@ -5,8 +5,6 @@
 #include "Point.h"
 #include "SDL/include/SDL.h"
 #include "Animation.h"
-#include "App.h"
-#include "Textures.h"
 
 
 struct SDL_Texture;
@@ -35,11 +33,10 @@ public:
 	const char* texturePath;
 	int hp;
 	SDL_Texture* texture = NULL;
-	SDL_Texture* camino = NULL;
 	Animation* currentAnimation = nullptr;
 	PhysBody* pbody;
 	//int pickCoinFxId;
-	
+
 	PhysBody* ataque;
 
 
@@ -61,10 +58,7 @@ public:
 	Animation DeathAnim;
 	Animation JumpAnimIzq;
 
-	Animation Batfly;
-	Animation BatAtack;
-	Animation TreeWalk;
-	Animation TreeAtack;
+
 
 };
 

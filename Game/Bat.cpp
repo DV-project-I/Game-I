@@ -14,11 +14,11 @@
 Bat::Bat() : Entity(EntityType::BAT)
 {
 	name.Create("bat");
-	IdleAnimDer.PushBack({ 0, 0, 0, 0 });
-	IdleAnimDer.PushBack({ 0, 0, 0, 0 });
-	IdleAnimDer.PushBack({ 0, 0, 0, 0 });
-	IdleAnimDer.PushBack({ 0, 0, 0, 0 });
-	IdleAnimDer.PushBack({ 0, 0, 0, 0 });
+	Batfly.PushBack({ 0, 0, 0, 0 });
+	Batfly.PushBack({ 0, 0, 0, 0 });
+	Batfly.PushBack({ 0, 0, 0, 0 });
+	Batfly.PushBack({ 0, 0, 0, 0 });
+	Batfly.PushBack({ 0, 0, 0, 0 });
 
 }
 
@@ -32,7 +32,7 @@ bool Bat::Awake() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
-	currentAnimation = &IdleAnimDer;
+	currentAnimation = &Batfly;
 
 	return true;
 }

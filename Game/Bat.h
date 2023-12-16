@@ -49,19 +49,9 @@ public:
 	bool isOnGround;
 	float JUMP_FORCE = 10.0f;
 
-	Animation IdleAnimIzq;
-	Animation IdleAnimDer;
-	Animation WalkAnimIzq;
-	Animation WalkAnimDer;
-	Animation JumpAnim;
-	Animation AtackAnim;
-	Animation DeathAnim;
-	Animation JumpAnimIzq;
-
 	Animation Batfly;
 	Animation BatAtack;
-	Animation TreeWalk;
-	Animation TreeAtack;
+
 
 };
 
