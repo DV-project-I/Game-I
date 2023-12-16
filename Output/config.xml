@@ -26,7 +26,7 @@
     <player x="450" y="532" texturepath="Assets/personajes/SpritesheetParca/PARCA3.png"/>
     <item x="400" y="532" texturepath="Assets/personajes/Torrente/Torrente.png"/>
 	<enemy x ="500" y="532" texturepath ="Assets/personajes/Torrente/torrenteSpritesheet.png"/>
-	<bat x ="550" y="532" texturepath ="Assets/personajes/murcielago.png"/>
+	<bat x ="500" y="532" texturepath ="Assets/personajes/murcielago.png"/>
 		 
 
   </scene>

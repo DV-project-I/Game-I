@@ -5,7 +5,6 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Item.h"
-#include "../Bat.h"
 
 struct SDL_Texture;
 
@@ -45,7 +44,6 @@ private:
 	uint windowW, windowH;
 	
 	Enemy* enemy;
-	Bat* bat;
 	PhysBody* pbody;
 };
 
