@@ -17,11 +17,14 @@
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
 	name.Create("enemy");
-	IdleAnimDer.PushBack({ 0, 0, 0, 0 });
-	IdleAnimDer.PushBack({ 0, 0, 0, 0 });
-	IdleAnimDer.PushBack({ 0, 0, 0, 0 });
-	IdleAnimDer.PushBack({ 0, 0, 0, 0 });
-	IdleAnimDer.PushBack({ 0, 0, 0, 0 });
+	WalkAnimIzq.PushBack({ 0, 0, 25, 25 });
+	WalkAnimIzq.PushBack({ 25, 0, 25, 25 });
+	WalkAnimIzq.PushBack({ 50, 0, 25, 25 });
+	WalkAnimIzq.PushBack({ 75, 0, 25, 25 });
+	WalkAnimIzq.PushBack({ 100, 0, 25, 25 });
+	WalkAnimIzq.PushBack({ 125, 0, 25, 25 });
+	WalkAnimIzq.PushBack({ 150, 0, 25, 25 });
+	WalkAnimIzq.PushBack({ 175, 0, 25, 25 });
 	
 }
 
