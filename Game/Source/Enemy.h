@@ -33,6 +33,7 @@ public:
 	const char* texturePath;
 	int hp;
 	SDL_Texture* texture = NULL;
+	SDL_Texture* camino = NULL;
 	Animation* currentAnimation = nullptr;
 	PhysBody* pbody;
 	//int pickCoinFxId;
