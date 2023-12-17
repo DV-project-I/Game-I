@@ -62,7 +62,7 @@ public:
 
 	Animation Batfly;
 	Animation BatAtack;
-
+	Animation DeathBat;
 
 };
 

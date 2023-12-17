@@ -18,13 +18,19 @@
 Bat::Bat() : Entity(EntityType::BAT)
 {
 	name.Create("bat");
-	Batfly.PushBack({ 0, 0, 32, 32 });
-	Batfly.PushBack({ 32, 0, 32, 32 });
-	Batfly.PushBack({ 64, 0, 32, 32 });
-	Batfly.PushBack({ 96, 0, 32, 32 });
+	Batfly.PushBack({ 0, 160, 32, 32 });
+	Batfly.PushBack({ 32, 160, 32, 32 });
+	Batfly.PushBack({ 64, 160, 32, 32 });
+	Batfly.PushBack({ 96, 160, 32, 32 });
 	Batfly.speed = 0.1f;
 	Batfly.loop = true;
 
+	DeathBat.PushBack({ 0, 192, 32, 32 });
+	DeathBat.PushBack({ 32, 192, 32, 32 });
+	DeathBat.PushBack({ 64, 192, 32, 32 });
+	DeathBat.PushBack({ 96, 192, 32, 32 });
+	DeathBat.speed = 0.1f;
+	DeathBat.loop = false;
 }
 
 Bat::~Bat() {
@@ -76,7 +82,7 @@ bool Bat::Update(float dt) {
 	b2Vec2 vel;
 	
 	if (IsDeath == true) {
-		Batfly.loop = false;
+		currentAnimation = &DeathBat;
 		movX = 0;
 		movY = -GRAVITY_Y;
 
@@ -120,9 +126,9 @@ bool Bat::Update(float dt) {
 				}
 			}
 		}
-
+		currentAnimation = &Batfly;
 	}
-	currentAnimation = &Batfly;
+	
 
 	vel.x = movX;
 	vel.y = movY;
@@ -135,7 +141,7 @@ bool Bat::Update(float dt) {
 	this->position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
 
-	app->render->DrawTexture(texture, position.x + 3, position.y, &currentAnimation->GetCurrentFrame());
+	app->render->DrawTexture(texture, position.x + 3, position.y -5, &currentAnimation->GetCurrentFrame());
 	return true;
 
 
