@@ -42,7 +42,7 @@ public:
 	PhysBody* pbody;
 	//int pickCoinFxId;
 
-	SDL_Rect AreaVision;
+	
 
 	PhysBody* ataque;
 

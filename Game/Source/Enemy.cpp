@@ -67,6 +67,9 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
 	AtackAnimDer.PushBack({ 0,  75, 25, 25 });
 	AtackAnimDer.speed = 0.3f;
 	AtackAnimDer.loop = false;
+
+	DeathAnim.PushBack({ 175, 75, 25, 25 });
+	
 }
 
 Enemy::~Enemy() {
@@ -102,11 +105,6 @@ bool Enemy::Start() {
 	pbody->ctype = ColliderType::ENEMY;
 
 	
-	
-	AreaVision.h = 50;
-	AreaVision.w = 100;
-	AreaVision.x = position.x - (AreaVision.w/2);
-	AreaVision.y = position.y - (AreaVision.h/2);
 	//pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
 
@@ -115,74 +113,77 @@ bool Enemy::Start() {
 
 
 bool Enemy::Update(float dt) {
-
 	movX = 0;
 	b2Vec2 vel;
 	vel.y = -GRAVITY_Y;
 
-	iPoint origin = iPoint(this->position.x, this->position.y);
-	iPoint origin2 = iPoint(app->scene->player->position.x, app->scene->player->position.y);
-
-	
-
-	
-	
-	if (position.DistanceTo(app->scene->player->position) <100) {
-			
-	//COSAS DEL PATHFINDING
-	app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
-	// DIBUJAR EL PATH
-	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-		for (uint i = 0; i < path->Count(); ++i)
-		{
-		
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(camino, pos.x, pos.y);
-
-		movX = (pos.x - this->position.x)/25;
-		vel.x = movX;
-
-			if (pos.x - this->position.x < 20) {
-			Ataca = true;
-			}
-		}
+	if (IsDeath == true) {
+		currentAnimation = &DeathAnim;
+		movX = 0;
+		movY = 0;
 
 	}
-	
+	else {
+		
+
+		iPoint origin = iPoint(this->position.x, this->position.y);
+		iPoint origin2 = iPoint(app->scene->player->position.x, app->scene->player->position.y);
+
+
+		if (position.DistanceTo(app->scene->player->position) < 200) {
+
+			//COSAS DEL PATHFINDING
+			app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
+			// DIBUJAR EL PATH
+			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+			for (uint i = 0; i < path->Count(); ++i)
+			{
+
+				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+				app->render->DrawTexture(camino, pos.x, pos.y);
+
+				movX = (pos.x - this->position.x) / 25;
+				vel.x = movX;
+
+			}
+
+		}
+
+		
+
+		if (vel.x < 0) {
+			currentAnimation = &WalkAnimIzq;
+		}
+		else	if (vel.x > 0) {
+			currentAnimation = &WalkAnimDer;
+		}
+		else	if (vel.y == 0 && vel.x == 0 && currentAnimation == &WalkAnimIzq) {
+			currentAnimation = &IdleAnimIzq;
+		}
+		else if (vel.y == 0 && vel.x == 0 && currentAnimation == &WalkAnimDer) {
+			currentAnimation = &IdleAnimDer;
+		}
+
+		if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimDer) {
+			currentAnimation = &AtackAnimDer;
+			if (AtackAnimDer.HasFinished()) {
+				AtackAnimDer.Reset();
+				Ataca = false;
+			}
+
+		}
+		if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimIzq) {
+			currentAnimation = &AtackAnimIzq;
+			if (AtackAnimIzq.HasFinished()) {
+				AtackAnimIzq.Reset();
+				Ataca = false;
+			}
+
+		}
+	}
+
 	vel.x = movX;
 
-	if (vel.x < 0 ) {
-		currentAnimation = &WalkAnimIzq;
-	}else	if (vel.x > 0) {
-		currentAnimation = &WalkAnimDer;
-	}else	if (vel.y == 0 && vel.x == 0 && currentAnimation == &WalkAnimIzq) {
-		currentAnimation = &IdleAnimIzq;
-	}else if (vel.y == 0 && vel.x == 0 && currentAnimation == &WalkAnimDer) {
-		currentAnimation = &IdleAnimDer;
-	}
-
-	if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimDer) {
-		currentAnimation = &AtackAnimDer;
-		if (AtackAnimDer.HasFinished()) {			
-			AtackAnimDer.Reset();
-			Ataca = false;
-		}
-	
-	}
-	if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimIzq) {
-		currentAnimation = &AtackAnimIzq;
-		if (AtackAnimIzq.HasFinished()) {		
-			AtackAnimIzq.Reset();
-			Ataca = false;			
-		}
-		
-	}
-	
-	if (IsDeath == true) {
-		EnemyDeath();
-
-	}
-	
 	currentAnimation->Update();
 
 	pbody->body->SetLinearVelocity(vel);

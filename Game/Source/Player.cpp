@@ -240,10 +240,10 @@ bool Player::Update(float dt)
 		currentAnimation = &AtackAnimDer;
 		pbody->ctype = ColliderType::PLAYERATTACK;
 			
-		if (AtackAnimDer.HasFinished() == true )
+		/*if (AtackAnimDer.HasFinished() == true )
 		{
 			pbody->ctype = ColliderType::PLAYER;
-		}
+		}*/
 		AtackAnimDer.Reset();
 	}
 	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimDer || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimDer) {
@@ -251,10 +251,10 @@ bool Player::Update(float dt)
 		currentAnimation = &AtackAnimIzq;
 		pbody->ctype = ColliderType::PLAYERATTACK;
 
-		if (AtackAnimIzq.HasFinished() == true)
+		/*if (AtackAnimIzq.HasFinished() == true)
 		{
 			pbody->ctype = ColliderType::PLAYER;
-		}
+		}*/
 		AtackAnimIzq.Reset();
 		
 	}
@@ -347,10 +347,8 @@ void Player :: PlayerDeath()
 	
 bool Player::LoadState(pugi::xml_node node) {
 
-	int X = node.child("player").attribute("x").as_int();
-	int Y = node.child("player").attribute("y").as_int();
 
-	SetPosition(X, Y);
+	SetPosition(node.child("player").attribute("x").as_int(), node.child("player").attribute("y").as_int());
 	return true;
 }
 
