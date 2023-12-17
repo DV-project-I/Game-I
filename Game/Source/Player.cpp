@@ -360,24 +360,6 @@ void Player :: PlayerDeath()
 	
 }
 
-	
-bool Player::LoadState(pugi::xml_node node) {
-	int x = node.child("player").attribute("x").as_int();
-	int y = node.child("player").attribute("y").as_int();
-	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
 
-	return true;
-}
-
-
-bool Player::SaveState(pugi::xml_node node) {
-
-	pugi::xml_node PlayerPos = node.append_child("player");
-	PlayerPos.append_attribute("x").set_value(position.x);
-	PlayerPos.append_attribute("y").set_value(position.y);
-
-	return true;
-}
 
 
