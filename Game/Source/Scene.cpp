@@ -157,7 +157,17 @@ bool Scene::LoadState(pugi::xml_node node) {
 	int x = node.child("player").attribute("x").as_int();
 	int y = node.child("player").attribute("y").as_int();
 	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-	player->pbody->body->SetTransform(newPos, pbody->body->GetAngle());
+	player->SetPosition(x, y); 
+
+	int xe = node.child("enemy").attribute("x").as_int();
+	int ye = node.child("enemy").attribute("y").as_int();
+	
+	enemy->SetPosition(xe, ye);
+
+	int xb = node.child("bat").attribute("x").as_int();
+	int yb = node.child("bat").attribute("y").as_int();
+	
+	bat->SetPosition(xb, yb);
 
 	return true;
 }
@@ -169,6 +179,14 @@ bool Scene::SaveState(pugi::xml_node node) {
 	pugi::xml_node PlayerPos = node.append_child("player");
 	PlayerPos.append_attribute("x").set_value(app->scene->player->position.x);
 	PlayerPos.append_attribute("y").set_value(player->position.y);
+
+	pugi::xml_node EnemyPos = node.append_child("enemy");
+	EnemyPos.append_attribute("x").set_value(app->scene->enemy->position.x);
+	EnemyPos.append_attribute("y").set_value(enemy->position.y);
+
+	pugi::xml_node BatPos = node.append_child("bat");
+	BatPos.append_attribute("x").set_value(app->scene->bat->position.x);
+	BatPos.append_attribute("y").set_value(bat->position.y);
 		
 
 	return true;
