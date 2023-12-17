@@ -289,11 +289,15 @@ bool Player::Update(float dt)
 	
 	app->render->DrawTexture(texture, position.x +8, position.y +9, &currentAnimation->GetCurrentFrame());
 
-	if (isOnGround == true && app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isPlayingSound == false || isOnGround == true && app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isPlayingSound == false) {
+	if (isOnGround == true && app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && timertoplay > 31 || isOnGround == true && app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && timertoplay > 31) {
 
+		timertoplay = 0;
+		
 		app->audio->PlayFx(walkingsound, 0);
-		isPlayingSound = true;
+		
 	}
+
+	timertoplay++;
 	
 	
 	return true;
