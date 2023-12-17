@@ -310,6 +310,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
 		currentAnimation = &IdleAnimDer;
+
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
