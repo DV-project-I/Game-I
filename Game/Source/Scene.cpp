@@ -70,7 +70,7 @@ bool Scene::Start()
 	img = app->tex->Load("Assets/Textures/camino.png");
 	
 	//Music is commented so that you can add your own music
-	app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.ogg");
+	app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.wav");
 
 	//Get the size of the window
 	app->win->GetWindowSize(windowW, windowH);
