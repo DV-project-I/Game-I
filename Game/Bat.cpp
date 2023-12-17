@@ -48,6 +48,8 @@ bool Bat::Start() {
 	texture = app->tex->Load(texturePath);
 	camino = app->tex->Load("../Assets/Textures/camino.png");
 
+	batsound = app->audio->LoadFx("Assets/Audio/Fx/flying.wav");
+
 
 
 
@@ -85,32 +87,40 @@ bool Bat::Update(float dt) {
 		iPoint origin = iPoint(this->position.x, this->position.y);
 		iPoint origin2 = iPoint(app->scene->player->position.x, app->scene->player->position.y);
 
-		if (-0.01f < vel.y < 0.01f && -0.01f < vel.x < 0.01f && currentAnimation == &Batfly) {
-			currentAnimation = &Batfly;
-		}
-		if (-0.01f < vel.y < 0.01f && -0.01f < vel.x < 0.01f && currentAnimation == &Batfly) {
-			currentAnimation = &Batfly;
-		}
+		if (position.DistanceTo(app->scene->player->position) < 200) {
 
-		app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
-		// DIBUJAR EL PATH
-		const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-		for (uint i = 0; i < path->Count(); ++i)
-		{
 
-			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-			app->render->DrawTexture(camino, pos.x, pos.y);
+			if (position.DistanceTo(app->scene->player->position) < 150 && timertoplay > 80) {
 
-			movX = (pos.x - this->position.x) / 25;
-			vel.x = movX;
+				app->audio->PlayFx(batsound, 0);
+				timertoplay = 0;
 
-			movY = (pos.y - this->position.y) / 25;
-			vel.y = movY;
+			}
+			timertoplay++;
 
-			if (pos.x - this->position.x < 20) {
-				Ataca = true;
+			
+
+			app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
+			// DIBUJAR EL PATH
+			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+			for (uint i = 0; i < path->Count(); ++i)
+			{
+
+				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+				app->render->DrawTexture(camino, pos.x, pos.y);
+
+				movX = (pos.x - this->position.x) / 25;
+				vel.x = movX;
+
+				movY = (pos.y - this->position.y) / 25;
+				vel.y = movY;
+
+				if (pos.x - this->position.x < 20) {
+					Ataca = true;
+				}
 			}
 		}
+
 	}
 	currentAnimation = &Batfly;
 
@@ -127,6 +137,8 @@ bool Bat::Update(float dt) {
 
 	app->render->DrawTexture(texture, position.x + 3, position.y, &currentAnimation->GetCurrentFrame());
 	return true;
+
+
 }
 
 bool Bat::CleanUp() {

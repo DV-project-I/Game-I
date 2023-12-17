@@ -45,6 +45,9 @@ public:
 
 	PhysBody* ataque;
 
+	uint batsound;
+	float timertoplay;
+
 	bool IsDeath = false;
 	float movX;
 	float movY;
