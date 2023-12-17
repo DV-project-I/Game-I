@@ -166,7 +166,6 @@ bool Enemy::Update(float dt) {
 		}
 
 		
-
 		if (vel.x < 0) {
 			currentAnimation = &WalkAnimIzq;
 		}

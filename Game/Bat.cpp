@@ -109,10 +109,10 @@ bool Bat::Update(float dt) {
 				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 				app->render->DrawTexture(camino, pos.x, pos.y);
 
-				movX = (pos.x - this->position.x) / 25;
+				movX = (pos.x - this->position.x) / 30;
 				vel.x = movX;
 
-				movY = (pos.y - this->position.y) / 25;
+				movY = (pos.y - this->position.y) / 30;
 				vel.y = movY;
 
 				if (pos.x - this->position.x < 20) {
