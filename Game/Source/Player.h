@@ -55,7 +55,10 @@ public:
 	const float JUMP_INITIAL_VELOCITY = 200.0f;
 	bool isJumping;
 	bool isOnGround;
+	bool isPlayingSound;
 	float JUMP_FORCE = 10.0f;
+
+	uint walkingsound;
 
 
 
