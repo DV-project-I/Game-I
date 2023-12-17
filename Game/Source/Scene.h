@@ -36,14 +36,17 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	iPoint GetPLayerPosition();
+
 	Player* player;
 private:
 
 	SDL_Texture* img;
 	float textPosX, textPosY = 0;
 	uint texW, texH;
-	uint windowW, windowH;
-	
+	uint windowW, windowH;	
+	SDL_Texture* mouseTileTex = nullptr;
+
 	Enemy* enemy;
 	Bat* bat;
 	PhysBody* pbody;

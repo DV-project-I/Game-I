@@ -67,7 +67,7 @@ bool Scene::Awake(pugi::xml_node& config)
 bool Scene::Start()
 {
 	// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
-	img = app->tex->Load("Assets/Textures/goldCoin.png");
+	img = app->tex->Load("Assets/Textures/camino.png");
 	
 	//Music is commented so that you can add your own music
 	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
@@ -122,14 +122,13 @@ bool Scene::Update(float dt)
 	
 	app->render->camera.x = (-player->position.x)* app->win->GetScale() +512; /**2 - 3 + app->win->screenSurface->w / 2;*/		
 	app->render->camera.y = (-player->position.y)* app->win->GetScale() + 384;
-
 	iPoint origin = iPoint(player->position.x, player->position.y);
 
-	iPoint origin2 = iPoint(player->position.x +70, player->position.y );
+	iPoint origin2 = iPoint(player->position.x + 70, player->position.y);
 	//If mouse button is pressed modify player position
 	if (app->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
-		
-		app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x,origin.y), app->map->WorldToMap(origin2.x,origin2.y));
+
+		app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
 	}
 
 	// L13: Get the latest calculated path and draw
@@ -139,8 +138,12 @@ bool Scene::Update(float dt)
 		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 		app->render->DrawTexture(img, pos.x, pos.y);
 	}
+
 	/*app -> render -> camera.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	app ->render -> camera.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;*/
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
+	
 	return true;
 }
 
@@ -161,4 +164,8 @@ bool Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+iPoint Scene::GetPLayerPosition() {
+	return player->position;
 }

@@ -91,13 +91,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 	AtackAnimIzq.speed = 0.1f;
 	AtackAnimIzq.loop = false;
 
-	AtackAnimDer.PushBack({ 0, 32, 32, 32 });
-	AtackAnimDer.PushBack({ 32, 32, 32, 32 });
-	AtackAnimDer.PushBack({ 64, 32, 32, 32 });
-	AtackAnimDer.PushBack({ 96, 32, 32, 32 });
-	AtackAnimDer.PushBack({ 128, 32, 32, 32 });
-	AtackAnimDer.speed = 0.1f;
-	AtackAnimDer.loop = false;
+	
 	
 }
 
@@ -244,15 +238,15 @@ bool Player::Update(float dt)
 	//ATAQUE BASICO MELÉ
 	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimIzq || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimIzq) {
 		currentAnimation = &AtackAnimDer;
-		
-		AtackAnimIzq.Reset();
+		AtackAnimDer.Reset();
+	
 		
 	}
 	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimDer || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimDer) {
 		
 		currentAnimation = &AtackAnimIzq;
-
-		AtackAnimDer.Reset();
+		AtackAnimIzq.Reset();
+		
 	}
 
 
@@ -318,6 +312,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	
 
 }
+
 void Player ::SetPosition(int x, int y) {
 	DeathAnim.Reset();
 	position.x = x;

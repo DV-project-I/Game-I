@@ -102,11 +102,11 @@ bool Enemy::Start() {
 	pbody->ctype = ColliderType::ENEMY;
 
 	
-	AreaVision.x = position.x -37;
-	AreaVision.y = position.y -25;
+	
 	AreaVision.h = 50;
-	AreaVision.w = 75;
-
+	AreaVision.w = 100;
+	AreaVision.x = position.x - (AreaVision.w/2);
+	AreaVision.y = position.y - (AreaVision.h/2);
 	//pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
 
@@ -129,11 +129,12 @@ bool Enemy::Update(float dt) {
 		currentAnimation = &IdleAnimDer;
 	}
 
-	/*
-	if (app->scene->player->position.x >= AreaVision.x &&
-		app->scene->player->position.x <= AreaVision.x +AreaVision.w &&
-		app->scene->player->position.y >= AreaVision.y &&
-		app->scene->player->position.y >= AreaVision.y + AreaVision.h) {*/
+	
+	/*if (app->scene->GetPLayerPosition().x >= AreaVision.x &&
+		app->scene->GetPLayerPosition().x <= AreaVision.x +AreaVision.w &&
+		app->scene->GetPLayerPosition().y >= AreaVision.y &&
+		app->scene->GetPLayerPosition().y >= AreaVision.y + AreaVision.h) {*/
+
 	//COSAS DEL PATHFINDING
 	app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
 	// DIBUJAR EL PATH
