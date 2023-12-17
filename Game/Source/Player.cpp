@@ -41,30 +41,30 @@ Player::Player() : Entity(EntityType::PLAYER)
 	WalkAnimDer.speed = 0.15f;
 
 	
-	JumpAnim.PushBack({ 0, 96, 32, 32 });
-	JumpAnim.PushBack({ 32, 96, 32, 32 });
-	JumpAnim.PushBack({ 64, 96, 32, 32 });
-	JumpAnim.PushBack({ 96, 96, 32, 32 });
-	JumpAnim.PushBack({ 128, 96, 32, 32 });
-	JumpAnim.PushBack({ 160, 96, 32, 32 });
-	JumpAnim.PushBack({ 192, 96, 32, 32 });
-	JumpAnim.PushBack({ 224, 96, 32, 32 });
-	JumpAnim.PushBack({ 256, 96, 32, 32 });
-	JumpAnim.PushBack({ 288, 96, 32, 32 });
-	JumpAnim.speed = 0.3f;
+	JumpAnimIzq.PushBack({ 0, 96, 32, 32 });
+	JumpAnimIzq.PushBack({ 32, 96, 32, 32 });
+	JumpAnimIzq.PushBack({ 64, 96, 32, 32 });
+	JumpAnimIzq.PushBack({ 96, 96, 32, 32 });
+	JumpAnimIzq.PushBack({ 128, 96, 32, 32 });
+	JumpAnimIzq.PushBack({ 160, 96, 32, 32 });
+	JumpAnimIzq.PushBack({ 192, 96, 32, 32 });
+	JumpAnimIzq.PushBack({ 224, 96, 32, 32 });
+	JumpAnimIzq.PushBack({ 256, 96, 32, 32 });
+	JumpAnimIzq.PushBack({ 288, 96, 32, 32 });
+	JumpAnimIzq.speed = 0.3f;
 	JumpAnim.loop = true;
 
-	JumpAnimIzq.PushBack({ 0, 128, 32, 32 });
-	JumpAnimIzq.PushBack({ 32, 128, 32, 32 });
-	JumpAnimIzq.PushBack({ 64, 128, 32, 32 });
-	JumpAnimIzq.PushBack({ 96, 128, 32, 32 });
-	JumpAnimIzq.PushBack({ 128, 128, 32, 32 });
-	JumpAnimIzq.PushBack({ 160, 128, 32, 32 });
-	JumpAnimIzq.PushBack({ 192, 128, 32, 32 });
-	JumpAnimIzq.PushBack({ 224, 128, 32, 32 });
-	JumpAnimIzq.PushBack({ 256, 128, 32, 32 });
-	JumpAnimIzq.PushBack({ 288, 128, 32, 32 });
-	JumpAnimIzq.speed = 0.3f;
+	JumpAnim.PushBack({ 0, 128, 32, 32 });
+	JumpAnim.PushBack({ 32, 128, 32, 32 });
+	JumpAnim.PushBack({ 64, 128, 32, 32 });
+	JumpAnim.PushBack({ 96, 128, 32, 32 });
+	JumpAnim.PushBack({ 128, 128, 32, 32 });
+	JumpAnim.PushBack({ 160, 128, 32, 32 });
+	JumpAnim.PushBack({ 192, 128, 32, 32 });
+	JumpAnim.PushBack({ 224, 128, 32, 32 });
+	JumpAnim.PushBack({ 256, 128, 32, 32 });
+	JumpAnim.PushBack({ 288, 128, 32, 32 });
+	JumpAnim.speed = 0.3f;
 	JumpAnimIzq.loop = true;
 
 	DeathAnim.PushBack({ 0, 288, 32, 32 });
@@ -241,21 +241,26 @@ bool Player::Update(float dt)
 		currentAnimation = &AtackAnimDer;
 		pbody->ctype = ColliderType::PLAYERATTACK;
 			
-		/*if (AtackAnimDer.HasFinished() == true )
+		if (AtackAnimDer.HasFinished() == true)
 		{
 			pbody->ctype = ColliderType::PLAYER;
-		}*/
+			timerataque = 0;
+		}
+		timerataque++;
 		AtackAnimDer.Reset();
 	}
 	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimDer || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimDer) {
 		
+		
 		currentAnimation = &AtackAnimIzq;
 		pbody->ctype = ColliderType::PLAYERATTACK;
 
-		/*if (AtackAnimIzq.HasFinished() == true)
+		if (AtackAnimDer.HasFinished() == true)
 		{
 			pbody->ctype = ColliderType::PLAYER;
-		}*/
+			timerataque = 0;
+		}
+		timerataque++;
 		AtackAnimIzq.Reset();
 		
 	}
@@ -357,9 +362,11 @@ void Player :: PlayerDeath()
 
 	
 bool Player::LoadState(pugi::xml_node node) {
+	int x = node.child("player").attribute("x").as_int();
+	int y = node.child("player").attribute("y").as_int();
+	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
 
-
-	SetPosition(node.child("player").attribute("x").as_int(), node.child("player").attribute("y").as_int());
 	return true;
 }
 

@@ -63,7 +63,7 @@ public:
 
 	uint walkingsound;
 
-
+	float timerataque;
 
 	Animation IdleAnimIzq;
 	Animation IdleAnimDer;

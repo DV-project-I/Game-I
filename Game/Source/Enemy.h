@@ -32,6 +32,7 @@ public:
 	void SetPosition(int x, int y);
 
 
+
 public:
 	float speed;
 	const char* texturePath;
