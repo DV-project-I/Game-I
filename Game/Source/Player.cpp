@@ -345,5 +345,23 @@ void Player :: PlayerDeath()
 }
 
 	
+bool Player::LoadState(pugi::xml_node node) {
+
+	int X = node.child("player").attribute("x").as_int();
+	int Y = node.child("player").attribute("y").as_int();
+
+	SetPosition(X, Y);
+	return true;
+}
+
+
+bool Player::SaveState(pugi::xml_node node) {
+
+	pugi::xml_node PlayerPos = node.append_child("player");
+	PlayerPos.append_attribute("x").set_value(position.x);
+	PlayerPos.append_attribute("y").set_value(position.y);
+
+	return true;
+}
 
 
