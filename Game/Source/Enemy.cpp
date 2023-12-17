@@ -116,25 +116,19 @@ bool Enemy::Start() {
 
 bool Enemy::Update(float dt) {
 
+	movX = 0;
 	b2Vec2 vel;
 	vel.y = -GRAVITY_Y;
 
 	iPoint origin = iPoint(this->position.x, this->position.y);
 	iPoint origin2 = iPoint(app->scene->player->position.x, app->scene->player->position.y);
 
-	if (-0.01f < vel.y < 0.01f && -0.01f < vel.x < 0.01f && currentAnimation == &WalkAnimIzq) {
-		currentAnimation = &IdleAnimIzq;
-	}
-	if (-0.01f < vel.y < 0.01f && -0.01f < vel.x < 0.01f && currentAnimation == &WalkAnimDer) {
-		currentAnimation = &IdleAnimDer;
-	}
+	
 
 	
-	/*if (app->scene->GetPLayerPosition().x >= AreaVision.x &&
-		app->scene->GetPLayerPosition().x <= AreaVision.x +AreaVision.w &&
-		app->scene->GetPLayerPosition().y >= AreaVision.y &&
-		app->scene->GetPLayerPosition().y >= AreaVision.y + AreaVision.h) {*/
-
+	
+	if (position.DistanceTo(app->scene->player->position) <100) {
+			
 	//COSAS DEL PATHFINDING
 	app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
 	// DIBUJAR EL PATH
@@ -153,18 +147,21 @@ bool Enemy::Update(float dt) {
 			}
 		}
 
-	/*}*/
+	}
 	
-	
+	vel.x = movX;
 
 	if (vel.x < 0 ) {
 		currentAnimation = &WalkAnimIzq;
-	}
-	if (vel.x > 0) {
+	}else	if (vel.x > 0) {
 		currentAnimation = &WalkAnimDer;
+	}else	if (vel.y == 0 && vel.x == 0 && currentAnimation == &WalkAnimIzq) {
+		currentAnimation = &IdleAnimIzq;
+	}else if (vel.y == 0 && vel.x == 0 && currentAnimation == &WalkAnimDer) {
+		currentAnimation = &IdleAnimDer;
 	}
 
-	/*if (Ataca = true && vel.x == 0 && currentAnimation == &WalkAnimDer) {
+	if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimDer) {
 		currentAnimation = &AtackAnimDer;
 		if (AtackAnimDer.HasFinished()) {			
 			AtackAnimDer.Reset();
@@ -172,16 +169,20 @@ bool Enemy::Update(float dt) {
 		}
 	
 	}
-	if (Ataca = true && vel.x == 0 && currentAnimation == &WalkAnimIzq) {
+	if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimIzq) {
 		currentAnimation = &AtackAnimIzq;
 		if (AtackAnimIzq.HasFinished()) {		
 			AtackAnimIzq.Reset();
 			Ataca = false;			
 		}
 		
-	}*/
+	}
 	
-	app->render->DrawRectangle(AreaVision, 0, 0, 255, 0);
+	if (IsDeath == true) {
+		EnemyDeath();
+
+	}
+	
 	currentAnimation->Update();
 
 	pbody->body->SetLinearVelocity(vel);
@@ -212,11 +213,33 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
-	case ColliderType::INSTAKILL:
-		
+	case ColliderType::INSTAKILL:		
 		LOG("Collision INSTAKILL");
+		break;
+	case ColliderType::PLAYERATTACK:
+		IsDeath == true;
+		LOG("Collision PLAYERATTACK");
 		break;
 	}
 
+
+}
+void Enemy::SetPosition(int x, int y) {
+	DeathAnim.Reset();
+	position.x = x;
+	position.y = y;
+	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
+
+	IsDeath = false;
+
+}
+
+void Enemy::EnemyDeath()
+{
+	currentAnimation = &DeathAnim;
+	if (currentAnimation->HasFinished() == true) {
+		SetPosition(parameters.attribute("x").as_int(), parameters.attribute("y").as_int());
+	}
 
 }

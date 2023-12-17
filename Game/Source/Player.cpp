@@ -238,13 +238,23 @@ bool Player::Update(float dt)
 	//ATAQUE BASICO MELÉ
 	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimIzq || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimIzq) {
 		currentAnimation = &AtackAnimDer;
+		pbody->ctype = ColliderType::PLAYERATTACK;
+			
+		if (AtackAnimDer.HasFinished() == true )
+		{
+			pbody->ctype = ColliderType::PLAYER;
+		}
 		AtackAnimDer.Reset();
-	
-		
 	}
 	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimDer || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimDer) {
 		
 		currentAnimation = &AtackAnimIzq;
+		pbody->ctype = ColliderType::PLAYERATTACK;
+
+		if (AtackAnimIzq.HasFinished() == true)
+		{
+			pbody->ctype = ColliderType::PLAYER;
+		}
 		AtackAnimIzq.Reset();
 		
 	}
