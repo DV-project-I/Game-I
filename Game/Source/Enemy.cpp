@@ -101,6 +101,12 @@ bool Enemy::Start() {
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
+	
+	AreaVision.x = position.x -37;
+	AreaVision.y = position.y -25;
+	AreaVision.h = 50;
+	AreaVision.w = 75;
+
 	//pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
 
@@ -116,22 +122,24 @@ bool Enemy::Update(float dt) {
 	iPoint origin = iPoint(this->position.x, this->position.y);
 	iPoint origin2 = iPoint(app->scene->player->position.x, app->scene->player->position.y);
 
-	if (vel.y == 0 && vel.x == 0 && currentAnimation == &WalkAnimIzq) {
+	if (-0.01f < vel.y < 0.01f && -0.01f < vel.x < 0.01f && currentAnimation == &WalkAnimIzq) {
 		currentAnimation = &IdleAnimIzq;
 	}
-	if (vel.y == 0 && vel.x == 0 && currentAnimation == &WalkAnimDer) {
+	if (-0.01f < vel.y < 0.01f && -0.01f < vel.x < 0.01f && currentAnimation == &WalkAnimDer) {
 		currentAnimation = &IdleAnimDer;
 	}
 
-	
-	
+	/*
+	if (app->scene->player->position.x >= AreaVision.x &&
+		app->scene->player->position.x <= AreaVision.x +AreaVision.w &&
+		app->scene->player->position.y >= AreaVision.y &&
+		app->scene->player->position.y >= AreaVision.y + AreaVision.h) {*/
 	//COSAS DEL PATHFINDING
 	app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
-	
 	// DIBUJAR EL PATH
 	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-	for (uint i = 0; i < path->Count(); ++i)
-	{
+		for (uint i = 0; i < path->Count(); ++i)
+		{
 		
 		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 		app->render->DrawTexture(camino, pos.x, pos.y);
@@ -139,10 +147,14 @@ bool Enemy::Update(float dt) {
 		movX = (pos.x - this->position.x)/25;
 		vel.x = movX;
 
-		if (pos.x - this->position.x < 20) {
+			if (pos.x - this->position.x < 20) {
 			Ataca = true;
+			}
 		}
-	}
+
+	/*}*/
+	
+	
 
 	if (vel.x < 0 ) {
 		currentAnimation = &WalkAnimIzq;
@@ -168,6 +180,7 @@ bool Enemy::Update(float dt) {
 		
 	}*/
 	
+	app->render->DrawRectangle(AreaVision, 0, 0, 255, 0);
 	currentAnimation->Update();
 
 	pbody->body->SetLinearVelocity(vel);
