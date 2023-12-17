@@ -15,6 +15,8 @@ Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
 	
+	hp = 10;
+
 	IdleAnimDer.PushBack({ 0, 160, 32, 32 });
 	IdleAnimDer.PushBack({ 32, 160, 32, 32 });
 	IdleAnimDer.PushBack({ 64, 160, 32, 32 });
@@ -127,7 +129,7 @@ bool Player::Start() {
 	ataque = app->physics->CreateRectangle(0, 0, 8, 16, bodyType::STATIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ITEM;
-	//pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
+	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
 
 	return true;
@@ -240,13 +242,11 @@ bool Player::Update(float dt)
 	
 	//ATAQUE BASICO MELÉ
 	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimIzq || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimIzq || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &JumpAnimIzq ) {
-		currentAnimation = &AtackAnimDer;
-		pbody->height = 16;		
+		currentAnimation = &AtackAnimDer;	
 		pbody->ctype = ColliderType::PLAYERATTACK;
 			
 		if (AtackAnimDer.HasFinished() == true)
-		{
-			pbody->height = 8;
+		{			
 			pbody->ctype = ColliderType::PLAYER;
 			AtackAnimDer.Reset();
 			
@@ -256,12 +256,10 @@ bool Player::Update(float dt)
 	}
 	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimDer || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimDer || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &JumpAnim) {
 		currentAnimation = &AtackAnimIzq;
-		pbody->height = 16;
 		pbody->ctype = ColliderType::PLAYERATTACK;
 
-		if (AtackAnimDer.HasFinished() == true)
+		if (AtackAnimIzq.HasFinished() == true)
 		{
-			pbody->height = 8;
 			pbody->ctype = ColliderType::PLAYER;
 			AtackAnimIzq.Reset();
 			
@@ -283,7 +281,7 @@ bool Player::Update(float dt)
 
 
 	if (hp <= 0) {
-		IsDeath == true;
+		IsDeath = true;
 	}
 
 
@@ -341,6 +339,12 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		IsDeath = true;
 		LOG("Collision INSTAKILL");
 		break;
+	case ColliderType::ENEMY:
+		hp --;
+		app->audio->PlayFx(pickCoinFxId);
+		LOG("Collision ENEMY");
+		break;
+
 	}
 	
 
@@ -361,11 +365,11 @@ void Player :: PlayerDeath()
 {			
 	currentAnimation = &DeathAnim;
 	if (currentAnimation->HasFinished() == true) {		
-		SetPosition(parameters.attribute("x").as_int(), parameters.attribute("y").as_int());		
+		SetPosition(parameters.attribute("x").as_int(), parameters.attribute("y").as_int());
+		hp = 10;
 	}
 	
 }
-
 
 
 

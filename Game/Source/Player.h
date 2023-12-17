@@ -35,15 +35,15 @@ public:
 public:
 	float speed;
 	const char* texturePath;
-	int hp;
+	int hp = 10;
 	SDL_Texture* texture = NULL;
 	Animation* currentAnimation = nullptr;
 	PhysBody* pbody;
 	PhysBody* ataque;
 
-	//int pickCoinFxId;
+	int pickCoinFxId;
 
-	
+	int patata = 0;
 	bool left;
 	bool God;
 	bool IsDeath = false;
