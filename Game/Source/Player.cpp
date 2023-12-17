@@ -114,6 +114,7 @@ bool Player::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
+	walkingsound = app->audio->LoadFx("Assets/Audio/Fx/walking.wav");
 
 
 	hp = 10;
@@ -287,6 +288,12 @@ bool Player::Update(float dt)
 	currentAnimation->Update();
 	
 	app->render->DrawTexture(texture, position.x +8, position.y +9, &currentAnimation->GetCurrentFrame());
+
+	if (isOnGround == true && app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && isPlayingSound == false || isOnGround == true && app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && isPlayingSound == false) {
+
+		app->audio->PlayFx(walkingsound, 0);
+		isPlayingSound = true;
+	}
 	
 	
 	return true;
