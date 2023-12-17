@@ -27,7 +27,7 @@
     <item x="400" y="532" texturepath="Assets/personajes/Torrente/Torrente.png"/>
 	<enemy x ="272" y="672" texturepath ="Assets/personajes/Torrente/torrenteSpritesheet.png"/>
 	<bat x ="1008" y="1104" texturepath ="Assets/personajes/MurcielagoYArbol.png"/>
-	<bat1 x ="1008" y="1104" texturepath ="Assets/personajes/MurcielagoYArbol.png"/>
+	<bat1 x ="1056" y="640" texturepath ="Assets/personajes/MurcielagoYArbol.png"/>
 	<bat2 x ="1008" y="1104" texturepath ="Assets/personajes/MurcielagoYArbol.png"/>
 		 
 

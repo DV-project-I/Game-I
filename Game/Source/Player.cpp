@@ -144,6 +144,8 @@ bool CheckCollision(const SDL_Rect& rect1, const SDL_Rect& rect2) {
 
 bool Player::Update(float dt)
 {
+	
+
 	movX = 0;
 	
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
@@ -237,31 +239,35 @@ bool Player::Update(float dt)
 	}
 	
 	//ATAQUE BASICO MELÉ
-	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimIzq || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimIzq) {
+	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimIzq || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimIzq || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &JumpAnimIzq ) {
 		currentAnimation = &AtackAnimDer;
+		pbody->height = 16;		
 		pbody->ctype = ColliderType::PLAYERATTACK;
 			
 		if (AtackAnimDer.HasFinished() == true)
 		{
+			pbody->height = 8;
 			pbody->ctype = ColliderType::PLAYER;
-			timerataque = 0;
+			AtackAnimDer.Reset();
+			
 		}
 		
-		AtackAnimDer.Reset();
+		
 	}
-	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimDer || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimDer) {
-		
-		
+	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimDer || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimDer || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &JumpAnim) {
 		currentAnimation = &AtackAnimIzq;
+		pbody->height = 16;
 		pbody->ctype = ColliderType::PLAYERATTACK;
 
 		if (AtackAnimDer.HasFinished() == true)
 		{
+			pbody->height = 8;
 			pbody->ctype = ColliderType::PLAYER;
-			timerataque = 0;
+			AtackAnimIzq.Reset();
+			
 		}
 	
-		AtackAnimIzq.Reset();
+		
 		
 	}
 
