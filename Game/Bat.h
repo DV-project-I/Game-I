@@ -27,6 +27,9 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
+	void BatDeath();
+
+	void SetPosition(int x, int y);
 
 public:
 	float speed;
@@ -42,7 +45,7 @@ public:
 
 	PhysBody* ataque;
 
-
+	bool IsDeath = false;
 	float movX;
 	float movY;
 	float velY;

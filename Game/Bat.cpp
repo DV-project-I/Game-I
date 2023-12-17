@@ -73,40 +73,50 @@ bool Bat::Update(float dt) {
 
 	b2Vec2 vel;
 	
+	if (IsDeath == true) {
+		Batfly.loop = false;
+		movX = 0;
+		movY = -GRAVITY_Y;
 
-	iPoint origin = iPoint(this->position.x, this->position.y);
-	iPoint origin2 = iPoint(app->scene->player->position.x, app->scene->player->position.y);
-
-	if (-0.01f < vel.y < 0.01f && -0.01f < vel.x < 0.01f && currentAnimation == &Batfly) {
-		currentAnimation = &Batfly;
 	}
-	if (-0.01f < vel.y < 0.01f && -0.01f < vel.x < 0.01f && currentAnimation == &Batfly) {
-		currentAnimation = &Batfly;
-	}
+	else {
 
-	app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
-	// DIBUJAR EL PATH
-	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-	for (uint i = 0; i < path->Count(); ++i)
-	{
 
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(camino, pos.x, pos.y);
+		iPoint origin = iPoint(this->position.x, this->position.y);
+		iPoint origin2 = iPoint(app->scene->player->position.x, app->scene->player->position.y);
 
-		movX = (pos.x - this->position.x) / 25;
-		vel.x = movX;
+		if (-0.01f < vel.y < 0.01f && -0.01f < vel.x < 0.01f && currentAnimation == &Batfly) {
+			currentAnimation = &Batfly;
+		}
+		if (-0.01f < vel.y < 0.01f && -0.01f < vel.x < 0.01f && currentAnimation == &Batfly) {
+			currentAnimation = &Batfly;
+		}
 
-		movY = (pos.y - this->position.y) / 25;
-		vel.y = movY;
+		app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
+		// DIBUJAR EL PATH
+		const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+		for (uint i = 0; i < path->Count(); ++i)
+		{
 
-		if (pos.x - this->position.x < 20) {
-			Ataca = true;
+			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			app->render->DrawTexture(camino, pos.x, pos.y);
+
+			movX = (pos.x - this->position.x) / 25;
+			vel.x = movX;
+
+			movY = (pos.y - this->position.y) / 25;
+			vel.y = movY;
+
+			if (pos.x - this->position.x < 20) {
+				Ataca = true;
+			}
 		}
 	}
-
 	currentAnimation = &Batfly;
 
-	app->render->DrawRectangle(AreaVision, 0, 0, 255, 0);
+	vel.x = movX;
+	vel.y = movY;
+
 	currentAnimation->Update();
 
 	pbody->body->SetLinearVelocity(vel);
@@ -141,7 +151,29 @@ void Bat::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 		LOG("Collision INSTAKILL");
 		break;
+	case ColliderType::PLAYERATTACK:
+		IsDeath = true;
+		LOG("Collision PLAYERATTACK");
+		break;
+	}
 	}
 
+void Bat::SetPosition(int x, int y) {
+	position.x = x;
+	position.y = y;
+	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	pbody->body->SetTransform(newPos, pbody->body->GetAngle());
+
+	IsDeath = false;
 
 }
+
+void Bat::BatDeath()
+{
+	Batfly.loop = false;
+	
+
+}
+
+
+
