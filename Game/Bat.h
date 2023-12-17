@@ -33,9 +33,12 @@ public:
 	const char* texturePath;
 	int hp;
 	SDL_Texture* texture = NULL;
+	SDL_Texture* camino = NULL;
 	Animation* currentAnimation = nullptr;
 	PhysBody* pbody;
 	//int pickCoinFxId;
+
+	SDL_Rect AreaVision;
 
 	PhysBody* ataque;
 
@@ -48,6 +51,8 @@ public:
 	bool isJumping;
 	bool isOnGround;
 	float JUMP_FORCE = 10.0f;
+
+	bool Ataca;
 
 	Animation Batfly;
 	Animation BatAtack;

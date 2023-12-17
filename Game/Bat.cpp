@@ -10,6 +10,10 @@
 #include "../Physics.h"
 #include "../Animation.h"
 #include "../Pathfinding.h"
+#include "../Player.h"
+#include "../Map.h"
+#include "../Entity.h"
+
 
 Bat::Bat() : Entity(EntityType::BAT)
 {
@@ -42,6 +46,7 @@ bool Bat::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
+	camino = app->tex->Load("../Assets/Textures/camino.png");
 
 
 
@@ -55,6 +60,10 @@ bool Bat::Start() {
 
 	//pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
+	AreaVision.h = 50;
+	AreaVision.w = 100;
+	AreaVision.x = position.x - (AreaVision.w / 2);
+	AreaVision.y = position.y - (AreaVision.h / 2);
 
 	return true;
 }
@@ -62,11 +71,49 @@ bool Bat::Start() {
 
 bool Bat::Update(float dt) {
 
+	b2Vec2 vel;
+	
 
+	iPoint origin = iPoint(this->position.x, this->position.y);
+	iPoint origin2 = iPoint(app->scene->player->position.x, app->scene->player->position.y);
 
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+	if (-0.01f < vel.y < 0.01f && -0.01f < vel.x < 0.01f && currentAnimation == &Batfly) {
+		currentAnimation = &Batfly;
+	}
+	if (-0.01f < vel.y < 0.01f && -0.01f < vel.x < 0.01f && currentAnimation == &Batfly) {
+		currentAnimation = &Batfly;
+	}
+
+	app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
+	// DIBUJAR EL PATH
+	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
+	for (uint i = 0; i < path->Count(); ++i)
+	{
+
+		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+		app->render->DrawTexture(camino, pos.x, pos.y);
+
+		movX = (pos.x - this->position.x) / 25;
+		vel.x = movX;
+
+		movY = (pos.y - this->position.y) / 25;
+		vel.y = movY;
+
+		if (pos.x - this->position.x < 20) {
+			Ataca = true;
+		}
+	}
+
+	currentAnimation = &Batfly;
+
+	app->render->DrawRectangle(AreaVision, 0, 0, 255, 0);
 	currentAnimation->Update();
+
+	pbody->body->SetLinearVelocity(vel);
+
+	this->position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
+	this->position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+
 
 	app->render->DrawTexture(texture, position.x + 3, position.y, &currentAnimation->GetCurrentFrame());
 	return true;
