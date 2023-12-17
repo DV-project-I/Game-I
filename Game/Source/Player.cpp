@@ -246,7 +246,7 @@ bool Player::Update(float dt)
 			pbody->ctype = ColliderType::PLAYER;
 			timerataque = 0;
 		}
-		timerataque++;
+		
 		AtackAnimDer.Reset();
 	}
 	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimDer || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimDer) {
@@ -260,7 +260,7 @@ bool Player::Update(float dt)
 			pbody->ctype = ColliderType::PLAYER;
 			timerataque = 0;
 		}
-		timerataque++;
+	
 		AtackAnimIzq.Reset();
 		
 	}

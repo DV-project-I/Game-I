@@ -80,11 +80,12 @@ bool Bat::Start() {
 bool Bat::Update(float dt) {
 
 	b2Vec2 vel;
-	
+	movX = 0;
+	movY = 0;
 	if (IsDeath == true) {
 		currentAnimation = &DeathBat;
 		movX = 0;
-		movY = -GRAVITY_Y;
+		movY = -GRAVITY_Y + 25.2f;
 
 	}
 	else {
@@ -93,7 +94,7 @@ bool Bat::Update(float dt) {
 		iPoint origin = iPoint(this->position.x, this->position.y);
 		iPoint origin2 = iPoint(app->scene->player->position.x, app->scene->player->position.y);
 
-		if (position.DistanceTo(app->scene->player->position) < 200) {
+		if (position.DistanceTo(app->scene->player->position) < 150) {
 
 
 			if (position.DistanceTo(app->scene->player->position) < 150 && timertoplay > 80) {

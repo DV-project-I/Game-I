@@ -122,7 +122,7 @@ bool Enemy::Start() {
 bool Enemy::Update(float dt) {
 	movX = 0;
 	b2Vec2 vel;
-	vel.y = -GRAVITY_Y;
+	vel.y = -GRAVITY_Y - 25.2f;
 
 	if (IsDeath == true) {
 		currentAnimation = &DeathAnim;
@@ -137,7 +137,7 @@ bool Enemy::Update(float dt) {
 		iPoint origin2 = iPoint(app->scene->player->position.x, app->scene->player->position.y);
 
 
-		if (position.DistanceTo(app->scene->player->position) < 200) {
+		if (position.DistanceTo(app->scene->player->position) < 120) {
 
 
 			if (position.DistanceTo(app->scene->player->position) < 150 && timertoplay > 500) {
@@ -234,7 +234,8 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
-	case ColliderType::INSTAKILL:		
+	case ColliderType::INSTAKILL:
+		IsDeath = true;
 		LOG("Collision INSTAKILL");
 		break;
 	case ColliderType::PLAYERATTACK:

@@ -33,11 +33,7 @@ bool Scene::Awake(pugi::xml_node& config)
 	
 	// iterate all objects in the scene
 	// Check https://pugixml.org/docs/quickstart.html#access
-	for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
-	{
-		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-		item->parameters = itemNode;
-	}
+
 
 	if (config.child("player")) {
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
@@ -52,6 +48,17 @@ bool Scene::Awake(pugi::xml_node& config)
 	if (config.child("bat")) {
 		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
 		bat->parameters = config.child("bat");
+	}
+
+	if (config.child("bat1")) {
+		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
+		bat->parameters = config.child("bat1");
+	}
+
+
+	if (config.child("bat2")) {
+		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
+		bat->parameters = config.child("bat2");
 	}
 
 	if (config.child("map")) {
@@ -104,7 +111,7 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	// Renders the image in the center of the screen 
-	app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
+
 	float camSpeed = 0.25f; 
 
 	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
