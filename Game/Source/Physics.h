@@ -29,7 +29,8 @@ enum class ColliderType {
 	PLATFORM, 
 	UNKNOWN,
 	INSTAKILL,
-	ENEMY
+	ENEMY,
+	PLAYERATTACK
 	// ..
 };
 
