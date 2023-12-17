@@ -99,6 +99,8 @@ bool Enemy::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 	camino = app->tex->Load("../Assets/Textures/camino.png");
+	torrentesound = app->audio->LoadFx("Assets/Audio/Fx/torrente.wav");
+	torrentesound2 = app->audio->LoadFx("Assets/Audio/Fx/punchtorrente.wav");
 	
 	
 
@@ -137,6 +139,15 @@ bool Enemy::Update(float dt) {
 
 		if (position.DistanceTo(app->scene->player->position) < 200) {
 
+
+			if (position.DistanceTo(app->scene->player->position) < 150 && timertoplay > 500) {
+
+				app->audio->PlayFx(torrentesound, 0);
+				timertoplay = 0;
+
+			}
+			timertoplay++;
+
 			//COSAS DEL PATHFINDING
 			app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
 			// DIBUJAR EL PATH
@@ -170,7 +181,10 @@ bool Enemy::Update(float dt) {
 		}
 
 		if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimDer) {
+			
 			currentAnimation = &AtackAnimDer;
+			app->audio->PlayFx(torrentesound2, 0);
+			
 			if (AtackAnimDer.HasFinished()) {
 				AtackAnimDer.Reset();
 				Ataca = false;
@@ -179,6 +193,8 @@ bool Enemy::Update(float dt) {
 		}
 		if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimIzq) {
 			currentAnimation = &AtackAnimIzq;
+			app->audio->PlayFx(torrentesound2, 0);
+
 			if (AtackAnimIzq.HasFinished()) {
 				AtackAnimIzq.Reset();
 				Ataca = false;

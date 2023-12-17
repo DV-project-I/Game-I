@@ -42,7 +42,10 @@ public:
 	PhysBody* pbody;
 	//int pickCoinFxId;
 
-	
+	float timertoplay;
+
+	uint torrentesound;
+	uint torrentesound2;
 
 	PhysBody* ataque;
 
