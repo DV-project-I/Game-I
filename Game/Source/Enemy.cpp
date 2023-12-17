@@ -164,7 +164,11 @@ bool Enemy::Update(float dt) {
 			}
 
 		}
-
+		for (uint i = 0; i < path->Count(); ++i)
+		{
+			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			app->render->DrawTexture(pathTexture, pos.x, pos.y, false);
+		}
 		
 		if (vel.x < 0) {
 			currentAnimation = &WalkAnimIzq;
