@@ -122,25 +122,8 @@ bool Scene::Update(float dt)
 	
 	app->render->camera.x = (-player->position.x)* app->win->GetScale() +512; /**2 - 3 + app->win->screenSurface->w / 2;*/		
 	app->render->camera.y = (-player->position.y)* app->win->GetScale() + 384;
-	iPoint origin = iPoint(player->position.x, player->position.y);
+	
 
-	iPoint origin2 = iPoint(player->position.x + 70, player->position.y);
-	//If mouse button is pressed modify player position
-	if (app->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
-
-		app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
-	}
-
-	// L13: Get the latest calculated path and draw
-	const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-	for (uint i = 0; i < path->Count(); ++i)
-	{
-		iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-		app->render->DrawTexture(img, pos.x, pos.y);
-	}
-
-	/*app -> render -> camera.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	app ->render -> camera.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;*/
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
 	
@@ -168,4 +151,25 @@ bool Scene::CleanUp()
 
 iPoint Scene::GetPLayerPosition() {
 	return player->position;
+}
+bool Scene::LoadState(pugi::xml_node node) {
+
+	int x = node.child("player").attribute("x").as_int();
+	int y = node.child("player").attribute("y").as_int();
+	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	player->pbody->body->SetTransform(newPos, pbody->body->GetAngle());
+
+	return true;
+}
+
+
+
+bool Scene::SaveState(pugi::xml_node node) {
+
+	pugi::xml_node PlayerPos = node.append_child("player");
+	PlayerPos.append_attribute("x").set_value(app->scene->player->position.x);
+	PlayerPos.append_attribute("y").set_value(player->position.y);
+		
+
+	return true;
 }

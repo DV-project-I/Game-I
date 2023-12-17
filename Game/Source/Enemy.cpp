@@ -156,9 +156,9 @@ bool Enemy::Update(float dt) {
 			{
 
 				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-				app->render->DrawTexture(camino, pos.x, pos.y);
+				app->render->DrawTexture(camino, pos.x, pos.y, false);
 
-				movX = (pos.x - this->position.x) / 25;
+				movX = (pos.x - this->position.x)/25 ;
 				vel.x = movX;
 
 			}
