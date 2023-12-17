@@ -68,8 +68,13 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
 	AtackAnimDer.speed = 0.3f;
 	AtackAnimDer.loop = false;
 
-	DeathAnim.PushBack({ 175, 75, 25, 25 });
-	
+	DeathAnim.PushBack({ 0, 100, 25, 25 });
+	DeathAnim.PushBack({ 25, 100, 25, 25 });
+	DeathAnim.PushBack({ 50, 100, 25, 25 });
+	DeathAnim.PushBack({ 75, 100, 30, 25 });
+	DeathAnim.PushBack({ 105, 100, 25, 25 });
+	DeathAnim.speed = 0.3f;
+	DeathAnim.loop = false;
 }
 
 Enemy::~Enemy() {
@@ -218,7 +223,7 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision INSTAKILL");
 		break;
 	case ColliderType::PLAYERATTACK:
-		IsDeath == true;
+		IsDeath = true;
 		LOG("Collision PLAYERATTACK");
 		break;
 	}
