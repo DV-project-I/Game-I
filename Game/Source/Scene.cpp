@@ -40,14 +40,14 @@ bool Scene::Awake(pugi::xml_node& config)
 		player->parameters = config.child("player");
 	}
 
-	if (config.child("enemy")) {
+	if (config.child("enemy0")) {
 		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy->parameters = config.child("enemy");
+		enemy->parameters = config.child("enemy0");
 	}
 
-	if (config.child("bat")) {
+	if (config.child("bat0")) {
 		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
-		bat->parameters = config.child("bat");
+		bat->parameters = config.child("bat0");
 	}
 
 	if (config.child("bat1")) {
@@ -83,6 +83,31 @@ bool Scene::Awake(pugi::xml_node& config)
 	if (config.child("bat4")) {
 		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
 		bat->parameters = config.child("bat4");
+	}
+
+	if (config.child("bat5")) {
+		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
+		bat->parameters = config.child("bat5");
+	}
+
+	if (config.child("enemy4")) {
+		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+		enemy->parameters = config.child("enemy4");
+	}
+
+	if (config.child("bat6")) {
+		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
+		bat->parameters = config.child("bat6");
+	}
+
+	if (config.child("enemy5")) {
+		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+		enemy->parameters = config.child("enemy5");
+	}
+
+	if (config.child("bat7")) {
+		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
+		bat->parameters = config.child("bat7");
 	}
 
 	if (config.child("map")) {

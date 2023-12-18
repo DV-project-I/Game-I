@@ -142,7 +142,7 @@ bool Enemy::Update(float dt) {
 		iPoint origin2 = iPoint(app->scene->player->position.x, app->scene->player->position.y);
 
 
-		if (position.DistanceTo(app->scene->player->position) < 80) {
+		if (position.DistanceTo(app->scene->player->position) < 120) {
 
 
 			if (position.DistanceTo(app->scene->player->position) < 150 && timertoplay > 500) {
