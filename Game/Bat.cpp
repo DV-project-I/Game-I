@@ -85,6 +85,7 @@ bool Bat::Update(float dt) {
 
 		if (app->scene->player->IsDeath == true) {
 		IsDeath = false;
+		pbody->ctype = ColliderType::ENEMY;
 	}
 
 	if (IsDeath == true) {
