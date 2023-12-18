@@ -125,7 +125,7 @@ bool Enemy::Update(float dt) {
 	vel.y = -GRAVITY_Y - 25.2f;
 
 	if (app->scene->player->IsDeath == true) {
-		IsDeath = false;
+		IsDeath = false;	
 	}
 
 	if (IsDeath == true) {

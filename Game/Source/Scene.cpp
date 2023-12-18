@@ -61,6 +61,30 @@ bool Scene::Awake(pugi::xml_node& config)
 		bat->parameters = config.child("bat2");
 	}
 
+	if (config.child("enemy1")) {
+		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+		enemy->parameters = config.child("enemy1");
+	}
+	if (config.child("enemy2")) {
+		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+		enemy->parameters = config.child("enemy2");
+	}
+
+	if (config.child("bat3")) {
+		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
+		bat->parameters = config.child("bat3");
+	}
+
+	if (config.child("enemy3")) {
+		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+		enemy->parameters = config.child("enemy3");
+	}
+
+	if (config.child("bat4")) {
+		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
+		bat->parameters = config.child("bat4");
+	}
+
 	if (config.child("map")) {
 		//Get the map name from the config file and assigns the value in the module
 		app->map->name = config.child("map").attribute("name").as_string();
