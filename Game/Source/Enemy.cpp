@@ -156,6 +156,15 @@ bool Enemy::Update(float dt) {
 			//COSAS DEL PATHFINDING
 			app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
 			// DIBUJAR EL PATH
+
+			if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
+				pathmode = !pathmode;
+			}
+
+		}
+
+		if (pathmode == true) {
+
 			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
 			for (uint i = 0; i < path->Count(); ++i)
 			{
@@ -163,11 +172,10 @@ bool Enemy::Update(float dt) {
 				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 				app->render->DrawTexture(camino, pos.x, pos.y);
 
-				movX = (pos.x - this->position.x)/25 ;
+				movX = (pos.x - this->position.x) / 25;
 				vel.x = movX;
 
 			}
-
 		}
 	
 		

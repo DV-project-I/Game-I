@@ -57,6 +57,7 @@ public:
 	bool isJumping;
 	bool isOnGround;
 	float JUMP_FORCE = 10.0f;
+	bool pathmode;
 
 	bool Ataca;
 
