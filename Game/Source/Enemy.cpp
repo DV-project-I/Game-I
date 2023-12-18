@@ -124,6 +124,10 @@ bool Enemy::Update(float dt) {
 	b2Vec2 vel;
 	vel.y = -GRAVITY_Y - 25.2f;
 
+	if (app->scene->player->IsDeath == true) {
+		IsDeath = false;
+	}
+
 	if (IsDeath == true) {
 		currentAnimation = &DeathAnim;
 		pbody->ctype = ColliderType::ITEM;
