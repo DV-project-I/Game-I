@@ -77,21 +77,23 @@ Player::Player() : Entity(EntityType::PLAYER)
 	DeathAnim.speed = 0.1f;
 	DeathAnim.loop = false;
 
-	AtackAnimDer.PushBack({ 0, 33, 32, 32 });
-	AtackAnimDer.PushBack({ 32, 33, 32, 32 });
-	AtackAnimDer.PushBack({ 64, 33, 32, 32 });
-	AtackAnimDer.PushBack({ 96, 33, 32, 32 });
-	AtackAnimDer.PushBack({ 128, 33, 32, 32 });
-	AtackAnimDer.speed = 0.1f;
-	AtackAnimDer.loop = false;
-
-	AtackAnimIzq.PushBack({ 0, 0, 32, 32 });
-	AtackAnimIzq.PushBack({ 32, 0, 32, 32 });
-	AtackAnimIzq.PushBack({ 64, 0, 32, 32 });
-	AtackAnimIzq.PushBack({ 96, 0, 32, 32 });
-	AtackAnimIzq.PushBack({ 128, 0, 32, 32 });
+	AtackAnimIzq.PushBack({ 0, 33, 32, 32 });
+	AtackAnimIzq.PushBack({ 32, 33, 32, 32 });
+	AtackAnimIzq.PushBack({ 64, 33, 32, 32 });
+	AtackAnimIzq.PushBack({ 96, 33, 32, 32 });
+	AtackAnimIzq.PushBack({ 128, 33, 32, 32 });
+	AtackAnimIzq.PushBack({ 0, 192, 32, 32 });
 	AtackAnimIzq.speed = 0.1f;
 	AtackAnimIzq.loop = false;
+
+	AtackAnimDer.PushBack({ 0, 0, 32, 32 });
+	AtackAnimDer.PushBack({ 32, 0, 32, 32 });
+	AtackAnimDer.PushBack({ 64, 0, 32, 32 });
+	AtackAnimDer.PushBack({ 96, 0, 32, 32 });
+	AtackAnimDer.PushBack({ 128, 0, 32, 32 });
+	AtackAnimDer.PushBack({ 0, 160, 32, 32 });
+	AtackAnimDer.speed = 0.1f;
+	AtackAnimDer.loop = false;
 
 	
 	
@@ -126,9 +128,10 @@ bool Player::Start() {
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 
-	ataque = app->physics->CreateRectangle(0, 0, 8, 16, bodyType::STATIC);
-	pbody->listener = this;
-	pbody->ctype = ColliderType::ITEM;
+	ataque = app->physics->CreateRectangle(0, 0, 20, 20, bodyType::STATIC);
+	ataque->ctype = ColliderType::PLAYERATTACK;
+	ataque->body->GetFixtureList()->SetSensor(true);
+
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
 
@@ -162,11 +165,15 @@ bool Player::Update(float dt)
 
 	//Estas quieto salta la IDLE
 	if (vel.y == 0 && vel.x == 0 && IsDeath == false && currentAnimation == &WalkAnimIzq) {
-		currentAnimation = &IdleAnimIzq;
+		currentAnimation = &IdleAnimIzq;		
+		AtackAnimIzq.Reset();
+		DeathAnim.Reset();
 		left = true;
 	}
 	if (vel.y == 0 && vel.x == 0 && IsDeath == false && currentAnimation == &WalkAnimDer) {
 		currentAnimation = &IdleAnimDer;
+		AtackAnimDer.Reset();
+		DeathAnim.Reset();
 		left = false;
 	}
 	
@@ -211,21 +218,26 @@ bool Player::Update(float dt)
 			vel.y = -JUMP_FORCE;			
 			currentAnimation = &JumpAnim;
 		}
-		//Andar izquierda
+		//-----Andar izquierda------
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			movX = -speed * dt;
+
 			if (isOnGround == true)
 				currentAnimation = &WalkAnimIzq;
+			AtackAnimIzq.Reset();
+			DeathAnim.Reset();
 			if (isOnGround == false) {
 				currentAnimation = &JumpAnimIzq;
 			}
 		}
 
-		//Andar derecha
+		//-----Andar derecha------
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			movX = speed * dt;
 			if (isOnGround == true)
 				currentAnimation = &WalkAnimDer;
+			AtackAnimDer.Reset();
+			DeathAnim.Reset();
 			if (isOnGround == false) {
 				currentAnimation = &JumpAnim;
 			}
@@ -241,33 +253,41 @@ bool Player::Update(float dt)
 	}
 	
 	//ATAQUE BASICO MELÉ
-	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimIzq || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimIzq || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &JumpAnimIzq ) {
-		currentAnimation = &AtackAnimDer;	
-		pbody->ctype = ColliderType::PLAYERATTACK;
-			
-		if (AtackAnimDer.HasFinished() == true)
-		{			
-			pbody->ctype = ColliderType::PLAYER;
-			AtackAnimDer.Reset();
-			
-		}
-		
-		
-	}
-	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimDer || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimDer || app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &JumpAnim) {
-		currentAnimation = &AtackAnimIzq;
-		pbody->ctype = ColliderType::PLAYERATTACK;
+	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimDer || 
+		app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimDer || 
+		app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &JumpAnim || 
+		app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &AtackAnimDer) {
 
-		if (AtackAnimIzq.HasFinished() == true)
-		{
-			pbody->ctype = ColliderType::PLAYER;
-			AtackAnimIzq.Reset();
-			
-		}
+		movX = 0;
+		currentAnimation = &AtackAnimDer;	
+		int x = position.x +40;
+		int y = position.y +20;
+		b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+		ataque->body->SetTransform(newPos, ataque->body->GetAngle());
+		timerataque = 0;
+	}
 	
-		
+
+	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimIzq ||
+		app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimIzq ||
+		app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &JumpAnimIzq || 
+		app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &AtackAnimIzq) {
+
+		currentAnimation = &AtackAnimIzq;
+		int x = position.x +10;
+		int y = position.y +20;
+		b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+		ataque->body->SetTransform(newPos, ataque->body->GetAngle());
+		timerataque = 0;
 		
 	}
+	if (timerataque >= 60)
+	{
+		b2Vec2 ResetPos(PIXEL_TO_METERS(0), PIXEL_TO_METERS(0));
+		ataque->body->SetTransform(ResetPos, ataque->body->GetAngle());
+		timerataque = 0;	
+	}
+	
 
 
 	if (vel.y == 0 && vel.x == 0 && IsDeath == false && currentAnimation == &WalkAnimIzq) {
@@ -307,7 +327,7 @@ bool Player::Update(float dt)
 	}
 
 	timertoplay++;
-	
+	timerataque++;
 	
 	return true;
 }

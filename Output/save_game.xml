@@ -7,9 +7,9 @@
 	<:anonymous />
 	<:anonymous />
 	<scene>
-		<player x="318" y="1535" />
-		<enemy x="571" y="743" />
-		<bat x="1019" y="1351" />
+		<player x="341" y="383" />
+		<enemy x="256" y="679" />
+		<bat x="992" y="1261" />
 	</scene>
 	<entitymanager />
 	<renderer />

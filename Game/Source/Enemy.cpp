@@ -126,6 +126,7 @@ bool Enemy::Update(float dt) {
 
 	if (IsDeath == true) {
 		currentAnimation = &DeathAnim;
+		pbody->ctype = ColliderType::ITEM;
 		movX = 0;
 		movY = 0;
 

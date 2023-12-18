@@ -59,7 +59,7 @@ bool Bat::Start() {
 
 
 
-	hp = 10;
+	
 	//texture = app->tex->Load("Assets/personajes/Spritesheet Parca/parca.png");
 
 	pbody = app->physics->CreateCircle(position.x, position.y, 8, bodyType::DYNAMIC);
@@ -86,6 +86,7 @@ bool Bat::Update(float dt) {
 		currentAnimation = &DeathBat;
 		movX = 0;
 		movY = -GRAVITY_Y + 25.2f;
+		pbody->ctype = ColliderType::ITEM;
 
 	}
 	else {
