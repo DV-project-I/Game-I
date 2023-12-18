@@ -52,7 +52,7 @@ bool Bat::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
-	camino = app->tex->Load("../Assets/Textures/camino.png");
+	camino = app->tex->Load("Assets/Textures/camino.png");
 
 	batsound = app->audio->LoadFx("Assets/Audio/Fx/flying.wav");
 
@@ -127,6 +127,10 @@ bool Bat::Update(float dt) {
 					Ataca = true;
 				}
 			}
+
+
+
+
 		}
 		currentAnimation = &Batfly;
 	}
