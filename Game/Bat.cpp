@@ -82,6 +82,11 @@ bool Bat::Update(float dt) {
 	b2Vec2 vel;
 	movX = 0;
 	movY = 0;
+
+		if (app->scene->player->IsDeath == true) {
+		IsDeath = false;
+	}
+
 	if (IsDeath == true) {
 		currentAnimation = &DeathBat;
 		movX = 0;
