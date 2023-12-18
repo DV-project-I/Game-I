@@ -98,7 +98,7 @@ bool Enemy::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
-	camino = app->tex->Load("../Assets/Textures/camino.png");
+	camino = app->tex->Load("Assets/Textures/camino.png");
 	torrentesound = app->audio->LoadFx("Assets/Audio/Fx/torrente.wav");
 	torrentesound2 = app->audio->LoadFx("Assets/Audio/Fx/punchtorrente.wav");
 	
@@ -157,7 +157,7 @@ bool Enemy::Update(float dt) {
 			{
 
 				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-				app->render->DrawTexture(camino, pos.x, pos.y, false);
+				app->render->DrawTexture(camino, pos.x, pos.y);
 
 				movX = (pos.x - this->position.x)/25 ;
 				vel.x = movX;
