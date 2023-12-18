@@ -111,6 +111,9 @@ bool Bat::Update(float dt) {
 			}
 			timertoplay++;
 
+			if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
+				pathmode = !pathmode;
+			}
 			
 
 			app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
@@ -120,8 +123,9 @@ bool Bat::Update(float dt) {
 			{
 
 				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-				app->render->DrawTexture(camino, pos.x, pos.y);
-
+				if (pathmode == true) {
+					app->render->DrawTexture(camino, pos.x, pos.y);
+				}
 				movX = (pos.x - this->position.x) / 30;
 				vel.x = movX;
 

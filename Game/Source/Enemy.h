@@ -57,7 +57,7 @@ public:
 	float movY;
 	float velY;	
 	bool IsDeath = false;
-	bool pathmode;
+	bool pathmode = false;
 
 	bool Ataca;
 

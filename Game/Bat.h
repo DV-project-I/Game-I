@@ -49,6 +49,8 @@ public:
 	float timertoplay;
 
 	bool IsDeath = false;
+	bool pathmode = false;
+
 	float movX;
 	float movY;
 	float velY;
@@ -57,7 +59,7 @@ public:
 	bool isJumping;
 	bool isOnGround;
 	float JUMP_FORCE = 10.0f;
-	bool pathmode;
+	
 
 	bool Ataca;
 
