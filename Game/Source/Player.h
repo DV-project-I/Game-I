@@ -62,6 +62,7 @@ public:
 
 
 	uint walkingsound;
+	uint grito;
 
 	float timerataque;
 

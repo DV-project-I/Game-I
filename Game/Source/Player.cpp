@@ -119,6 +119,7 @@ bool Player::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 	walkingsound = app->audio->LoadFx("Assets/Audio/Fx/walking.wav");
+	grito = app->audio->LoadFx("Assets/Audio/Fx/grito.wav");
 
 
 	hp = 10;
@@ -306,6 +307,7 @@ bool Player::Update(float dt)
 
 
 	if (IsDeath == true) {
+		app->audio->PlayFx(grito, 0);
 		PlayerDeath();	
 		
 	}
@@ -361,7 +363,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::ENEMY:
 		hp --;
-		app->audio->PlayFx(pickCoinFxId);
+		
+		app->audio->PlayFx(grito, 0);
 		LOG("Collision ENEMY");
 		break;
 
@@ -384,6 +387,7 @@ void Player ::SetPosition(int x, int y) {
 void Player :: PlayerDeath()
 {			
 	currentAnimation = &DeathAnim;
+	
 	if (currentAnimation->HasFinished() == true) {		
 		SetPosition(parameters.attribute("x").as_int(), parameters.attribute("y").as_int());
 		hp = 10;
