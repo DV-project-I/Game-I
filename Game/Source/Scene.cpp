@@ -123,7 +123,7 @@ bool Scene::Awake(pugi::xml_node& config)
 bool Scene::Start()
 {
 	// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
-	img = app->tex->Load("Assets/Textures/camino.png");
+	img = app->tex->Load("Assets/UI/10hp.png");
 	
 	//Music is commented so that you can add your own music
 	app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.wav");
@@ -175,10 +175,41 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		app->render->camera.x += (int)ceil(camSpeed * dt);
 	
+	if (player->hp == 10) {
+		img = app->tex->Load("Assets/UI/10hp.png");
+	}
+	else if (player->hp == 9) {
+		img = app->tex->Load("Assets/UI/9hp.png");
+	}
+	else if (player->hp == 8) {
+		img = app->tex->Load("Assets/UI/8hp.png");
+	}
+	else if (player->hp == 7) {
+		img = app->tex->Load("Assets/UI/7hp.png");
+	}
+	else if (player->hp == 6) {
+		img = app->tex->Load("Assets/UI/6hp.png");
+	}
+	else if (player->hp == 5) {
+		img = app->tex->Load("Assets/UI/5hp.png");
+	}
+	else if (player->hp == 4) {
+		img = app->tex->Load("Assets/UI/4hp.png");
+	}
+	else if (player->hp == 3) {
+		img = app->tex->Load("Assets/UI/3hp.png");
+	}
+	else if (player->hp == 2) {
+		img = app->tex->Load("Assets/UI/2hp.png");
+	}
+	else if (player->hp == 1) {
+		img = app->tex->Load("Assets/UI/1hp.png");
+	}
 	
-	app->render->camera.x = (-player->position.x)* app->win->GetScale() +512; /**2 - 3 + app->win->screenSurface->w / 2;*/		
+	app->render->camera.x = (-player->position.x)* app->win->GetScale() +512; 
 	app->render->camera.y = (-player->position.y)* app->win->GetScale() + 384;
 	
+	app->render->DrawTexture(img, player->position.x -160, player->position.y -120);
 
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
