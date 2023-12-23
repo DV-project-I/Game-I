@@ -61,17 +61,10 @@ public:
 
 	bool Ataca;
 
-	Animation IdleAnimIzq;
-	Animation IdleAnimDer;
-	Animation WalkAnimIzq;
-	Animation WalkAnimDer;
-	Animation JumpAnim;
-	Animation AtackAnimDer;
-	Animation AtackAnimIzq;
+
+	Animation IdleAnim;
+	Animation AtackAnim;
 	Animation DeathAnim;
-	Animation JumpAnimIzq;
-
-
 
 };
 

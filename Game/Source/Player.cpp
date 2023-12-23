@@ -132,6 +132,7 @@ bool Player::Start() {
 	ataque = app->physics->CreateRectangle(0, 0, 20, 20, bodyType::STATIC);
 	ataque->ctype = ColliderType::PLAYERATTACK;
 	ataque->body->GetFixtureList()->SetSensor(true);
+	
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
@@ -319,6 +320,7 @@ bool Player::Update(float dt)
 	currentAnimation->Update();
 	
 	app->render->DrawTexture(texture, position.x +8, position.y +9, &currentAnimation->GetCurrentFrame());
+
 
 	if (isOnGround == true && app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && timertoplay > 31 || isOnGround == true && app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && timertoplay > 31) {
 

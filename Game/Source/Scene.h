@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "Item.h"
 #include "../bat.h"
+#include "Tree.h"
 
 struct SDL_Texture;
 
@@ -52,6 +53,7 @@ private:
 	SDL_Texture* mouseTileTex = nullptr;
 
 	Enemy* enemy;
+	Tree* tree;
 	Bat* bat;
 	PhysBody* pbody;
 };

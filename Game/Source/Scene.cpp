@@ -11,6 +11,7 @@
 #include "Physics.h"
 #include "Entity.h"
 #include "../bat.h"
+#include "Tree.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -38,6 +39,11 @@ bool Scene::Awake(pugi::xml_node& config)
 	if (config.child("player")) {
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 		player->parameters = config.child("player");
+	}
+
+	if (config.child("testTree")) {
+		tree = (Tree*)app->entityManager->CreateEntity(EntityType::TREE);
+		tree->parameters = config.child("testTree");
 	}
 
 	if (config.child("enemy0")) {

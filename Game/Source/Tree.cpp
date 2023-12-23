@@ -17,62 +17,36 @@
 Tree::Tree() : Entity(EntityType::TREE)
 {
 	name.Create("tree");
-	WalkAnimIzq.PushBack({ 0, 0, 25, 25 });
-	WalkAnimIzq.PushBack({ 25, 0, 25, 25 });
-	WalkAnimIzq.PushBack({ 50, 0, 25, 25 });
-	WalkAnimIzq.PushBack({ 75, 0, 25, 25 });
-	WalkAnimIzq.PushBack({ 100, 0, 25, 25 });
-	WalkAnimIzq.PushBack({ 125, 0, 25, 25 });
-	WalkAnimIzq.PushBack({ 150, 0, 25, 25 });
-	WalkAnimIzq.PushBack({ 175, 0, 25, 25 });
-	WalkAnimIzq.speed = 0.3f;
-	WalkAnimIzq.loop = true;
 
-	WalkAnimDer.PushBack({ 175, 25, 25, 25 });
-	WalkAnimDer.PushBack({ 150, 25, 25, 25 });
-	WalkAnimDer.PushBack({ 125, 25, 25, 25 });	
-	WalkAnimDer.PushBack({ 100, 25, 25, 25 });
-	WalkAnimDer.PushBack({ 75, 25, 25, 25 });
-	WalkAnimDer.PushBack({ 50, 25, 25, 25 });	
-	WalkAnimDer.PushBack({ 25, 25, 25, 25 });
-	WalkAnimDer.PushBack({ 0, 25, 25, 25 });
-	WalkAnimDer.speed = 0.3f;
-	WalkAnimDer.loop = true;
-	
-	IdleAnimDer.PushBack({ 150, 100, 25, 25 });
-	IdleAnimDer.speed = 0.3f;
-	IdleAnimDer.loop = true;
-	IdleAnimIzq.PushBack({ 175, 100, 25, 25 });
-	IdleAnimIzq.speed = 0.3f;
-	IdleAnimIzq.loop = true;
 
-	AtackAnimIzq.PushBack({ 0, 50, 25, 25 });
-	AtackAnimIzq.PushBack({ 25, 50, 25, 25 });
-	AtackAnimIzq.PushBack({ 50, 50, 25, 25 });
-	AtackAnimIzq.PushBack({ 75, 50, 25, 25 });
-	AtackAnimIzq.PushBack({ 100, 50, 25, 25 });	
-	AtackAnimIzq.PushBack({ 125, 50, 25, 25 });
-	AtackAnimIzq.PushBack({ 150, 50, 25, 25 });
-	AtackAnimIzq.PushBack({ 175, 50, 25, 25 });
-	AtackAnimIzq.speed = 0.3f;
-	AtackAnimIzq.loop = false;
+	IdleAnim.PushBack({ 0, 64, 64, 64 });
+	IdleAnim.PushBack({ 64, 64, 64, 64 });
+	IdleAnim.PushBack({ 128, 64, 64, 64 });
+	IdleAnim.speed = 0.3f;
+	IdleAnim.loop = true;
 
-	AtackAnimDer.PushBack({ 175, 75, 25, 25 });
-	AtackAnimDer.PushBack({ 150, 75, 25, 25 });
-	AtackAnimDer.PushBack({ 125, 75, 25, 25 });
-	AtackAnimDer.PushBack({ 100, 75, 25, 25 });	
-	AtackAnimDer.PushBack({ 75, 75, 25, 25 });	
-	AtackAnimDer.PushBack({ 50, 75, 25, 25 });
-	AtackAnimDer.PushBack({ 25, 75, 25, 25 });
-	AtackAnimDer.PushBack({ 0,  75, 25, 25 });
-	AtackAnimDer.speed = 0.3f;
-	AtackAnimDer.loop = false;
 
-	DeathAnim.PushBack({ 0, 100, 25, 25 });
-	DeathAnim.PushBack({ 25, 100, 25, 25 });
-	DeathAnim.PushBack({ 50, 100, 25, 25 });
-	DeathAnim.PushBack({ 75, 100, 30, 25 });
-	DeathAnim.PushBack({ 105, 100, 25, 25 });
+	AtackAnim.PushBack({ 0, 0, 64, 64 });
+	AtackAnim.PushBack({ 64, 0, 64, 64 });
+	AtackAnim.PushBack({ 128, 0, 64, 64 });
+	AtackAnim.PushBack({ 192, 0, 64, 64 });
+	AtackAnim.PushBack({ 256, 0, 64, 64 });	
+	AtackAnim.PushBack({ 320, 0, 64, 64 });
+	AtackAnim.PushBack({ 384, 0, 64, 64 });
+	AtackAnim.PushBack({ 448, 0, 64, 64 });
+	AtackAnim.PushBack({ 512, 0, 64, 64 });
+	AtackAnim.PushBack({ 576, 0, 64, 64 });
+	AtackAnim.PushBack({ 640, 0, 64, 64 });
+	AtackAnim.PushBack({ 704, 0, 64, 64 });
+	AtackAnim.speed = 0.3f;
+	AtackAnim.loop = false;
+
+
+
+	DeathAnim.PushBack({ 192, 64, 64, 64});
+	DeathAnim.PushBack({ 256,64, 64, 64 });
+	DeathAnim.PushBack({ 320,64, 64, 64 });
+	DeathAnim.PushBack({ 384,64, 64, 64 });
 	DeathAnim.speed = 0.3f;
 	DeathAnim.loop = false;
 }
@@ -89,7 +63,7 @@ PathFinding path;
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
-	currentAnimation = &IdleAnimDer;
+	currentAnimation = &IdleAnim;
 
 	return true;
 }
@@ -107,7 +81,7 @@ bool Tree::Start() {
 	hp = 10;
 	//texture = app->tex->Load("Assets/personajes/Spritesheet Parca/parca.png");
 
-	pbody = app->physics->CreateCircle(position.x, position.y, 8, bodyType::DYNAMIC);
+	pbody = app->physics->CreateRectangle(position.x, position.y, 16, 32, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
@@ -120,114 +94,52 @@ bool Tree::Start() {
 
 
 bool Tree::Update(float dt) {
-	movX = 0;
-	b2Vec2 vel;
-	vel.y = -GRAVITY_Y - 25.2f;
+	
+	
+	
 
 	if (app->scene->player->IsDeath == true) {
 		IsDeath = false;
+		pbody->height = 64;
 		pbody->ctype = ColliderType::ENEMY;
 	}
 
 	if (IsDeath == true) {
 		currentAnimation = &DeathAnim;
+		pbody->height = 32;
 		pbody->ctype = ColliderType::ITEM;
-		movX = 0;
-		movY = 0;
-
+	
 	}
 	else {
 		
-
-		iPoint origin = iPoint(this->position.x, this->position.y);
-		iPoint origin2 = iPoint(app->scene->player->position.x, app->scene->player->position.y);
-
-
-		if (position.DistanceTo(app->scene->player->position) < 120) {
-
-
-			if (position.DistanceTo(app->scene->player->position) < 150 && timertoplay > 500) {
-
-				app->audio->PlayFx(torrentesound, 0);
-				timertoplay = 0;
-
-			}
-			timertoplay++;
-
-			//COSAS DEL PATHFINDING
-			app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
-			// DIBUJAR EL PATH
-
-			if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
-				pathmode = !pathmode;
-			}
-
-		}
-
+			
 		
 
-			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
-			for (uint i = 0; i < path->Count(); ++i)
-			{
+		if (position.DistanceTo(app->scene->player->position) < 50) {
+			currentAnimation = &AtackAnim;
+			//app->audio->PlayFx(torrentesound2, 0);
+
+			if (AtackAnim.HasFinished()) {
+				AtackAnim.Reset();
 				
-				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-				if (pathmode == true) {
-					app->render->DrawTexture(camino, pos.x, pos.y);
-				}
-				movX = (pos.x - this->position.x) / 25;
-				vel.x = movX;
-
-			}
-		
-	
-		
-		if (vel.x < 0) {
-			currentAnimation = &WalkAnimIzq;
-		}
-		else	if (vel.x > 0) {
-			currentAnimation = &WalkAnimDer;
-		}
-		else	if (vel.y == 0 && vel.x == 0 && currentAnimation == &WalkAnimIzq) {
-			currentAnimation = &IdleAnimIzq;
-		}
-		else if (vel.y == 0 && vel.x == 0 && currentAnimation == &WalkAnimDer) {
-			currentAnimation = &IdleAnimDer;
-		}
-
-		if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimDer) {
-			
-			currentAnimation = &AtackAnimDer;
-			app->audio->PlayFx(torrentesound2, 0);
-			
-			if (AtackAnimDer.HasFinished()) {
-				AtackAnimDer.Reset();
-				Ataca = false;
-			}
-
-		}
-		if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimIzq) {
-			currentAnimation = &AtackAnimIzq;
-			app->audio->PlayFx(torrentesound2, 0);
-
-			if (AtackAnimIzq.HasFinished()) {
-				AtackAnimIzq.Reset();
-				Ataca = false;
 			}
 
 		}
 	}
 
-	vel.x = movX;
+	
 
 	currentAnimation->Update();
 
-	pbody->body->SetLinearVelocity(vel);
+	
 
 	this->position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	this->position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 	
 
-	app->render->DrawTexture(texture, position.x +3 , position.y, &currentAnimation->GetCurrentFrame());
+	app->render->DrawTexture(texture, position.x -16 , position.y -32, &currentAnimation->GetCurrentFrame());
+	
+	currentAnimation = &IdleAnim;
 	return true;
 }
 
@@ -272,11 +184,3 @@ void Tree::SetPosition(int x, int y) {
 
 }
 
-void Tree::EnemyDeath()
-{
-	currentAnimation = &DeathAnim;
-	if (currentAnimation->HasFinished() == true) {
-		SetPosition(parameters.attribute("x").as_int(), parameters.attribute("y").as_int());
-	}
-
-}

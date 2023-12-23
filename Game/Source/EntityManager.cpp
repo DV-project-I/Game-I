@@ -94,6 +94,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::BAT:
 		entity = new Bat();
 		break;
+	case EntityType::TREE:
+		entity = new Tree();
+		break;
 	default:
 		break;
 	}
