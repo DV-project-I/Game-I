@@ -37,6 +37,7 @@ public:
 	const char* texturePath;
 	int hp = 10;
 	SDL_Texture* texture = NULL;
+	SDL_Texture* tataque = NULL;
 	Animation* currentAnimation = nullptr;
 	PhysBody* pbody;
 	PhysBody* ataque;
@@ -75,6 +76,7 @@ public:
 	Animation AtackAnimIzq;
 	Animation DeathAnim;
 	Animation JumpAnimIzq;
+	Animation Alma;
 
 
 };

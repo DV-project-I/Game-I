@@ -39,7 +39,7 @@ Tree::Tree() : Entity(EntityType::TREE)
 	AtackAnim.PushBack({ 640, 0, 64, 64 });
 	AtackAnim.PushBack({ 704, 0, 64, 64 });
 	AtackAnim.speed = 0.3f;
-	AtackAnim.loop = false;
+	AtackAnim.loop = true;
 
 
 
@@ -47,7 +47,7 @@ Tree::Tree() : Entity(EntityType::TREE)
 	DeathAnim.PushBack({ 256,64, 64, 64 });
 	DeathAnim.PushBack({ 320,64, 64, 64 });
 	DeathAnim.PushBack({ 384,64, 64, 64 });
-	DeathAnim.speed = 0.3f;
+	DeathAnim.speed = 0.1f;
 	DeathAnim.loop = false;
 }
 

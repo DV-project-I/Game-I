@@ -95,7 +95,14 @@ Player::Player() : Entity(EntityType::PLAYER)
 	AtackAnimDer.speed = 0.1f;
 	AtackAnimDer.loop = false;
 
-	
+	Alma.PushBack({ 0, 0, 16, 16 });
+	Alma.PushBack({ 16, 0, 16, 16 });
+	Alma.PushBack({ 32, 0, 16, 16 });
+	Alma.PushBack({ 48, 0, 16, 16 });
+	Alma.PushBack({ 64, 0, 16, 16 });
+	Alma.PushBack({ 80, 0, 16, 16 });
+	Alma.speed = 0.2f;
+	Alma.loop = true;
 	
 }
 
@@ -118,6 +125,7 @@ bool Player::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
+	tataque = app->tex->Load("Assets/cosas/almaflotante.png");
 	walkingsound = app->audio->LoadFx("Assets/Audio/Fx/walking.wav");
 	grito = app->audio->LoadFx("Assets/Audio/Fx/grito.wav");
 
@@ -320,7 +328,7 @@ bool Player::Update(float dt)
 	currentAnimation->Update();
 	
 	app->render->DrawTexture(texture, position.x +8, position.y +9, &currentAnimation->GetCurrentFrame());
-
+	app->render->DrawTexture(tataque, ataque->body->GetPosition().x + 8, ataque->body->GetPosition().y + 9, &Alma.GetCurrentFrame());
 
 	if (isOnGround == true && app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && timertoplay > 31 || isOnGround == true && app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && timertoplay > 31) {
 
