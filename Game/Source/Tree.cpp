@@ -22,7 +22,7 @@ Tree::Tree() : Entity(EntityType::TREE)
 	IdleAnim.PushBack({ 0, 64, 64, 64 });
 	IdleAnim.PushBack({ 64, 64, 64, 64 });
 	IdleAnim.PushBack({ 128, 64, 64, 64 });
-	IdleAnim.speed = 0.3f;
+	IdleAnim.speed = 0.1f;
 	IdleAnim.loop = true;
 
 
@@ -77,13 +77,17 @@ bool Tree::Start() {
 	torrentesound2 = app->audio->LoadFx("Assets/Audio/Fx/punchtorrente.wav");
 	
 	
-
+	cooldown = 0;
 	hp = 10;
 	//texture = app->tex->Load("Assets/personajes/Spritesheet Parca/parca.png");
 
 	pbody = app->physics->CreateRectangle(position.x, position.y, 16, 32, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
+
+	ataque = app->physics->CreateRectangle(0, 0, 20, 20, bodyType::STATIC);
+	ataque->ctype = ColliderType::ENEMY;
+	ataque->body->GetFixtureList()->SetSensor(true);
 
 	
 	//pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
@@ -106,7 +110,7 @@ bool Tree::Update(float dt) {
 
 	if (IsDeath == true) {
 		currentAnimation = &DeathAnim;
-		pbody->height = 32;
+		pbody->height = 32;		
 		pbody->ctype = ColliderType::ITEM;
 	
 	}
@@ -115,18 +119,26 @@ bool Tree::Update(float dt) {
 			
 		
 
-		if (position.DistanceTo(app->scene->player->position) < 50) {
+		if (position.DistanceTo(app->scene->player->position) < 50 ) {
 			currentAnimation = &AtackAnim;
 			//app->audio->PlayFx(torrentesound2, 0);
-
-			if (AtackAnim.HasFinished()) {
-				AtackAnim.Reset();
-				
+			if (cooldown > 60) {
+				int x = app->scene->player->position.x + 7;
+				int y = app->scene->player->position.y + 20;
+				b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+				ataque->body->SetTransform(newPos, ataque->body->GetAngle());
+				timerataque = 0;
+				cooldown = 0;
 			}
-
 		}
 	}
-
+	if (timerataque >= 30)
+	{
+		b2Vec2 ResetPos(PIXEL_TO_METERS(0), PIXEL_TO_METERS(0));
+		ataque->body->SetTransform(ResetPos, ataque->body->GetAngle());
+		timerataque = 0;
+		
+	}
 	
 
 	currentAnimation->Update();
@@ -137,8 +149,11 @@ bool Tree::Update(float dt) {
 	this->position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 	
 
-	app->render->DrawTexture(texture, position.x -16 , position.y -32, &currentAnimation->GetCurrentFrame());
+	app->render->DrawTexture(texture, position.x -16 , position.y -25, &currentAnimation->GetCurrentFrame());
 	
+	timerataque++;
+	cooldown++;
+
 	currentAnimation = &IdleAnim;
 	return true;
 }

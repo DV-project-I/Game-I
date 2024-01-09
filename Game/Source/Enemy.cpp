@@ -55,7 +55,7 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
 	AtackAnimIzq.PushBack({ 150, 50, 25, 25 });
 	AtackAnimIzq.PushBack({ 175, 50, 25, 25 });
 	AtackAnimIzq.speed = 0.3f;
-	AtackAnimIzq.loop = false;
+	AtackAnimIzq.loop = true;
 
 	AtackAnimDer.PushBack({ 175, 75, 25, 25 });
 	AtackAnimDer.PushBack({ 150, 75, 25, 25 });
@@ -66,7 +66,7 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
 	AtackAnimDer.PushBack({ 25, 75, 25, 25 });
 	AtackAnimDer.PushBack({ 0,  75, 25, 25 });
 	AtackAnimDer.speed = 0.3f;
-	AtackAnimDer.loop = false;
+	AtackAnimDer.loop = true;
 
 	DeathAnim.PushBack({ 0, 100, 25, 25 });
 	DeathAnim.PushBack({ 25, 100, 25, 25 });
@@ -111,6 +111,9 @@ bool Enemy::Start() {
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
+	ataque = app->physics->CreateRectangle(0, 0, 20, 5, bodyType::STATIC);
+	ataque->ctype = ColliderType::ENEMY;
+	ataque->body->GetFixtureList()->SetSensor(true);
 	
 	//pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
@@ -199,6 +202,14 @@ bool Enemy::Update(float dt) {
 			currentAnimation = &AtackAnimDer;
 			app->audio->PlayFx(torrentesound2, 0);
 			
+			if (cooldown > 60) {
+				int x = position.x + 30;
+				int y = position.y + 15;
+				b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+				ataque->body->SetTransform(newPos, ataque->body->GetAngle());
+				
+			}
+
 			if (AtackAnimDer.HasFinished()) {
 				AtackAnimDer.Reset();
 				Ataca = false;
@@ -216,6 +227,13 @@ bool Enemy::Update(float dt) {
 
 		}
 	}
+	if (position.DistanceTo(app->scene->player->position) > 50)
+	{
+		b2Vec2 ResetPos(PIXEL_TO_METERS(0), PIXEL_TO_METERS(0));
+		ataque->body->SetTransform(ResetPos, ataque->body->GetAngle());
+		timerataque = 0;
+
+	}
 
 	vel.x = movX;
 
@@ -226,6 +244,8 @@ bool Enemy::Update(float dt) {
 	this->position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	this->position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 	
+	timerataque++;
+	cooldown++;
 
 	app->render->DrawTexture(texture, position.x +3 , position.y, &currentAnimation->GetCurrentFrame());
 	return true;
