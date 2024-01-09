@@ -291,7 +291,7 @@ bool Player::Update(float dt)
 		timerataque = 0;
 		
 	}
-	if (timerataque >= 60)
+	if (timerataque >= 30)
 	{
 		b2Vec2 ResetPos(PIXEL_TO_METERS(0), PIXEL_TO_METERS(0));
 		ataque->body->SetTransform(ResetPos, ataque->body->GetAngle());
