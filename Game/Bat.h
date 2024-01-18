@@ -48,6 +48,10 @@ public:
 	uint batsound;
 	float timertoplay;
 
+	
+	float timerataque;
+	float cooldown = 0;
+
 	bool IsDeath = false;
 	bool pathmode = false;
 

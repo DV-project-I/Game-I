@@ -111,7 +111,7 @@ bool Enemy::Start() {
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
-	ataque = app->physics->CreateRectangle(0, 0, 20, 5, bodyType::STATIC);
+	ataque = app->physics->CreateRectangle(0, 0, 30, 10, bodyType::STATIC);
 	ataque->ctype = ColliderType::ENEMY;
 	ataque->body->GetFixtureList()->SetSensor(true);
 	
@@ -196,7 +196,7 @@ bool Enemy::Update(float dt) {
 		else if (vel.y == 0 && vel.x == 0 && currentAnimation == &WalkAnimDer) {
 			currentAnimation = &IdleAnimDer;
 		}
-
+		//Ataque
 		if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimDer) {
 			
 			currentAnimation = &AtackAnimDer;

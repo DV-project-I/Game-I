@@ -25,10 +25,10 @@ Bat::Bat() : Entity(EntityType::BAT)
 	Batfly.speed = 0.1f;
 	Batfly.loop = true;
 
-	DeathBat.PushBack({ 0, 192, 32, 32 });
-	DeathBat.PushBack({ 32, 192, 32, 32 });
-	DeathBat.PushBack({ 64, 192, 32, 32 });
-	DeathBat.PushBack({ 96, 192, 32, 32 });
+	DeathBat.PushBack({ 0, 8 +192, 32, 32 });
+	DeathBat.PushBack({ 32,8 + 192, 32, 32 });
+	DeathBat.PushBack({ 64,8 + 192, 32, 32 });
+	DeathBat.PushBack({ 96,8 + 192, 32, 32 });
 	DeathBat.speed = 0.1f;
 	DeathBat.loop = false;
 }
@@ -65,6 +65,11 @@ bool Bat::Start() {
 	pbody = app->physics->CreateCircle(position.x, position.y, 8, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
+
+	ataque = app->physics->CreateRectangle(0, 0, 30, 10, bodyType::STATIC);
+	ataque->ctype = ColliderType::ENEMY;
+	ataque->body->GetFixtureList()->SetSensor(true);
+
 
 	//pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
@@ -137,12 +142,33 @@ bool Bat::Update(float dt) {
 					Ataca = true;
 				}
 			}
+		}
 
+		if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &Batfly) {
 
+			currentAnimation = &BatAtack;
 
+			if (cooldown > 60) {
+				int x = position.x + 30;
+				int y = position.y + 15;
+				b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+				ataque->body->SetTransform(newPos, ataque->body->GetAngle());
+
+			}
+
+			if (BatAtack.HasFinished()) {
+				BatAtack.Reset();
+				Ataca = false;
+			}
+			currentAnimation = &Batfly;
+		}
+		if (position.DistanceTo(app->scene->player->position) > 50)
+		{
+			b2Vec2 ResetPos(PIXEL_TO_METERS(0), PIXEL_TO_METERS(0));
+			ataque->body->SetTransform(ResetPos, ataque->body->GetAngle());
+			timerataque = 0;
 
 		}
-		currentAnimation = &Batfly;
 	}
 	
 
@@ -157,7 +183,7 @@ bool Bat::Update(float dt) {
 	this->position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
 
-	app->render->DrawTexture(texture, position.x + 3, position.y -5, &currentAnimation->GetCurrentFrame());
+	app->render->DrawTexture(texture, position.x -1, position.y +5, &currentAnimation->GetCurrentFrame());
 	return true;
 
 
