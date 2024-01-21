@@ -8,6 +8,9 @@
 #include "../bat.h"
 #include "Tree.h"
 
+#include "GuiControl.h"
+#include "GuiControlButton.h"
+
 struct SDL_Texture;
 
 class Scene : public Module
@@ -41,6 +44,8 @@ public:
 
 	bool LoadState(pugi::xml_node node);
 
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 	iPoint GetPLayerPosition();
 
 	Player* player;
@@ -56,6 +61,8 @@ private:
 	Tree* tree;
 	Bat* bat;
 	PhysBody* pbody;
+
+	GuiControlButton* gcButtom;
 };
 
 #endif // __SCENE_H__

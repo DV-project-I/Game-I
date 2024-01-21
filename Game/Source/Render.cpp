@@ -51,7 +51,11 @@ bool Render::Awake(pugi::xml_node& config)
 		camera.x = 0;
 		camera.y = 0;
 	}
+	////initialise the SDL_ttf library
+	//TTF_Init();
 
+	////load a font into memory
+	//font = TTF_OpenFont("Assets/Fonts/arial/arial.ttf", 25);
 	return ret;
 }
 

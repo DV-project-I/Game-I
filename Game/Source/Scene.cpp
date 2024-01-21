@@ -13,6 +13,8 @@
 #include "../bat.h"
 #include "Tree.h"
 
+#include "GuiControl.h"
+#include "GuiManager.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -121,6 +123,11 @@ bool Scene::Awake(pugi::xml_node& config)
 		app->map->name = config.child("map").attribute("name").as_string();
 		app->map->path = config.child("map").attribute("path").as_string();
 	}
+	/*for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
+	{
+		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+		item->parameters = itemNode;
+	}*/
 
 	return ret;
 }
@@ -143,6 +150,11 @@ bool Scene::Start()
 	textPosX = (float)windowW / 2 - (float)texW / 2;
 	textPosY = (float)windowH / 2 - (float)texH / 2;
 
+	// Texture to highligh mouse position 
+	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
+
+	// L15: DONE 2: Instantiate a new GuiControlButton in the Scene
+
 	
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
@@ -152,6 +164,8 @@ bool Scene::Start()
 		app->map->mapData.tileHeight,
 		app->map->mapData.tilesets.Count());
 
+	SDL_Rect btPos = { windowW /2 + 60, windowH/2 + 10, 120,20 };
+	gcButtom = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);
 
 	return true;
 }
@@ -217,6 +231,8 @@ bool Scene::Update(float dt)
 	
 	app->render->DrawTexture(img, player->position.x -160, player->position.y -120);
 
+	
+
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
 	
@@ -281,6 +297,14 @@ bool Scene::SaveState(pugi::xml_node node) {
 	BatPos.append_attribute("x").set_value(app->scene->bat->position.x);
 	BatPos.append_attribute("y").set_value(bat->position.y);
 		
+
+	return true;
+}
+
+bool Scene::OnGuiMouseClickEvent(GuiControl* control)
+{
+	// L15: DONE 5: Implement the OnGuiMouseClickEvent method
+	LOG("Press Gui Control: %d", control->id);
 
 	return true;
 }

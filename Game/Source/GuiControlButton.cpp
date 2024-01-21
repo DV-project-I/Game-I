@@ -25,14 +25,14 @@ bool GuiControlButton::Update(float dt)
 		app->input->GetMousePosition(mouseX, mouseY);
 
 		//If the position of the mouse if inside the bounds of the button 
-		if (mouseX > bounds.x && mouseX < bounds.x + bounds.w && mouseY > bounds.y && mouseY < bounds.y + bounds.h) {
-		
+		if (mouseX / 3 > bounds.x/3 && mouseX / 3 < bounds.x / 3 + bounds.w / 3 && mouseY / 3 > bounds.y / 3 && mouseY / 3 < bounds.y / 3 + bounds.h / 3) {
+
 			state = GuiControlState::FOCUSED;
 
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
 				state = GuiControlState::PRESSED;
 			}
-			
+
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
 				NotifyObserver();
 			}
@@ -58,10 +58,9 @@ bool GuiControlButton::Update(float dt)
 			break;
 		}
 
-		//app->render->DrawTexture(text.GetString(), bounds.x, bounds.y, bounds.w, bounds.h);
-		
+		//app->render->DrawText(text.GetString(), bounds.x, bounds.y, bounds.w, bounds.h);
+
 	}
 
 	return false;
 }
-

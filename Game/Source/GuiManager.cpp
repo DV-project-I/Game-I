@@ -40,7 +40,7 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 }
 
 bool GuiManager::Update(float dt)
-{	
+{
 
 	ListItem<GuiControl*>* control = guiControlsList.start;
 
@@ -66,6 +66,4 @@ bool GuiManager::CleanUp()
 
 	return false;
 }
-
-
 
