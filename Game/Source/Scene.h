@@ -52,6 +52,7 @@ public:
 private:
 
 	SDL_Texture* img;
+	SDL_Texture* conf;
 	float textPosX, textPosY = 0;
 	uint texW, texH;
 	uint windowW, windowH;	

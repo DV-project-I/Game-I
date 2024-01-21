@@ -137,7 +137,7 @@ bool Scene::Start()
 {
 	// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
 	img = app->tex->Load("Assets/UI/10hp.png");
-	
+	conf = app->tex->Load("Assets/cosas/macarron.png");
 	//Music is commented so that you can add your own music
 	app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.wav");
 
@@ -146,6 +146,7 @@ bool Scene::Start()
 
 	//Get the size of the texture
 	app->tex->GetSize(img, texW, texH);
+	
 
 	textPosX = (float)windowW / 2 - (float)texW / 2;
 	textPosY = (float)windowH / 2 - (float)texH / 2;
@@ -230,6 +231,7 @@ bool Scene::Update(float dt)
 	app->render->camera.y = (-player->position.y)* app->win->GetScale() + 384;
 	
 	app->render->DrawTexture(img, player->position.x -160, player->position.y -120);
+	app->render->DrawTexture(conf, player->position.x + 60, player->position.y - 120);
 
 	
 

@@ -25,7 +25,7 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
 	WalkAnimIzq.PushBack({ 125, 0, 25, 25 });
 	WalkAnimIzq.PushBack({ 150, 0, 25, 25 });
 	WalkAnimIzq.PushBack({ 175, 0, 25, 25 });
-	WalkAnimIzq.speed = 0.3f;
+	WalkAnimIzq.speed = 0.1f;
 	WalkAnimIzq.loop = true;
 
 	WalkAnimDer.PushBack({ 175, 25, 25, 25 });
@@ -36,7 +36,7 @@ Enemy::Enemy() : Entity(EntityType::ENEMY)
 	WalkAnimDer.PushBack({ 50, 25, 25, 25 });	
 	WalkAnimDer.PushBack({ 25, 25, 25, 25 });
 	WalkAnimDer.PushBack({ 0, 25, 25, 25 });
-	WalkAnimDer.speed = 0.3f;
+	WalkAnimDer.speed = 0.1f;
 	WalkAnimDer.loop = true;
 	
 	IdleAnimDer.PushBack({ 150, 100, 25, 25 });
