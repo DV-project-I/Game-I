@@ -14,9 +14,10 @@ public:
 	Module() : active(false)
 	{}
 
-	void Init()
+	void Init(bool isActive)
 	{
-		active = true;
+		
+		active = isActive;
 	}
 
 	// Called before render is available

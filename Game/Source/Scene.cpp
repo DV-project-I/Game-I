@@ -30,144 +30,152 @@ Scene::~Scene()
 // Called before render is available
 bool Scene::Awake(pugi::xml_node& config)
 {
-	LOG("Loading Scene");
-	bool ret = true;
+	if (active == true) {
+		LOG("Loading Scene");
+		bool ret = true;
 
+
+		// iterate all objects in the scene
+		// Check https://pugixml.org/docs/quickstart.html#access
+
+
+		if (config.child("player")) {
+			player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
+			player->parameters = config.child("player");
+		}
+
+		if (config.child("testTree")) {
+			tree = (Tree*)app->entityManager->CreateEntity(EntityType::TREE);
+			tree->parameters = config.child("testTree");
+		}
+
+		if (config.child("enemy0")) {
+			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+			enemy->parameters = config.child("enemy0");
+		}
+
+		if (config.child("bat0")) {
+			bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
+			bat->parameters = config.child("bat0");
+		}
+
+		if (config.child("bat1")) {
+			bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
+			bat->parameters = config.child("bat1");
+		}
+
+
+		if (config.child("bat2")) {
+			bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
+			bat->parameters = config.child("bat2");
+		}
+
+		if (config.child("enemy1")) {
+			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+			enemy->parameters = config.child("enemy1");
+		}
+		if (config.child("enemy2")) {
+			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+			enemy->parameters = config.child("enemy2");
+		}
+
+		if (config.child("bat3")) {
+			bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
+			bat->parameters = config.child("bat3");
+		}
+
+		if (config.child("enemy3")) {
+			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+			enemy->parameters = config.child("enemy3");
+		}
+
+		if (config.child("bat4")) {
+			bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
+			bat->parameters = config.child("bat4");
+		}
+
+		if (config.child("bat5")) {
+			bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
+			bat->parameters = config.child("bat5");
+		}
+
+		if (config.child("enemy4")) {
+			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+			enemy->parameters = config.child("enemy4");
+		}
+
+		if (config.child("bat6")) {
+			bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
+			bat->parameters = config.child("bat6");
+		}
+
+		if (config.child("enemy5")) {
+			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+			enemy->parameters = config.child("enemy5");
+		}
+
+		if (config.child("bat7")) {
+			bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
+			bat->parameters = config.child("bat7");
+		}
+
+		if (config.child("map")) {
+			//Get the map name from the config file and assigns the value in the module
+			app->map->name = config.child("map").attribute("name").as_string();
+			app->map->path = config.child("map").attribute("path").as_string();
+		}
+		/*for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
+		{
+			Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+			item->parameters = itemNode;
+		}*/
+
+		
+	}
+	return true;
 	
-	// iterate all objects in the scene
-	// Check https://pugixml.org/docs/quickstart.html#access
-
-
-	if (config.child("player")) {
-		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
-		player->parameters = config.child("player");
-	}
-
-	if (config.child("testTree")) {
-		tree = (Tree*)app->entityManager->CreateEntity(EntityType::TREE);
-		tree->parameters = config.child("testTree");
-	}
-
-	if (config.child("enemy0")) {
-		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy->parameters = config.child("enemy0");
-	}
-
-	if (config.child("bat0")) {
-		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
-		bat->parameters = config.child("bat0");
-	}
-
-	if (config.child("bat1")) {
-		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
-		bat->parameters = config.child("bat1");
-	}
-
-
-	if (config.child("bat2")) {
-		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
-		bat->parameters = config.child("bat2");
-	}
-
-	if (config.child("enemy1")) {
-		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy->parameters = config.child("enemy1");
-	}
-	if (config.child("enemy2")) {
-		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy->parameters = config.child("enemy2");
-	}
-
-	if (config.child("bat3")) {
-		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
-		bat->parameters = config.child("bat3");
-	}
-
-	if (config.child("enemy3")) {
-		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy->parameters = config.child("enemy3");
-	}
-
-	if (config.child("bat4")) {
-		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
-		bat->parameters = config.child("bat4");
-	}
-
-	if (config.child("bat5")) {
-		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
-		bat->parameters = config.child("bat5");
-	}
-
-	if (config.child("enemy4")) {
-		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy->parameters = config.child("enemy4");
-	}
-
-	if (config.child("bat6")) {
-		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
-		bat->parameters = config.child("bat6");
-	}
-
-	if (config.child("enemy5")) {
-		enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		enemy->parameters = config.child("enemy5");
-	}
-
-	if (config.child("bat7")) {
-		bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
-		bat->parameters = config.child("bat7");
-	}
-
-	if (config.child("map")) {
-		//Get the map name from the config file and assigns the value in the module
-		app->map->name = config.child("map").attribute("name").as_string();
-		app->map->path = config.child("map").attribute("path").as_string();
-	}
-	/*for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
-	{
-		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-		item->parameters = itemNode;
-	}*/
-
-	return ret;
 }
 
 // Called before the first frame
 bool Scene::Start()
 {
-	// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
-	img = app->tex->Load("Assets/UI/10hp.png");
-	conf = app->tex->Load("Assets/cosas/macarron.png");
-	//Music is commented so that you can add your own music
-	app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.wav");
 
-	//Get the size of the window
-	app->win->GetWindowSize(windowW, windowH);
+	if (active == true) {
+		// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
+		img = app->tex->Load("Assets/UI/10hp.png");
+		conf = app->tex->Load("Assets/cosas/macarron.png");
+		//Music is commented so that you can add your own music
+		app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.wav");
 
-	//Get the size of the texture
-	app->tex->GetSize(img, texW, texH);
-	
+		//Get the size of the window
+		app->win->GetWindowSize(windowW, windowH);
 
-	textPosX = (float)windowW / 2 - (float)texW / 2;
-	textPosY = (float)windowH / 2 - (float)texH / 2;
+		//Get the size of the texture
+		app->tex->GetSize(img, texW, texH);
 
-	// Texture to highligh mouse position 
-	mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
-	// L15: DONE 2: Instantiate a new GuiControlButton in the Scene
+		textPosX = (float)windowW / 2 - (float)texW / 2;
+		textPosY = (float)windowH / 2 - (float)texH / 2;
 
-	
+		// Texture to highligh mouse position 
+		mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
-	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-		app->map->mapData.width,
-		app->map->mapData.height,
-		app->map->mapData.tileWidth,
-		app->map->mapData.tileHeight,
-		app->map->mapData.tilesets.Count());
+		// L15: DONE 2: Instantiate a new GuiControlButton in the Scene
 
-	SDL_Rect btPos = { windowW /2 + 400, windowH/2 -350 ,80,80 };
-	gcButtom = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);
 
+
+		SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
+			app->map->mapData.width,
+			app->map->mapData.height,
+			app->map->mapData.tileWidth,
+			app->map->mapData.tileHeight,
+			app->map->mapData.tilesets.Count());
+
+		SDL_Rect btPos = { windowW / 2 + 400, windowH / 2 - 350 ,80,80 };
+		gcButtom = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);
+
+		
+	}
 	return true;
 }
 

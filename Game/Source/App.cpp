@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Physics.h"
 #include "GuiManager.h"
+#include "Scene2.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -32,24 +33,29 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio();
 	physics = new Physics();
 	scene = new Scene();
+	scene2 = new Scene2();
 	map = new Map();
 	entityManager = new EntityManager();
 	guiManager = new GuiManager();
+	
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
-	AddModule(win);
-	AddModule(input);
-	AddModule(tex);
-	AddModule(audio);
-	AddModule(physics);
-	AddModule(map);
-	AddModule(scene);
-	AddModule(entityManager);
-	AddModule(guiManager);
+	AddModule(win, true);
+	AddModule(input, true);
+	AddModule(tex, true);
+	AddModule(audio, true);
+	AddModule(physics, false);
+	AddModule(map, false);
+	AddModule(scene2, true);
+	AddModule(scene, false);
+	AddModule(entityManager, true);
+	AddModule(guiManager, false);
+
+
 
 	// Render last to swap buffer
-	AddModule(render);
+	AddModule(render, true);
 
 	LOG("Timer App Constructor: %f", timer.ReadMSec());
 }
@@ -69,10 +75,11 @@ App::~App()
 	modules.Clear();
 }
 
-void App::AddModule(Module* module)
+void App::AddModule(Module* module, bool isActive = true)
 {
-	module->Init();
+	module->Init(isActive);
 	modules.Add(module);
+
 }
 
 // Called before render is available

@@ -20,6 +20,7 @@ class EntityManager;
 class Map;
 class Physics;
 class GuiManager;
+class Scene2;
 
 class App
 {
@@ -44,7 +45,7 @@ public:
 	bool CleanUp();
 
 	// Add a new module to handle
-	void AddModule(Module* module);
+	void AddModule(Module* module, bool isActive);
 
 	// Exposing some properties for reading
 	int GetArgc() const;
@@ -95,6 +96,8 @@ public:
 	Map* map;
 	Physics* physics;
 	GuiManager* guiManager;
+	Scene2* scene2;
+	
 
 private:
 

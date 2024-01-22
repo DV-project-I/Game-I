@@ -21,10 +21,14 @@ PathFinding::~PathFinding()
 // Called before quitting
 bool PathFinding::CleanUp()
 {
-	LOG("Freeing pathfinding library");
+	if (app->map->active == true) {
 
-	lastPath.Clear();
-	RELEASE_ARRAY(map);
+		LOG("Freeing pathfinding library");
+
+		lastPath.Clear();
+		RELEASE_ARRAY(map);
+	}
+	
 
 	return true;
 }

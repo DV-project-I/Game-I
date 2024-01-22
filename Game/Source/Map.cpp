@@ -27,29 +27,36 @@ Map::~Map()
 // Called before render is available
 bool Map::Awake(pugi::xml_node& config)
 {
-    LOG("Loading Map Parser");
-    bool ret = true;
+    if (active == true) {
+        LOG("Loading Map Parser");
+        bool ret = true;
 
-    return ret;
+        
+    }
+    return true;
 }
 
 bool Map::Start() 
 {
+    if (active == true) {
+        //Calls the functon to load the map, make sure that the filename is assigned
+        SString mapPath = path;
+        mapPath += name;
+        Load(mapPath);
 
-    //Calls the functon to load the map, make sure that the filename is assigned
-    SString mapPath = path;
-    mapPath += name;
-    Load(mapPath);
+        pathfinding = new PathFinding();
 
-    pathfinding = new PathFinding();
+        //Initialize the navigation map
+        uchar* navigationMap = NULL;
+        CreateNavigationMap(mapData.width, mapData.height, &navigationMap);
+        pathfinding->SetNavigationMap((uint)mapData.width, (uint)mapData.height, navigationMap);
+        RELEASE_ARRAY(navigationMap);
 
-    //Initialize the navigation map
-    uchar* navigationMap = NULL;
-    CreateNavigationMap(mapData.width, mapData.height, &navigationMap);
-    pathfinding->SetNavigationMap((uint)mapData.width, (uint)mapData.height, navigationMap);
-    RELEASE_ARRAY(navigationMap);
-
+        
+    }
     return true;
+
+   
 }
 
 bool Map::Update(float dt)

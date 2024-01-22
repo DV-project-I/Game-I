@@ -81,6 +81,9 @@ public:
 
 // Box2D World
 b2World* world;
+
+
+
 private:
 
 	// Debug mode

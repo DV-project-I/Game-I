@@ -1,5 +1,5 @@
-#ifndef __SCENE_H__
-#define __SCENE_H__
+#ifndef __SCENE2_H__
+#define __SCENE2_H__
 
 #include "Module.h"
 #include "Player.h"
@@ -13,14 +13,14 @@
 
 struct SDL_Texture;
 
-class Scene : public Module
+class Scene2 : public Module
 {
 public:
 
-	Scene();
+	Scene2();
 
 	// Destructor
-	virtual ~Scene();
+	virtual ~Scene2();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
@@ -40,15 +40,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool SaveState(pugi::xml_node node);
 
-	bool LoadState(pugi::xml_node node);
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
-
-	iPoint GetPLayerPosition();
-
-	Player* player;
 
 	
 private:
@@ -60,10 +54,6 @@ private:
 	uint windowW, windowH;	
 	SDL_Texture* mouseTileTex = nullptr;
 
-	Enemy* enemy;
-	Tree* tree;
-	Bat* bat;
-	PhysBody* pbody;
 
 	GuiControlButton* gcButtom;
 };
