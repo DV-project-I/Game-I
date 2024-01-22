@@ -55,7 +55,9 @@ private:
 	SDL_Texture* mouseTileTex = nullptr;
 
 
-	GuiControlButton* gcButtom;
+	GuiControlButton* play;
+	GuiControlButton* options;
+	GuiControlButton* exit;
 };
 
 #endif // __SCENE_H__

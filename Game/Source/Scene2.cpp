@@ -79,9 +79,14 @@ bool Scene2::Start()
 			app->map->mapData.tileHeight,
 			app->map->mapData.tilesets.Count());
 
-		SDL_Rect btPos = { windowW / 2 + 400, windowH / 2 - 350 ,80,80 };
-		gcButtom = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);
+		
 
+		SDL_Rect btPos = { windowW / 2 -90  , windowH / 2 ,180,80 };
+		play = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);
+		SDL_Rect btPos1 = { windowW / 2 - 90  , windowH / 2 +90 ,180,80 };
+		options = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos1, this);
+		SDL_Rect btPos2 = { windowW / 2 - 90  , windowH / 2 +180 ,180,80 };
+		exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos2, this);
 		
 	}
 	return true;
@@ -90,22 +95,27 @@ bool Scene2::Start()
 // Called each loop iteration
 bool Scene2::PreUpdate()
 {
+
 	return true;
 }
 
 // Called each loop iteration
 bool Scene2::Update(float dt)
 {
-	// Renders the image in the center of the screen 
-	
+
+	app->render->DrawTexture(img, windowW, windowH);
 	return true;
 }
 
 // Called each loop iteration
 bool Scene2::PostUpdate()
 {
+	bool ret = true;
 
-	return true;
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		ret = false;
+
+	return ret;
 }
 
 // Called before quitting

@@ -50,7 +50,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene2, true);
 	AddModule(scene, false);
 	AddModule(entityManager, true);
-	AddModule(guiManager, false);
+	AddModule(guiManager, true);
 
 
 
