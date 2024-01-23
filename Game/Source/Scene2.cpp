@@ -55,6 +55,9 @@ bool Scene2::Start()
 		if (active == true) {
 			// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
 			img = app->tex->Load("Assets/UI/titlescreen.png");
+			boton1 = app->tex->Load("Assets/UI/vsync.png");
+			boton2 = app->tex->Load("Assets/UI/maximize.png");
+			fondo = app->tex->Load("Assets/UI/options.png");
 			//Music is commented so that you can add your own music
 			app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.wav");
 
@@ -97,10 +100,10 @@ bool Scene2::Start()
 			SDL_Rect btPos4 = { windowW / 2 - 100  , windowH / 2 - 200 ,200,50 };
 			volume = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "MyButton", btPos4, this);
 			volume->state = GuiControlState::DISABLED;
-			SDL_Rect btPos5 = { windowW / 2 - 100  , windowH / 2 - 100 ,40,40 };
+			SDL_Rect btPos5 = { 412, 384,64,64 };
 			vsync = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "MyButton", btPos5, this);
 			vsync->state = GuiControlState::DISABLED;
-			SDL_Rect btPos6 = { windowW / 2 - 100  , windowH / 2 - 150 ,40,40 };
+			SDL_Rect btPos6 = { 412, 284 ,64,64 };
 			fullscreen = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "MyButton", btPos6, this);
 			fullscreen->state = GuiControlState::DISABLED;
 		}
@@ -138,6 +141,7 @@ bool Scene2::Update(float dt)
 			active = false;
 		}
 		if (options->state == GuiControlState::PRESSED) {
+			pause = true;
 			//QUITO LOS BOTONES 
 			play->state = GuiControlState::DISABLED;
 			options->state = GuiControlState::DISABLED;
@@ -153,6 +157,7 @@ bool Scene2::Update(float dt)
 		}
 		//MENU DE PAUSE BOTONES
 		if (back->state == GuiControlState::PRESSED) {
+			pause = false;
 			//QUITO LOS BOTONES 
 			play->state = GuiControlState::NORMAL;
 			options->state = GuiControlState::NORMAL;
@@ -166,6 +171,12 @@ bool Scene2::Update(float dt)
 
 
 		app->render->DrawTexture(img,0,0);
+
+		if (pause == true) {
+			app->render->DrawTexture(fondo, 0, 0);
+			app->render->DrawTexture(boton1, 412, 284);
+			app->render->DrawTexture(boton2, 412, 384);
+		}
 
 	}
 	return true;

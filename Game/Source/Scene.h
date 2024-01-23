@@ -56,6 +56,13 @@ private:
 	SDL_Texture* img;
 	SDL_Texture* conf;
 	SDL_Texture* boton1;
+	SDL_Texture* boton2;
+	SDL_Texture* fondo;
+	SDL_Texture* patras;
+	SDL_Texture* vol;
+	SDL_Texture* novol;
+	SDL_Texture* fuera;
+
 	float textPosX, textPosY = 0;
 	uint texW, texH;
 	uint windowW, windowH;	

@@ -147,6 +147,12 @@ bool Scene::Start()
 		img = app->tex->Load("Assets/UI/10hp.png");
 		conf = app->tex->Load("Assets/UI/titlescreen.png");
 		boton1 = app->tex->Load("Assets/UI/vsync.png");
+		boton2 = app->tex->Load("Assets/UI/maximize.png");
+		fondo = app->tex->Load("Assets/UI/options.png");
+		patras = app->tex->Load("Assets/UI/cross.png");
+		vol = app->tex->Load("Assets/UI/volumeup.png");
+		novol = app->tex->Load("Assets/UI/novolume.png");
+		fuera = app->tex->Load("Assets/UI/exit.png");
 		//Music is commented so that you can add your own music
 		app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.wav");
 
@@ -174,23 +180,23 @@ bool Scene::Start()
 			app->map->mapData.tileHeight,
 			app->map->mapData.tilesets.Count());
 
-		SDL_Rect btPos = { windowW / 2 + 400, windowH / 2 - 350 ,80,80 };
+		SDL_Rect btPos = { windowW / 2 + 400, windowH / 2 - 350 ,64,64 };
 		pause = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);
 		pause->state = GuiControlState::NORMAL;
 		//Menu de pausa
-		SDL_Rect btPos3 = { windowW / 2 - 450  , windowH / 2 - 350 ,80,80 };
+		SDL_Rect btPos3 = { windowW / 2 - 450  , windowH / 2 - 350 ,64,64 };
 		back = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos3, this);
 		back->state = GuiControlState::DISABLED;
-		SDL_Rect btPos4 = { windowW / 2 - 100  , windowH / 2 - 200 ,200,50 };
+		SDL_Rect btPos4 = { windowW / 2 - 100 +64 , windowH / 2 - 200 +5 ,200,50 };
 		volume = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "MyButton", btPos4, this);
 		volume->state = GuiControlState::DISABLED;
-		SDL_Rect btPos5 = { windowW / 2 - 100  , windowH / 2 - 100 ,40,40 };
+		SDL_Rect btPos5 = { windowW / 2  -100 , windowH / 2 - 120 ,64,64 };
 		vsync = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "MyButton", btPos5, this);
 		vsync->state = GuiControlState::DISABLED;
-		SDL_Rect btPos6 = { windowW / 2 - 100  , windowH / 2 - 150 ,40,40 };
+		SDL_Rect btPos6 = { windowW / 2  -100 , windowH / 2 - 21 ,64,64 };
 		fullscreen = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "MyButton", btPos6, this);
 		fullscreen->state = GuiControlState::DISABLED;
-		SDL_Rect btPos2 = { windowW / 2 - 210  , windowH / 2 - 115 + 190 ,410,60 };
+		SDL_Rect btPos2 = { windowW / 2 - 450  , windowH / 2 + 270 ,64,64 };
 		exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos2, this);
 		exit->state = GuiControlState::DISABLED;
 	return true;
@@ -259,20 +265,13 @@ bool Scene::Update(float dt)
 		app->render->camera.y = (-player->position.y) * app->win->GetScale() + 384;
 
 		
-		//app->render->DrawTexture(conf, player->position.x - 513, player->position.y - 385);
+		
 
 		//------------------MENU DE PAUSE-----------------------------
 		
 		if (pause->state == GuiControlState::PRESSED) {
 			onpause = true;
-			pause->state = GuiControlState::DISABLED;
-			app->physics->active = false;
-			app->entityManager->active = false;
-			back->state = GuiControlState::NORMAL;
-			volume->state = GuiControlState::NORMAL;
-			vsync->state = GuiControlState::NORMAL;
-			fullscreen->state = GuiControlState::NORMAL;
-			exit->state = GuiControlState::NORMAL;
+			
 		}
 		if (back->state == GuiControlState::PRESSED) {
 			onpause = false;
@@ -291,13 +290,31 @@ bool Scene::Update(float dt)
 		}
 
 		if (onpause == true) {
+			pause->state = GuiControlState::DISABLED;
+			app->physics->active = false;
+			app->entityManager->active = false;
+			back->state = GuiControlState::NORMAL;
+			volume->state = GuiControlState::NORMAL;
+			vsync->state = GuiControlState::NORMAL;
+			fullscreen->state = GuiControlState::NORMAL;
+			exit->state = GuiControlState::NORMAL;
 			app->win->scale = 1;
-			app->render->DrawTexture(boton1, 0, 0);
+			app->render->DrawTexture(fondo, player->position.x - 512, player->position.y - 383);
+			app->render->DrawTexture(boton1, player->position.x -100, player->position.y - 120);
+			app->render->DrawTexture(boton2, player->position.x -100, player->position.y - 20);
+			app->render->DrawTexture(patras, player->position.x - 450, player->position.y -350);
+			if (volumen <= 10) {
+			app->render->DrawTexture(novol, player->position.x - 100, player->position.y - 200);
+			}
+			if (volumen > 10) {
+				app->render->DrawTexture(vol, player->position.x - 100, player->position.y - 200);
+			}
+			app->render->DrawTexture(fuera, player->position.x - 450, player->position.y + 270);
 		}
 		if (onpause == false) {
 			app->render->DrawTexture(img, player->position.x - 160, player->position.y - 120);
 		}
-		
+		//------------------NO MENU DE PAUSE-----------------------------
 
 
 		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
@@ -312,7 +329,7 @@ bool Scene::PostUpdate()
 	bool ret = true;
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+		onpause = true;
 
 	//volume sounds
 	Mix_VolumeMusic(volumen);
