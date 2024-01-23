@@ -30,7 +30,7 @@ Scene::~Scene()
 // Called before render is available
 bool Scene::Awake(pugi::xml_node& config)
 {
-	if (active == true) {
+	
 		LOG("Loading Scene");
 		bool ret = true;
 
@@ -129,21 +129,21 @@ bool Scene::Awake(pugi::xml_node& config)
 			Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 			item->parameters = itemNode;
 		}*/
-
-		
-	}
-	return true;
 	
+	
+	
+	
+	return true;
 }
 
 // Called before the first frame
 bool Scene::Start()
 {
 
-	if (active == true) {
+	
 		// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
 		img = app->tex->Load("Assets/UI/10hp.png");
-		conf = app->tex->Load("Assets/cosas/macarron.png");
+		conf = app->tex->Load("Assets/UI/titlescreen.png");
 		//Music is commented so that you can add your own music
 		app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.wav");
 
@@ -172,10 +172,9 @@ bool Scene::Start()
 			app->map->mapData.tilesets.Count());
 
 		SDL_Rect btPos = { windowW / 2 + 400, windowH / 2 - 350 ,80,80 };
-		gcButtom = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);
-
-		
-	}
+		pause = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);
+		pause->state = GuiControlState::DISABLED;
+	
 	return true;
 }
 
@@ -189,63 +188,65 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	// Renders the image in the center of the screen 
+	if (active == true) {
+		float camSpeed = 0.25f;
 
-	float camSpeed = 0.25f; 
+		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+			app->render->camera.y -= (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y -= (int)ceil(camSpeed * dt);
+		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+			app->render->camera.y += (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y += (int)ceil(camSpeed * dt);
+		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+			app->render->camera.x -= (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x -= (int)ceil(camSpeed * dt);
+		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+			app->render->camera.x += (int)ceil(camSpeed * dt);
 
-	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x += (int)ceil(camSpeed * dt);
-	
-	if (player->hp == 10) {
-		img = app->tex->Load("Assets/UI/10hp.png");
-	}
-	else if (player->hp == 9) {
-		img = app->tex->Load("Assets/UI/9hp.png");
-	}
-	else if (player->hp == 8) {
-		img = app->tex->Load("Assets/UI/8hp.png");
-	}
-	else if (player->hp == 7) {
-		img = app->tex->Load("Assets/UI/7hp.png");
-	}
-	else if (player->hp == 6) {
-		img = app->tex->Load("Assets/UI/6hp.png");
-	}
-	else if (player->hp == 5) {
-		img = app->tex->Load("Assets/UI/5hp.png");
-	}
-	else if (player->hp == 4) {
-		img = app->tex->Load("Assets/UI/4hp.png");
-	}
-	else if (player->hp == 3) {
-		img = app->tex->Load("Assets/UI/3hp.png");
-	}
-	else if (player->hp == 2) {
-		img = app->tex->Load("Assets/UI/2hp.png");
-	}
-	else if (player->hp == 1) {
-		img = app->tex->Load("Assets/UI/1hp.png");
-	}
-	
-	app->render->camera.x = (-player->position.x)* app->win->GetScale() +512; 
-	app->render->camera.y = (-player->position.y)* app->win->GetScale() + 384;
-	
-	app->render->DrawTexture(img, player->position.x -160, player->position.y -120);
-	app->render->DrawTexture(conf, player->position.x + 60, player->position.y - 120);
 
-	
+		if (player->hp == 10) {
+			img = app->tex->Load("Assets/UI/10hp.png");
+		}
+		else if (player->hp == 9) {
+			img = app->tex->Load("Assets/UI/9hp.png");
+		}
+		else if (player->hp == 8) {
+			img = app->tex->Load("Assets/UI/8hp.png");
+		}
+		else if (player->hp == 7) {
+			img = app->tex->Load("Assets/UI/7hp.png");
+		}
+		else if (player->hp == 6) {
+			img = app->tex->Load("Assets/UI/6hp.png");
+		}
+		else if (player->hp == 5) {
+			img = app->tex->Load("Assets/UI/5hp.png");
+		}
+		else if (player->hp == 4) {
+			img = app->tex->Load("Assets/UI/4hp.png");
+		}
+		else if (player->hp == 3) {
+			img = app->tex->Load("Assets/UI/3hp.png");
+		}
+		else if (player->hp == 2) {
+			img = app->tex->Load("Assets/UI/2hp.png");
+		}
+		else if (player->hp == 1) {
+			img = app->tex->Load("Assets/UI/1hp.png");
+		}
 
-	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
-	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
-	
+
+		app->render->camera.x = (-player->position.x) * app->win->GetScale() + 512;
+		app->render->camera.y = (-player->position.y) * app->win->GetScale() + 384;
+
+		app->render->DrawTexture(img, player->position.x - 160, player->position.y - 120);
+		//app->render->DrawTexture(conf, player->position.x - 513, player->position.y - 385);
+
+
+
+		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
+		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
+	}
 	return true;
 }
 

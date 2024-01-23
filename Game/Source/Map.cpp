@@ -27,18 +27,18 @@ Map::~Map()
 // Called before render is available
 bool Map::Awake(pugi::xml_node& config)
 {
-    if (active == true) {
+    
         LOG("Loading Map Parser");
         bool ret = true;
 
         
-    }
+    
     return true;
 }
 
 bool Map::Start() 
 {
-    if (active == true) {
+   
         //Calls the functon to load the map, make sure that the filename is assigned
         SString mapPath = path;
         mapPath += name;
@@ -53,7 +53,7 @@ bool Map::Start()
         RELEASE_ARRAY(navigationMap);
 
         
-    }
+    
     return true;
 
    
@@ -63,49 +63,50 @@ bool Map::Update(float dt)
 {
     bool ret = true;
 
-    if(mapLoaded == false)
-        return false;
+    if (active == true) {
+        if (mapLoaded == false)
+            return false;
 
-    ListItem<MapLayer*>* mapLayerItem;
-    mapLayerItem = mapData.maplayers.start;
+        ListItem<MapLayer*>* mapLayerItem;
+        mapLayerItem = mapData.maplayers.start;
 
-    while (mapLayerItem != NULL)
-    {
-
-        if (mapLayerItem->data->properties.GetProperty("Draw") != NULL && mapLayerItem->data->properties.GetProperty("Draw")->value) 
+        while (mapLayerItem != NULL)
         {
-            SDL_Rect const camera = app->render->camera;
-            
-            iPoint const cameraPos = WorldToMap(-camera.x / app->win->GetScale(), ((camera.y) * -1)/ app->win->GetScale());
-            iPoint const cameraSize = WorldToMap((camera.w - camera.x +50)/ app->win->GetScale(), (camera.h - camera.y +50)/ app->win->GetScale());
-            for (int x = cameraPos.x; x < cameraSize.x; x++)
+
+            if (mapLayerItem->data->properties.GetProperty("Draw") != NULL && mapLayerItem->data->properties.GetProperty("Draw")->value)
             {
-                for (int y = cameraPos.y; y < cameraSize.y; y++)
+                SDL_Rect const camera = app->render->camera;
+
+                iPoint const cameraPos = WorldToMap(-camera.x / app->win->GetScale(), ((camera.y) * -1) / app->win->GetScale());
+                iPoint const cameraSize = WorldToMap((camera.w - camera.x + 50) / app->win->GetScale(), (camera.h - camera.y + 50) / app->win->GetScale());
+                for (int x = cameraPos.x; x < cameraSize.x; x++)
                 {
-                    int gid = mapLayerItem->data->Get(x, y);
-                    
-                    if (gid == 0)
+                    for (int y = cameraPos.y; y < cameraSize.y; y++)
                     {
-                        continue;
+                        int gid = mapLayerItem->data->Get(x, y);
+
+                        if (gid == 0)
+                        {
+                            continue;
+                        }
+                        TileSet* tileset = GetTilesetFromTileId(gid);
+
+                        SDL_Rect r = tileset->GetRect(gid);
+                        iPoint pos = MapToWorld(x, y);
+
+                        app->render->DrawTexture(tileset->texture,
+                            pos.x,
+                            pos.y,
+                            &r);
+
                     }
-                    TileSet* tileset = GetTilesetFromTileId(gid);
-
-                    SDL_Rect r = tileset->GetRect(gid);
-                    iPoint pos = MapToWorld(x, y);
-
-                    app->render->DrawTexture(tileset->texture,
-                        pos.x,
-                        pos.y,
-                        &r);
-                   
                 }
             }
+
+            mapLayerItem = mapLayerItem->next;
+
         }
-        
-        mapLayerItem = mapLayerItem->next;
-
     }
-
     return ret;
 }
 

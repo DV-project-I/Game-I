@@ -9,7 +9,7 @@
   </renderer>
 
   <window>
-    <resolution width="1024" height="768" scale="3"/>
+    <resolution width="1024" height="768" scale="1"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
@@ -43,6 +43,7 @@
 	<bat7 x ="1872" y="1040" texturepath ="Assets/personajes/MurcielagoYArbol.png"/>
   
   </scene>
+
 
   
 </config>

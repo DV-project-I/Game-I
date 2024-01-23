@@ -97,7 +97,7 @@ public:
 	Physics* physics;
 	GuiManager* guiManager;
 	Scene2* scene2;
-	
+	List<Module *> modules;
 
 private:
 
@@ -106,7 +106,7 @@ private:
 	SString gameTitle;
 	SString organization;
 
-	List<Module *> modules;
+	
 
 	// xml_document to store the config file and
 	// xml_node(s) to read specific branches of the xml

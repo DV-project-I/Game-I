@@ -58,6 +58,11 @@ private:
 	GuiControlButton* play;
 	GuiControlButton* options;
 	GuiControlButton* exit;
+
+	GuiControlButton* volume;
+	GuiControlButton* back;
+	GuiControlButton* fullscreen;
+	GuiControlButton* vsync;
 };
 
 #endif // __SCENE_H__

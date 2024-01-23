@@ -65,7 +65,7 @@ private:
 	Bat* bat;
 	PhysBody* pbody;
 
-	GuiControlButton* gcButtom;
+	GuiControlButton* pause;
 };
 
 #endif // __SCENE_H__

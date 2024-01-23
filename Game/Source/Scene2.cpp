@@ -48,47 +48,62 @@ bool Scene2::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Scene2::Start()
 {
+	
 
-	if (active == true) {
-		// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
-		img = app->tex->Load("Assets/UI/titlescreen.png");
-		//Music is commented so that you can add your own music
-		app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.wav");
+		if (active == true) {
+			// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
+			img = app->tex->Load("Assets/UI/titlescreen.png");
+			//Music is commented so that you can add your own music
+			app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.wav");
 
-		//Get the size of the window
-		app->win->GetWindowSize(windowW, windowH);
+			//Get the size of the window
+			app->win->GetWindowSize(windowW, windowH);
 
-		//Get the size of the texture
-		app->tex->GetSize(img, texW, texH);
-
-
-		textPosX = (float)windowW / 2 - (float)texW / 2;
-		textPosY = (float)windowH / 2 - (float)texH / 2;
-
-		// Texture to highligh mouse position 
-		mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
-
-		// L15: DONE 2: Instantiate a new GuiControlButton in the Scene
+			//Get the size of the texture
+			app->tex->GetSize(img, texW, texH);
 
 
+			textPosX = (float)windowW / 2 - (float)texW / 2;
+			textPosY = (float)windowH / 2 - (float)texH / 2;
 
-		SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-			app->map->mapData.width,
-			app->map->mapData.height,
-			app->map->mapData.tileWidth,
-			app->map->mapData.tileHeight,
-			app->map->mapData.tilesets.Count());
+			// Texture to highligh mouse position 
+			mouseTileTex = app->tex->Load("Assets/Maps/tileSelection.png");
 
-		
+			// L15: DONE 2: Instantiate a new GuiControlButton in the Scene
 
-		SDL_Rect btPos = { windowW / 2 -90  , windowH / 2 ,180,80 };
-		play = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);
-		SDL_Rect btPos1 = { windowW / 2 - 90  , windowH / 2 +90 ,180,80 };
-		options = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos1, this);
-		SDL_Rect btPos2 = { windowW / 2 - 90  , windowH / 2 +180 ,180,80 };
-		exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos2, this);
-		
-	}
+
+
+			SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
+				app->map->mapData.width,
+				app->map->mapData.height,
+				app->map->mapData.tileWidth,
+				app->map->mapData.tileHeight,
+				app->map->mapData.tilesets.Count());
+
+
+			//TITLE SCREEN
+			SDL_Rect btPos = { windowW / 2 - 210  , windowH / 2 -115 ,410,80 };
+			play = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);
+			SDL_Rect btPos1 = { windowW / 2 - 210  , windowH / 2 - 115 +105 ,410,70 };
+			options = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos1, this);
+			SDL_Rect btPos2 = { windowW / 2 - 210  , windowH / 2 - 115 +190 ,410,60 };
+			exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos2, this);
+			//OPTIONS
+			SDL_Rect btPos3 = { windowW / 2 - 450  , windowH / 2 - 350 ,80,80 };
+			back = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos3, this);
+			back->state = GuiControlState::DISABLED;
+			SDL_Rect btPos4 = { windowW / 2 - 100  , windowH / 2 - 200 ,200,20 };
+			volume = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "MyButton", btPos4, this);
+			volume->state = GuiControlState::DISABLED;
+			SDL_Rect btPos5 = { windowW / 2 - 100  , windowH / 2 - 100 ,40,40 };
+			vsync = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "MyButton", btPos5, this);
+			vsync->state = GuiControlState::DISABLED;
+			SDL_Rect btPos6 = { windowW / 2 - 100  , windowH / 2 - 150 ,40,40 };
+			fullscreen = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "MyButton", btPos6, this);
+			fullscreen->state = GuiControlState::DISABLED;
+		}
+
+	
 	return true;
 }
 
@@ -103,7 +118,51 @@ bool Scene2::PreUpdate()
 bool Scene2::Update(float dt)
 {
 
-	app->render->DrawTexture(img, windowW, windowH);
+	if (active == true) {
+
+		if (play->state == GuiControlState::PRESSED)
+		{
+			app->scene->active = true;
+			app->map->active = true;
+			app->physics->active = true;
+			app->entityManager->active = true;
+			play->state = GuiControlState::DISABLED;
+			options->state = GuiControlState::DISABLED;
+			exit->state = GuiControlState::DISABLED;
+			app->win->scale = 3;
+			active = false;
+		}
+		if (options->state == GuiControlState::PRESSED) {
+			//QUITO LOS BOTONES 
+			play->state = GuiControlState::DISABLED;
+			options->state = GuiControlState::DISABLED;
+			exit->state = GuiControlState::DISABLED;
+			//MENU DE PAUSE
+			back->state = GuiControlState::NORMAL;
+			volume->state = GuiControlState::NORMAL;
+			vsync->state = GuiControlState::NORMAL;
+			fullscreen->state = GuiControlState::NORMAL;
+		}
+		if (exit->state == GuiControlState::PRESSED) {
+			return false;
+		}
+		//MENU DE PAUSE BOTONES
+		if (back->state == GuiControlState::PRESSED) {
+			//QUITO LOS BOTONES 
+			play->state = GuiControlState::NORMAL;
+			options->state = GuiControlState::NORMAL;
+			exit->state = GuiControlState::NORMAL;
+			//MENU DE PAUSE
+			back->state = GuiControlState::DISABLED;
+			volume->state = GuiControlState::DISABLED;
+			vsync->state = GuiControlState::DISABLED;
+			fullscreen->state = GuiControlState::DISABLED;
+		}
+
+
+		app->render->DrawTexture(img,0,0);
+
+	}
 	return true;
 }
 

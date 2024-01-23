@@ -45,11 +45,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input, true);
 	AddModule(tex, true);
 	AddModule(audio, true);
-	AddModule(physics, false);
-	AddModule(map, false);
-	AddModule(scene2, true);
-	AddModule(scene, false);
-	AddModule(entityManager, true);
+	AddModule(physics, false); 		//Tocar estos para las escenas
+	AddModule(map, false);			//Tocar estos para las escenas
+	AddModule(scene2, true);		//Tocar estos para las escenas
+	AddModule(scene, false);		//Tocar estos para las escenas
+	AddModule(entityManager, false);//Tocar estos para las escenas
 	AddModule(guiManager, true);
 
 
