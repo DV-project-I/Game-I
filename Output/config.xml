@@ -24,7 +24,7 @@
   <scene>
 	<map path="Assets/Maps/" name="MapTemplate2.tmx"/>
     <player x="450" y="532" texturepath="Assets/personajes/SpritesheetParca/PARCA3.png"/>
-    <item x="400" y="532" texturepath="Assets/personajes/Torrente/Torrente.png"/>
+    <item x="400" y="532" texturepath="Assets/cosas/almaflotante.png"/>
 
 	<testTree x ="550" y="532" texturepath ="Assets/personajes/MurcielagoYArbol.png"/>  
 	<enemy0 x ="288" y="672" texturepath ="Assets/personajes/Torrente/torrenteSpritesheet.png"/>

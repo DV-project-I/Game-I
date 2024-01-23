@@ -63,6 +63,7 @@ private:
 	SDL_Texture* novol;
 	SDL_Texture* fuera;
 
+
 	float textPosX, textPosY = 0;
 	uint texW, texH;
 	uint windowW, windowH;	
@@ -72,6 +73,7 @@ private:
 	Tree* tree;
 	Bat* bat;
 	PhysBody* pbody;
+	Item* item;
 
 	
 	GuiControlButton* exit;

@@ -16,12 +16,12 @@ public:
     bool Update(float dt);
     bool Draw(Render* render);
     bool DrawDebug(Render* render);
-
+    bool checked = false;
 private:
 
     // GuiCheckBox specific properties
     // Maybe some animation properties for state change?
-    bool checked = false;
+   
 
     bool playFxOnce = true;
 };

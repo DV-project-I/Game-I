@@ -58,6 +58,9 @@ bool Scene2::Start()
 			boton1 = app->tex->Load("Assets/UI/vsync.png");
 			boton2 = app->tex->Load("Assets/UI/maximize.png");
 			fondo = app->tex->Load("Assets/UI/options.png");
+			patras = app->tex->Load("Assets/UI/cross.png");
+			vol = app->tex->Load("Assets/UI/volumeup.png");
+			novol = app->tex->Load("Assets/UI/novolume.png");
 			//Music is commented so that you can add your own music
 			app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.wav");
 
@@ -94,15 +97,16 @@ bool Scene2::Start()
 			SDL_Rect btPos2 = { windowW / 2 - 210  , windowH / 2 - 115 +190 ,410,60 };
 			exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos2, this);
 			//OPTIONS
-			SDL_Rect btPos3 = { windowW / 2 - 450  , windowH / 2 - 350 ,80,80 };
+			SDL_Rect btPos3 = { windowW / 2 - 450  , windowH / 2 - 350 ,64,64 };
 			back = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos3, this);
 			back->state = GuiControlState::DISABLED;
-			SDL_Rect btPos4 = { windowW / 2 - 100  , windowH / 2 - 200 ,200,50 };
+			SDL_Rect btPos4 = { windowW / 2 - 100 + 64 , windowH / 2 - 200 + 5 ,200,50 };
 			volume = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "MyButton", btPos4, this);
 			volume->state = GuiControlState::DISABLED;
 			SDL_Rect btPos5 = { 412, 384,64,64 };
 			vsync = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "MyButton", btPos5, this);
 			vsync->state = GuiControlState::DISABLED;
+			////////////////////////////////////PAU SOCORRO ME CORRO/////////////////////////////////////////////
 			SDL_Rect btPos6 = { 412, 284 ,64,64 };
 			fullscreen = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "MyButton", btPos6, this);
 			fullscreen->state = GuiControlState::DISABLED;
@@ -168,7 +172,9 @@ bool Scene2::Update(float dt)
 			vsync->state = GuiControlState::DISABLED;
 			fullscreen->state = GuiControlState::DISABLED;
 		}
-
+		/*if (fullscreen.) {
+			sdl_setwindowfullscreen(app->win->window, sdl_window_fullscreen);
+		}*/
 
 		app->render->DrawTexture(img,0,0);
 
@@ -176,6 +182,13 @@ bool Scene2::Update(float dt)
 			app->render->DrawTexture(fondo, 0, 0);
 			app->render->DrawTexture(boton1, 412, 284);
 			app->render->DrawTexture(boton2, 412, 384);
+			app->render->DrawTexture(patras, 62, 34);
+			if (volumen <= 0) {
+				app->render->DrawTexture(novol, 412,184);
+			}
+			if (volumen > 0) {
+				app->render->DrawTexture(vol, 412, 184);
+			}
 		}
 
 	}

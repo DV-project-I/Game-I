@@ -12,6 +12,7 @@
 #include "Entity.h"
 #include "../bat.h"
 #include "Tree.h"
+#include "Item.h"
 
 #include "GuiControl.h"
 #include "GuiManager.h"
@@ -44,6 +45,11 @@ bool Scene::Awake(pugi::xml_node& config)
 		if (config.child("player")) {
 			player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 			player->parameters = config.child("player");
+		}
+
+		if (config.child("item")) {
+			item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+			item->parameters = config.child("item");
 		}
 
 		if (config.child("testTree")) {
@@ -145,7 +151,7 @@ bool Scene::Start()
 	
 		// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
 		img = app->tex->Load("Assets/UI/10hp.png");
-		conf = app->tex->Load("Assets/UI/titlescreen.png");
+		conf = app->tex->Load("Assets/UI/ajustes.png");
 		boton1 = app->tex->Load("Assets/UI/vsync.png");
 		boton2 = app->tex->Load("Assets/UI/maximize.png");
 		fondo = app->tex->Load("Assets/UI/options.png");
@@ -180,7 +186,7 @@ bool Scene::Start()
 			app->map->mapData.tileHeight,
 			app->map->mapData.tilesets.Count());
 
-		SDL_Rect btPos = { windowW / 2 + 400, windowH / 2 - 350 ,64,64 };
+		SDL_Rect btPos = { windowW / 2 + 400, windowH / 2 - 350 ,63,63 };
 		pause = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);
 		pause->state = GuiControlState::NORMAL;
 		//Menu de pausa
@@ -303,15 +309,16 @@ bool Scene::Update(float dt)
 			app->render->DrawTexture(boton1, player->position.x -100, player->position.y - 120);
 			app->render->DrawTexture(boton2, player->position.x -100, player->position.y - 20);
 			app->render->DrawTexture(patras, player->position.x - 450, player->position.y -350);
-			if (volumen <= 10) {
+			if (volumen <= 0) {
 			app->render->DrawTexture(novol, player->position.x - 100, player->position.y - 200);
 			}
-			if (volumen > 10) {
+			if (volumen > 0) {
 				app->render->DrawTexture(vol, player->position.x - 100, player->position.y - 200);
 			}
 			app->render->DrawTexture(fuera, player->position.x - 450, player->position.y + 270);
 		}
 		if (onpause == false) {
+			app->render->DrawTexture(conf, player->position.x + 133, player->position.y -117);
 			app->render->DrawTexture(img, player->position.x - 160, player->position.y - 120);
 		}
 		//------------------NO MENU DE PAUSE-----------------------------
