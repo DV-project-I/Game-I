@@ -49,7 +49,7 @@ public:
 	iPoint GetPLayerPosition();
 
 	Player* player;
-
+	float volumen = 90;
 	GuiControlButton* pause;
 private:
 
@@ -71,6 +71,8 @@ private:
 	GuiControlButton* back;
 	GuiControlButton* fullscreen;
 	GuiControlButton* vsync;
+
+	
 };
 
 #endif // __SCENE_H__

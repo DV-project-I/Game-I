@@ -99,7 +99,7 @@ bool GuiSlider::Update( float dt)
             app->render->DrawRectangle({ bounds.x,bounds.y, sliderPosx - bounds.x,50 }, 0, 100, 50, 255, true, false);
            // app->render->DrawTexture(texture, bounds.x, bounds.y, &SDL_Rect({ 0, 23, 116, 23 }), 0, 0, 0, 0, false);
            // app->render->DrawTexture(texture, sliderPosx, bounds.y, &SDL_Rect({ 116, 23 , 16, 23 }), 0, 0, 0, 0, false);
-            //app->scene->volume = value2;
+            app->scene->volumen = value2;
             break;
 
         case GuiControlState::SELECTED:
@@ -121,7 +121,7 @@ bool GuiSlider::Update( float dt)
         //app->render->DrawText(text.GetString(), bounds.x, bounds.y - 20, bounds.w, bounds.h);
     }
 
-   //app->scene->volume = value2;
+   app->scene->volumen = value2;
     return false;
 }
 

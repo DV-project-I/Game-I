@@ -6,11 +6,13 @@
 	<audio />
 	<:anonymous />
 	<:anonymous />
+	<scene2 />
 	<scene>
-		<player x="491" y="1567" />
+		<player x="347" y="1535" />
 		<enemy x="1736" y="1287" />
-		<bat x="1838" y="1047" />
+		<bat x="1855" y="1063" />
 	</scene>
 	<entitymanager />
+	<guiManager />
 	<renderer />
 </game_state>

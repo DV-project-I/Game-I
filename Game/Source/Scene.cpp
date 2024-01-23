@@ -18,6 +18,8 @@
 #include "Defs.h"
 #include "Log.h"
 
+#include "SDL_mixer/include/SDL_mixer.h"
+
 Scene::Scene() : Module()
 {
 	name.Create("scene");
@@ -299,6 +301,10 @@ bool Scene::PostUpdate()
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+
+	//volume sounds
+	Mix_VolumeMusic(volumen);
+	Mix_Volume(-1, volumen);
 
 	return ret;
 }
