@@ -92,7 +92,7 @@ bool Scene2::Start()
 			SDL_Rect btPos3 = { windowW / 2 - 450  , windowH / 2 - 350 ,80,80 };
 			back = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos3, this);
 			back->state = GuiControlState::DISABLED;
-			SDL_Rect btPos4 = { windowW / 2 - 100  , windowH / 2 - 200 ,200,20 };
+			SDL_Rect btPos4 = { windowW / 2 - 100  , windowH / 2 - 200 ,200,50 };
 			volume = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "MyButton", btPos4, this);
 			volume->state = GuiControlState::DISABLED;
 			SDL_Rect btPos5 = { windowW / 2 - 100  , windowH / 2 - 100 ,40,40 };
@@ -120,6 +120,8 @@ bool Scene2::Update(float dt)
 
 	if (active == true) {
 
+		app->scene->pause->state = GuiControlState::DISABLED;
+
 		if (play->state == GuiControlState::PRESSED)
 		{
 			app->scene->active = true;
@@ -130,6 +132,7 @@ bool Scene2::Update(float dt)
 			options->state = GuiControlState::DISABLED;
 			exit->state = GuiControlState::DISABLED;
 			app->win->scale = 3;
+			app->scene->pause->state = GuiControlState::NORMAL;
 			active = false;
 		}
 		if (options->state == GuiControlState::PRESSED) {

@@ -50,7 +50,7 @@ public:
 
 	Player* player;
 
-	
+	GuiControlButton* pause;
 private:
 
 	SDL_Texture* img;
@@ -59,13 +59,18 @@ private:
 	uint texW, texH;
 	uint windowW, windowH;	
 	SDL_Texture* mouseTileTex = nullptr;
-
+	
 	Enemy* enemy;
 	Tree* tree;
 	Bat* bat;
 	PhysBody* pbody;
 
-	GuiControlButton* pause;
+	
+	GuiControlButton* exit;
+	GuiControlButton* volume;
+	GuiControlButton* back;
+	GuiControlButton* fullscreen;
+	GuiControlButton* vsync;
 };
 
 #endif // __SCENE_H__

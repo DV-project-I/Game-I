@@ -173,8 +173,23 @@ bool Scene::Start()
 
 		SDL_Rect btPos = { windowW / 2 + 400, windowH / 2 - 350 ,80,80 };
 		pause = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);
-		pause->state = GuiControlState::DISABLED;
-	
+		pause->state = GuiControlState::NORMAL;
+		//Menu de pausa
+		SDL_Rect btPos3 = { windowW / 2 - 450  , windowH / 2 - 350 ,80,80 };
+		back = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos3, this);
+		back->state = GuiControlState::DISABLED;
+		SDL_Rect btPos4 = { windowW / 2 - 100  , windowH / 2 - 200 ,200,50 };
+		volume = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 1, "MyButton", btPos4, this);
+		volume->state = GuiControlState::DISABLED;
+		SDL_Rect btPos5 = { windowW / 2 - 100  , windowH / 2 - 100 ,40,40 };
+		vsync = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "MyButton", btPos5, this);
+		vsync->state = GuiControlState::DISABLED;
+		SDL_Rect btPos6 = { windowW / 2 - 100  , windowH / 2 - 150 ,40,40 };
+		fullscreen = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "MyButton", btPos6, this);
+		fullscreen->state = GuiControlState::DISABLED;
+		SDL_Rect btPos2 = { windowW / 2 - 210  , windowH / 2 - 115 + 190 ,410,60 };
+		exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos2, this);
+		exit->state = GuiControlState::DISABLED;
 	return true;
 }
 
@@ -188,7 +203,8 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	// Renders the image in the center of the screen 
-	if (active == true) {
+	if (active == true) {		
+		
 		float camSpeed = 0.25f;
 
 		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
@@ -242,6 +258,32 @@ bool Scene::Update(float dt)
 		app->render->DrawTexture(img, player->position.x - 160, player->position.y - 120);
 		//app->render->DrawTexture(conf, player->position.x - 513, player->position.y - 385);
 
+		//------------------MENU DE PAUSE-----------------------------
+		
+		if (pause->state == GuiControlState::PRESSED) {
+			pause->state = GuiControlState::DISABLED;
+			app->physics->active = false;
+			app->entityManager->active = false;
+			back->state = GuiControlState::NORMAL;
+			volume->state = GuiControlState::NORMAL;
+			vsync->state = GuiControlState::NORMAL;
+			fullscreen->state = GuiControlState::NORMAL;
+			exit->state = GuiControlState::NORMAL;
+		}
+		if (back->state == GuiControlState::PRESSED) {
+			pause->state = GuiControlState::NORMAL;
+			app->physics->active = true;
+			app->entityManager->active = true;
+			back->state = GuiControlState::DISABLED;
+			volume->state = GuiControlState::DISABLED;
+			vsync->state = GuiControlState::DISABLED;
+			fullscreen->state = GuiControlState::DISABLED;
+			exit->state = GuiControlState::DISABLED;
+		}
+		if (exit->state == GuiControlState::PRESSED) {
+			return false;
+		}
+		
 
 
 		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();

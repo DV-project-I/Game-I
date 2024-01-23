@@ -48,13 +48,13 @@ bool GuiControlButton::Update(float dt)
 			app->render->DrawRectangle(bounds, 200, 200, 200, 155, true, false);
 			break;
 		case GuiControlState::NORMAL:
-			app->render->DrawRectangle(bounds, 0, 0, 255, 155, true, false);
+			app->render->DrawRectangle(bounds, 0, 255, 0, 155, true, false);
 			break;
 		case GuiControlState::FOCUSED:
-			app->render->DrawRectangle(bounds, 0, 0, 20, 155, true, false);
+			app->render->DrawRectangle(bounds, 0, 20, 0, 155, true, false);
 			break;
 		case GuiControlState::PRESSED:
-			app->render->DrawRectangle(bounds, 0, 255, 0, 155, true, false);
+			app->render->DrawRectangle(bounds, 0, 0, 255, 155, true, false);
 			break;
 		}
 
