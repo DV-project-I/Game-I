@@ -146,6 +146,7 @@ bool Scene::Start()
 		// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
 		img = app->tex->Load("Assets/UI/10hp.png");
 		conf = app->tex->Load("Assets/UI/titlescreen.png");
+		boton1 = app->tex->Load("Assets/UI/vsync.png");
 		//Music is commented so that you can add your own music
 		app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.wav");
 
@@ -257,12 +258,13 @@ bool Scene::Update(float dt)
 		app->render->camera.x = (-player->position.x) * app->win->GetScale() + 512;
 		app->render->camera.y = (-player->position.y) * app->win->GetScale() + 384;
 
-		app->render->DrawTexture(img, player->position.x - 160, player->position.y - 120);
+		
 		//app->render->DrawTexture(conf, player->position.x - 513, player->position.y - 385);
 
 		//------------------MENU DE PAUSE-----------------------------
 		
 		if (pause->state == GuiControlState::PRESSED) {
+			onpause = true;
 			pause->state = GuiControlState::DISABLED;
 			app->physics->active = false;
 			app->entityManager->active = false;
@@ -273,6 +275,8 @@ bool Scene::Update(float dt)
 			exit->state = GuiControlState::NORMAL;
 		}
 		if (back->state == GuiControlState::PRESSED) {
+			onpause = false;
+			app->win->scale = 3;
 			pause->state = GuiControlState::NORMAL;
 			app->physics->active = true;
 			app->entityManager->active = true;
@@ -284,6 +288,14 @@ bool Scene::Update(float dt)
 		}
 		if (exit->state == GuiControlState::PRESSED) {
 			return false;
+		}
+
+		if (onpause == true) {
+			app->win->scale = 1;
+			app->render->DrawTexture(boton1, 0, 0);
+		}
+		if (onpause == false) {
+			app->render->DrawTexture(img, player->position.x - 160, player->position.y - 120);
 		}
 		
 

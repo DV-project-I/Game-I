@@ -52,9 +52,10 @@ public:
 	float volumen = 90;
 	GuiControlButton* pause;
 private:
-
+	bool onpause;
 	SDL_Texture* img;
 	SDL_Texture* conf;
+	SDL_Texture* boton1;
 	float textPosX, textPosY = 0;
 	uint texW, texH;
 	uint windowW, windowH;	

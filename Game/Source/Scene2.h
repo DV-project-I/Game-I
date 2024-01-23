@@ -43,7 +43,7 @@ public:
 
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
-
+	float volumen = 90;
 	
 private:
 

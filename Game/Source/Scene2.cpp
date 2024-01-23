@@ -19,6 +19,8 @@
 #include "Defs.h"
 #include "Log.h"
 
+#include "SDL_mixer/include/SDL_mixer.h"
+
 Scene2::Scene2() : Module()
 {
 	name.Create("scene2");
@@ -176,6 +178,9 @@ bool Scene2::PostUpdate()
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+
+	Mix_VolumeMusic(volumen);
+	Mix_Volume(-1, volumen);
 
 	return ret;
 }
