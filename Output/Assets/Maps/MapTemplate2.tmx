@@ -68,6 +68,9 @@
  <tileset firstgid="11431" name="salaboss" tilewidth="16" tileheight="16" tilecount="3008" columns="64">
   <image source="../tileset/salaboss.png" width="1024" height="764"/>
  </tileset>
+ <tileset firstgid="14439" name="door" tilewidth="16" tileheight="16" tilecount="4" columns="2">
+  <image source="../tileset/door.png" width="32" height="32"/>
+ </tileset>
  <layer id="7" name="Capa de patrones 4" width="320" height="128" opacity="0.9">
   <properties>
    <property name="Draw" type="bool" value="true"/>
@@ -61300,8 +61303,8 @@
    <tile gid="11224"/>
    <tile gid="11226"/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="14439"/>
+   <tile gid="14440"/>
    <tile/>
    <tile/>
    <tile/>
@@ -61620,6 +61623,8 @@
    <tile gid="778"/>
    <tile gid="777"/>
    <tile/>
+   <tile gid="14441"/>
+   <tile gid="14442"/>
    <tile/>
    <tile/>
    <tile/>
@@ -61646,8 +61651,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
    <tile gid="777"/>
    <tile gid="781"/>
    <tile gid="780"/>
@@ -66879,13 +66882,14 @@
    <tile gid="777"/>
    <tile gid="781"/>
    <tile gid="781"/>
-   <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="14439"/>
+   <tile gid="14440"/>
    <tile/>
    <tile/>
    <tile/>
@@ -66947,7 +66951,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
    <tile gid="779"/>
    <tile gid="781"/>
    <tile gid="778"/>
@@ -67199,14 +67202,14 @@
    <tile gid="780"/>
    <tile gid="778"/>
    <tile gid="779"/>
-   <tile/>
-   <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="14441"/>
+   <tile gid="14442"/>
    <tile/>
    <tile/>
    <tile/>
