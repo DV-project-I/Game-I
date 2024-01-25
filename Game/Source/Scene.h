@@ -47,11 +47,14 @@ public:
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
+
 	iPoint GetPLayerPosition();
 
 	Player* player;
 	float volumen = 90;
 	GuiControlButton* pause;
+	SDL_Texture* diescreen;
+	SDL_Texture* winscreen;
 private:
 	bool onpause;
 	SDL_Texture* img;
@@ -63,6 +66,7 @@ private:
 	SDL_Texture* vol;
 	SDL_Texture* novol;
 	SDL_Texture* fuera;
+	
 
 
 	float textPosX, textPosY = 0;

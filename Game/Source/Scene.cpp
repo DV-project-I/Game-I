@@ -161,6 +161,8 @@ bool Scene::Start()
 		vol = app->tex->Load("Assets/UI/volumeup.png");
 		novol = app->tex->Load("Assets/UI/novolume.png");
 		fuera = app->tex->Load("Assets/UI/exit.png");
+		diescreen = app->tex->Load("Assets/UI/youlose.png");
+		winscreen = app->tex->Load("Assets/UI/youwin.png");
 		//Music is commented so that you can add your own music
 		app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.wav");
 
@@ -331,11 +333,31 @@ bool Scene::Update(float dt)
 			
 		}
 		//------------------NO MENU DE PAUSE-----------------------------
-
+		
+		if (player->vidas <= 0) {
+			app->physics->active = false;
+			app->entityManager->active = false;
+			pause->state = GuiControlState::DISABLED;
+			app->win->scale = 1;
+			app->render->DrawTexture(diescreen, player->position.x - 512, player->position.y - 383 - 100);
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+				return false;
+		}
+		if (boss->ganaste == true) {
+			app->physics->active = false;
+			app->entityManager->active = false;
+			pause->state = GuiControlState::DISABLED;
+			app->win->scale = 1;
+			app->render->DrawTexture(winscreen, player->position.x - 512, player->position.y - 383 - 100);
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+				return false;
+		}
+		
 
 		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
 	}
+	
 	return true;
 }
 

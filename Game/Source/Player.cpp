@@ -429,6 +429,7 @@ void Player :: PlayerDeath()
 {			
 	currentAnimation = &DeathAnim;
 	
+	vidas--;
 	if (currentAnimation->HasFinished() == true && pasaste == false) {		
 		SetPosition(parameters.attribute("x").as_int(), parameters.attribute("y").as_int());
 		hp = 10;

@@ -23,7 +23,7 @@
 
   <scene>
 	<map path="Assets/Maps/" name="MapTemplate2.tmx"/>
-    <player x="3990" y="1304" texturepath="Assets/personajes/SpritesheetParca/PARCA3.png"/>
+    <player x="550" y="532" texturepath="Assets/personajes/SpritesheetParca/PARCA3.png"/>
     <item x="1902" y="1040" texturepath="Assets/cosas/almaflotante.png"/>
 
 	<boss x ="3400" y="1744" texturepath ="Assets/personajes/Torrente/torrenteSpritesheet.png"/>  

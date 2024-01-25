@@ -62,7 +62,7 @@ public:
 	bool pathmode = false;
 
 	bool Ataca;
-
+	bool ganaste = false;
 
 	Animation IdleAnimIzq;
 	Animation IdleAnimDer;

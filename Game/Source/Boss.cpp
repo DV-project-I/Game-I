@@ -137,6 +137,7 @@ bool Boss::Update(float dt) {
 		pbody->ctype = ColliderType::ITEM;
 		movX = 0;
 		movY = 0;
+		ganaste = true;
 
 	}
 	else {
@@ -295,6 +296,7 @@ void Boss::SetPosition(int x, int y) {
 void Boss::EnemyDeath()
 {
 	currentAnimation = &DeathAnim;
+
 	if (currentAnimation->HasFinished() == true) {
 		SetPosition(parameters.attribute("x").as_int(), parameters.attribute("y").as_int());
 	}
