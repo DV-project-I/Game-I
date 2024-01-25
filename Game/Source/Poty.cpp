@@ -12,7 +12,7 @@
 
 Poty::Poty() : Entity(EntityType::POTION)
 {
-	name.Create("item");	
+	name.Create("poty");	
 	alma.PushBack({ 0, 0, 16, 16 });
 	alma.PushBack({ 16, 0, 16, 16 });
 	alma.PushBack({ 32, 0, 16, 16 });
@@ -37,11 +37,13 @@ bool Poty::Awake() {
 
 bool Poty::Start() {
 	
+	
 	//initilize textures
 	texture = app->tex->Load(texturePath);
-	pbody = app->physics->CreateCircle(position.x + 8, position.y + 8, 8, bodyType::STATIC);
-	pbody->ctype = ColliderType::ITEM;
-	
+	pbody = app->physics->CreateCircle(position.x + 8, position.y + 8, 8, bodyType::DYNAMIC, true);
+	pbody->ctype = ColliderType::POTION;
+	pbody->listener = this;
+	pbody->body->SetGravityScale(0);
 	return true;
 }
 
@@ -49,7 +51,7 @@ bool Poty::Start() {
 
 bool Poty::Update(float dt)
 {
-	
+	currentanim->Update();
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 	currentanim = &alma;
@@ -67,10 +69,13 @@ void Poty::OnCollision(PhysBody* physA, PhysBody* physB) {
 	switch (physB->ctype)
 	{
 	case ColliderType::PLAYER:
-		LOG("Collision ITEM");
+		LOG("Collision PLAYER");
+		usado = true;
+		app->physics->DestroyObject(pbody);
 		//app->audio->PlayFx(pickCoinFxId);
+		app->entityManager->DestroyEntity(this);
 		break;
-	case ColliderType::PLATFORM:
+	case ColliderType::PLATFORM:  
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::UNKNOWN:
@@ -86,3 +91,4 @@ void Poty::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 
 }
+

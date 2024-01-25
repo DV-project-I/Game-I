@@ -8,6 +8,7 @@
 #include "../bat.h"
 #include "Tree.h"
 #include "Boss.h"
+#include "Poty.h"
 
 #include "GuiControl.h"
 #include "GuiControlButton.h"
@@ -80,6 +81,7 @@ private:
 	PhysBody* pbody;
 	Item* item;
 	Boss* boss;
+	Poty* poty;
 	
 	GuiControlButton* exit;
 	GuiControlButton* volume;

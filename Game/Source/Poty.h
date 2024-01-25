@@ -25,6 +25,8 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
+	void SetPosition(int x, int y);
+
 public:
 
 	bool isPicked = false;
@@ -33,6 +35,8 @@ private:
 
 	SDL_Texture* texture;
 	Animation alma;
+	bool usado = false;
+
 	
 	const char* texturePath;
 	PhysBody* pbody;

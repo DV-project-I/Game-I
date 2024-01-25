@@ -1,4 +1,5 @@
 #include "EntityManager.h"
+#include "Poty.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "App.h"
@@ -101,7 +102,7 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		entity = new Boss();
 		break;
 	case EntityType::POTION:
-		entity = new Item();
+		entity = new Poty();
 		break;
 	default:
 		break;

@@ -108,7 +108,7 @@ PhysBody* Physics::CreateRectangle(int x, int y, int width, int height, bodyType
 	return pbody;
 }
 
-PhysBody* Physics::CreateCircle(int x, int y, int radious, bodyType type)
+PhysBody* Physics::CreateCircle(int x, int y, int radious, bodyType type, bool isSensor)
 {
 	// Create BODY at position x,y
 	b2BodyDef body;
@@ -130,6 +130,7 @@ PhysBody* Physics::CreateCircle(int x, int y, int radious, bodyType type)
 	b2FixtureDef fixture;
 	fixture.shape = &circle;
 	fixture.density = 1.0f;
+	fixture.isSensor = isSensor;
 	b->ResetMassData();
 
 	// Add fixture to the BODY

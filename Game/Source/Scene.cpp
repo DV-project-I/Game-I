@@ -53,6 +53,10 @@ bool Scene::Awake(pugi::xml_node& config)
 			item->parameters = config.child("item");
 		}
 
+		if (config.child("poty")) {
+			poty = (Poty*)app->entityManager->CreateEntity(EntityType::POTION);
+			poty->parameters = config.child("poty");
+		}
 
 		if (config.child("boss")) {
 			boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);

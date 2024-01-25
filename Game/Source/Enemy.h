@@ -7,6 +7,7 @@
 #include "Animation.h"
 
 
+
 struct SDL_Texture;
 
 class Enemy : public Entity
@@ -49,7 +50,7 @@ public:
 
 	uint torrentesound;
 	uint torrentesound2;
-
+	
 	PhysBody* ataque;
 	float timerataque;
 	float cooldown = 0;
