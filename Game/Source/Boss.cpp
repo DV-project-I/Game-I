@@ -38,13 +38,6 @@ Boss::Boss() : Entity(EntityType::BOSS)
 	WalkAnimDer.PushBack({ 0, 25, 25, 25 });
 	WalkAnimDer.speed = 0.1f;
 	WalkAnimDer.loop = true;
-	
-	IdleAnimDer.PushBack({ 150, 100, 25, 25 });
-	IdleAnimDer.speed = 0.3f;
-	IdleAnimDer.loop = true;
-	IdleAnimIzq.PushBack({ 175, 100, 25, 25 });
-	IdleAnimIzq.speed = 0.3f;
-	IdleAnimIzq.loop = true;
 
 	AtackAnimIzq.PushBack({ 0, 50, 25, 25 });
 	AtackAnimIzq.PushBack({ 25, 50, 25, 25 });
