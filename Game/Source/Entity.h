@@ -17,7 +17,8 @@ enum class EntityType
 	ENEMY,
 	BAT,
 	TREE,
-	BOSS
+	BOSS,
+	POTION
 };
 
 class Entity

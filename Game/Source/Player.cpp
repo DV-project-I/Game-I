@@ -373,7 +373,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	switch (physB->ctype)
 	{
-	case ColliderType::ITEM:
+	case ColliderType::POTION:
 		hp++;
 		LOG("Collision ITEM");
 		app->audio->PlayFx(pickCoinFxId, 0);

@@ -39,7 +39,7 @@ bool Item::Start() {
 	
 	//initilize textures
 	texture = app->tex->Load(texturePath);
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x + 8, position.y + 8, 8, bodyType::STATIC);
 	pbody->ctype = ColliderType::ITEM;
 	
 	return true;
@@ -47,12 +47,12 @@ bool Item::Start() {
 
 bool Item::Update(float dt)
 {
-	 
+	
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 	currentanim = &alma;
-	app->render->DrawTexture(texture, position.x, position.y +8, &currentanim->GetCurrentFrame());
-
+	app->render->DrawTexture(texture, position.x +8, position.y +8, &currentanim->GetCurrentFrame());
+	
 	return true;
 }
 

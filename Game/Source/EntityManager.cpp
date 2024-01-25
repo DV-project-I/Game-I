@@ -100,6 +100,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::BOSS:
 		entity = new Boss();
 		break;
+	case EntityType::POTION:
+		entity = new Item();
+		break;
 	default:
 		break;
 	}

@@ -30,7 +30,8 @@ enum class ColliderType {
 	UNKNOWN,
 	INSTAKILL,
 	ENEMY,
-	PLAYERATTACK
+	PLAYERATTACK,
+	POTION
 	// ..
 };
 
