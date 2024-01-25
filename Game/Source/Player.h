@@ -64,12 +64,14 @@ public:
 	bool isJumping;
 	bool isOnGround;
 	bool isPlayingSound;
+	bool isPlayingAtack = false;
 	float JUMP_FORCE = 10.0f;
 
 
 
 	uint walkingsound;
 	uint grito;
+	uint ataquesonido;
 
 	float timerataque;
 

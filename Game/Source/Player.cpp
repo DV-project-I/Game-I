@@ -129,6 +129,7 @@ bool Player::Start() {
 	tataque = app->tex->Load("Assets/cosas/almaflotante.png");
 	walkingsound = app->audio->LoadFx("Assets/Audio/Fx/walking.wav");
 	grito = app->audio->LoadFx("Assets/Audio/Fx/grito.wav");
+	ataquesonido = app->audio->LoadFx("Assets/Audio/Fx/Atack.wav");
 
 
 	hp = 10;
@@ -275,8 +276,9 @@ bool Player::Update(float dt)
 	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimDer || 
 		app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimDer || 
 		app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &JumpAnim || 
-		app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &AtackAnimDer) {
-
+		app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &AtackAnimDer && isPlayingAtack == false) {
+		app->audio->PlayFx(ataquesonido, 0);
+		isPlayingAtack = true;
 		movX = 0;
 		currentAnimation = &AtackAnimDer;	
 		int x = position.x +40;
@@ -285,13 +287,13 @@ bool Player::Update(float dt)
 		ataque->body->SetTransform(newPos, ataque->body->GetAngle());
 		timerataque = 0;
 	}
-	
 
 	if (app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &WalkAnimIzq ||
 		app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &IdleAnimIzq ||
 		app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &JumpAnimIzq || 
-		app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &AtackAnimIzq) {
-
+		app->input->GetMouseButtonDown(1) == KEY_DOWN && currentAnimation == &AtackAnimIzq && isPlayingAtack == false) {
+		isPlayingAtack = true;
+		app->audio->PlayFx(ataquesonido, 0);
 		currentAnimation = &AtackAnimIzq;
 		int x = position.x +10;
 		int y = position.y +20;
