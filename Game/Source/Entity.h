@@ -16,7 +16,8 @@ enum class EntityType
 	UNKNOWN,
 	ENEMY,
 	BAT,
-	TREE
+	TREE,
+	BOSS
 };
 
 class Entity
