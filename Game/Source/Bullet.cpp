@@ -31,8 +31,8 @@ bool Bullet::Start() {
 	
 	//initilize textures
 	texture = app->tex->Load("Assets/personajes/Boss/BloodBall.png");
-	pbody = app->physics->CreateCircle(position.x + 8, position.y + 8, 8, bodyType::STATIC);
-	pbody->ctype = ColliderType::ITEM;
+	pbody = app->physics->CreateCircle(position.x + 8, position.y + 8, 8, bodyType::DYNAMIC);
+	pbody->ctype = ColliderType::ENEMY;
 	
 	return true;
 }
