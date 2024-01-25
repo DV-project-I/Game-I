@@ -42,10 +42,14 @@ public:
 	PhysBody* pbody;
 	PhysBody* ataque;
 	PhysBody* tpnivel2;
+	PhysBody* tpBoss;
 
 	int pickCoinFxId;
 
 	int patata = 0;
+	bool lvl2 = false;
+	bool bossfight = false;
+	bool pasaste = false;
 	bool left;
 	bool God;
 	bool IsDeath = false;

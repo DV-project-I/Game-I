@@ -9,6 +9,7 @@
 #include "Point.h"
 #include "Physics.h"
 #include "Animation.h"
+#include "Window.h"
 
 
 Player::Player() : Entity(EntityType::PLAYER)
@@ -141,9 +142,13 @@ bool Player::Start() {
 	ataque->ctype = ColliderType::PLAYERATTACK;
 	ataque->body->GetFixtureList()->SetSensor(true);
 
-	tpnivel2 = app->physics->CreateRectangle(0, 0, 32, 32, bodyType::STATIC);
+	tpnivel2 = app->physics->CreateRectangle(1617, 1029, 8, 22, bodyType::STATIC);
 	tpnivel2->ctype = ColliderType::UNKNOWN;
 	tpnivel2->body->GetFixtureList()->SetSensor(true);
+
+	tpBoss = app->physics->CreateRectangle(3928, 1304, 8, 22, bodyType::STATIC);
+	tpBoss->ctype = ColliderType::UNKNOWN;
+	tpBoss->body->GetFixtureList()->SetSensor(true);
 	
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
@@ -318,6 +323,15 @@ bool Player::Update(float dt)
 		IsDeath = true;
 	}
 
+	if (lvl2 == true) {
+		SetPosition(1600, 824);
+		lvl2 = false;
+	}
+
+	if (bossfight == true) {
+		SetPosition(3440, 1744);
+		bossfight = false;
+	}
 
 	if (IsDeath == true) {
 		app->audio->PlayFx(grito, 0);
@@ -369,6 +383,15 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 		break;
 	case ColliderType::UNKNOWN:
+		if (pasaste == false) {
+		lvl2 = true;
+		app->win->scale = 2;
+		pasaste = true;
+		}
+		else {
+			bossfight = true;
+		}
+		
 		LOG("Collision UNKNOWN");
 		break;
 	case ColliderType::INSTAKILL:
@@ -376,10 +399,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision INSTAKILL");
 		break;
 	case ColliderType::ENEMY:
-		if(God ==false)
-		hp --;
-		
+		if (God == false) {
+		hp --;		
 		app->audio->PlayFx(grito, 0);
+		}	
 		LOG("Collision ENEMY");
 		break;
 
@@ -389,7 +412,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 }
 
 void Player ::SetPosition(int x, int y) {
-	DeathAnim.Reset();
+	
 	position.x = x;
 	position.y = y;
 	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));

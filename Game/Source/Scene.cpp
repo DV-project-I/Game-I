@@ -124,10 +124,10 @@ bool Scene::Awake(pugi::xml_node& config)
 			enemy->parameters = config.child("enemy5");
 		}
 
-		if (config.child("bat7")) {
+		/*if (config.child("bat7")) {
 			bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
 			bat->parameters = config.child("bat7");
-		}
+		}*/
 
 		if (config.child("map")) {
 			//Get the map name from the config file and assigns the value in the module
@@ -270,7 +270,7 @@ bool Scene::Update(float dt)
 
 
 		app->render->camera.x = (-player->position.x) * app->win->GetScale() + 512;
-		app->render->camera.y = (-player->position.y) * app->win->GetScale() + 384;
+		app->render->camera.y = (-player->position.y) * app->win->GetScale() + 384 +100;
 
 		
 		
@@ -307,21 +307,28 @@ bool Scene::Update(float dt)
 			fullscreen->state = GuiControlState::NORMAL;
 			exit->state = GuiControlState::NORMAL;
 			app->win->scale = 1;
-			app->render->DrawTexture(fondo, player->position.x - 512, player->position.y - 383);
-			app->render->DrawTexture(boton1, player->position.x -100, player->position.y - 120);
-			app->render->DrawTexture(boton2, player->position.x -100, player->position.y - 20);
-			app->render->DrawTexture(patras, player->position.x - 450, player->position.y -350);
+			app->render->DrawTexture(fondo, player->position.x - 512, player->position.y - 383 - 100);
+			app->render->DrawTexture(boton1, player->position.x -100, player->position.y - 120 - 100);
+			app->render->DrawTexture(boton2, player->position.x -100, player->position.y - 20 - 100);
+			app->render->DrawTexture(patras, player->position.x - 450, player->position.y -350 - 100);
 			if (volumen <= 0) {
-			app->render->DrawTexture(novol, player->position.x - 100, player->position.y - 200);
+			app->render->DrawTexture(novol, player->position.x - 100, player->position.y - 200 - 100);
 			}
 			if (volumen > 0) {
-				app->render->DrawTexture(vol, player->position.x - 100, player->position.y - 200);
+				app->render->DrawTexture(vol, player->position.x - 100, player->position.y - 200 - 100);
 			}
-			app->render->DrawTexture(fuera, player->position.x - 450, player->position.y + 270);
+			app->render->DrawTexture(fuera, player->position.x - 450, player->position.y + 270 - 100);
 		}
 		if (onpause == false) {
-			app->render->DrawTexture(conf, player->position.x + 133, player->position.y -117);
-			app->render->DrawTexture(img, player->position.x - 160, player->position.y - 120);
+			if (app->win->scale == 3) {
+			app->render->DrawTexture(conf, player->position.x + 133, player->position.y -117 - 33);
+			app->render->DrawTexture(img, player->position.x - 160, player->position.y - 120 - 33);
+			}
+			else if (app->win->scale == 2) {
+				app->render->DrawTexture(conf, player->position.x + 133 +66, player->position.y - 117 - 109);
+				app->render->DrawTexture(img, player->position.x - 160 -66, player->position.y - 120 - 66);
+			}
+			
 		}
 		//------------------NO MENU DE PAUSE-----------------------------
 
