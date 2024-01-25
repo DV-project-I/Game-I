@@ -46,6 +46,7 @@ public:
 	PhysBody* pbody;
 	//int pickCoinFxId;
 
+	
 	Bullet* bullet;
 	float timertoplay;
 	
@@ -54,7 +55,7 @@ public:
 
 	
 	PhysBody* ataque;
-	float timerataque;
+	float timerataque = 0;
 	float cooldown = 0;
 
 	float movX;

@@ -181,7 +181,11 @@ bool Boss::Update(float dt) {
 		}
 
 		if (phase2 == true) {
-			//app->entityManager->CreateEntity();
+			if (cooldown >= 50) {
+			//bullet = (Bullet*)app->entityManager->CreateEntity(EntityType::BULLET);
+			cooldown = 0;
+			}
+			
 		}
 			if (vel.x < 0) {
 				currentAnimation = &WalkAnimIzq;
