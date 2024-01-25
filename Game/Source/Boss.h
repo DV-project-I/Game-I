@@ -50,6 +50,7 @@ public:
 	uint torrentesound;
 	uint torrentesound2;
 
+	
 	PhysBody* ataque;
 	float timerataque;
 	float cooldown = 0;

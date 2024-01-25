@@ -41,6 +41,7 @@ public:
 	Animation* currentAnimation = nullptr;
 	PhysBody* pbody;
 	PhysBody* ataque;
+	PhysBody* tpnivel2;
 
 	int pickCoinFxId;
 

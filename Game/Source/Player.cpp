@@ -140,6 +140,10 @@ bool Player::Start() {
 	ataque = app->physics->CreateRectangle(0, 0, 20, 20, bodyType::STATIC);
 	ataque->ctype = ColliderType::PLAYERATTACK;
 	ataque->body->GetFixtureList()->SetSensor(true);
+
+	tpnivel2 = app->physics->CreateRectangle(0, 0, 32, 32, bodyType::STATIC);
+	tpnivel2->ctype = ColliderType::UNKNOWN;
+	tpnivel2->body->GetFixtureList()->SetSensor(true);
 	
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
