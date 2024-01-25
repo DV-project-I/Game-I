@@ -151,7 +151,7 @@ bool Player::Start() {
 	tpBoss->body->GetFixtureList()->SetSensor(true);
 	
 
-	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
+	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/Heal.wav");
 
 
 	return true;
@@ -374,13 +374,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	switch (physB->ctype)
 	{
 	case ColliderType::ITEM:
+		hp++;
 		LOG("Collision ITEM");
-		//app->audio->PlayFx(pickCoinFxId);
+		app->audio->PlayFx(pickCoinFxId, 0);
 		break;
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
 		currentAnimation = &IdleAnimDer;
-
 		break;
 	case ColliderType::UNKNOWN:
 		if (pasaste == false) {
@@ -390,8 +390,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		}
 		else {
 			bossfight = true;
-		}
-		
+		}		
 		LOG("Collision UNKNOWN");
 		break;
 	case ColliderType::INSTAKILL:

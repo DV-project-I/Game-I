@@ -60,3 +60,28 @@ bool Item::CleanUp()
 {
 	return true;
 }
+
+void Item::OnCollision(PhysBody* physA, PhysBody* physB) {
+	switch (physB->ctype)
+	{
+	case ColliderType::PLAYER:
+
+		LOG("Collision ITEM");
+		//app->audio->PlayFx(pickCoinFxId);
+		break;
+	case ColliderType::PLATFORM:
+		LOG("Collision PLATFORM");
+		break;
+	case ColliderType::UNKNOWN:
+		LOG("Collision UNKNOWN");
+		break;
+	case ColliderType::INSTAKILL:
+		LOG("Collision INSTAKILL");
+		break;
+	case ColliderType::PLAYERATTACK:
+		LOG("Collision PLAYERATTACK");
+		break;
+	}
+
+
+}
