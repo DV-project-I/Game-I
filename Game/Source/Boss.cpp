@@ -17,55 +17,71 @@
 Boss::Boss() : Entity(EntityType::BOSS)
 {
 	name.Create("boss");
-	WalkAnimIzq.PushBack({ 0, 0, 25, 25 });
-	WalkAnimIzq.PushBack({ 25, 0, 25, 25 });
-	WalkAnimIzq.PushBack({ 50, 0, 25, 25 });
-	WalkAnimIzq.PushBack({ 75, 0, 25, 25 });
-	WalkAnimIzq.PushBack({ 100, 0, 25, 25 });
-	WalkAnimIzq.PushBack({ 125, 0, 25, 25 });
-	WalkAnimIzq.PushBack({ 150, 0, 25, 25 });
-	WalkAnimIzq.PushBack({ 175, 0, 25, 25 });
+	WalkAnimIzq.PushBack({ 0, 0, 64, 64 });
+	WalkAnimIzq.PushBack({ 64, 0, 64, 64 });
+	WalkAnimIzq.PushBack({ 128, 0, 64, 64 });
+	WalkAnimIzq.PushBack({ 192, 0, 64, 64 });
+
 	WalkAnimIzq.speed = 0.1f;
 	WalkAnimIzq.loop = true;
 
-	WalkAnimDer.PushBack({ 175, 25, 25, 25 });
-	WalkAnimDer.PushBack({ 150, 25, 25, 25 });
-	WalkAnimDer.PushBack({ 125, 25, 25, 25 });	
-	WalkAnimDer.PushBack({ 100, 25, 25, 25 });
-	WalkAnimDer.PushBack({ 75, 25, 25, 25 });
-	WalkAnimDer.PushBack({ 50, 25, 25, 25 });	
-	WalkAnimDer.PushBack({ 25, 25, 25, 25 });
-	WalkAnimDer.PushBack({ 0, 25, 25, 25 });
+	WalkAnimDer.PushBack({ 0, 64, 64, 64 });
+	WalkAnimDer.PushBack({ 64, 64, 64, 64 });
+	WalkAnimDer.PushBack({ 128, 64, 64, 64 });
+	WalkAnimDer.PushBack({ 192, 64, 64, 64 });
+
 	WalkAnimDer.speed = 0.1f;
 	WalkAnimDer.loop = true;
 
-	AtackAnimIzq.PushBack({ 0, 50, 25, 25 });
-	AtackAnimIzq.PushBack({ 25, 50, 25, 25 });
-	AtackAnimIzq.PushBack({ 50, 50, 25, 25 });
-	AtackAnimIzq.PushBack({ 75, 50, 25, 25 });
-	AtackAnimIzq.PushBack({ 100, 50, 25, 25 });	
-	AtackAnimIzq.PushBack({ 125, 50, 25, 25 });
-	AtackAnimIzq.PushBack({ 150, 50, 25, 25 });
-	AtackAnimIzq.PushBack({ 175, 50, 25, 25 });
+	AtackAnimIzq.PushBack({ 0, 128, 64, 64 });
+	AtackAnimIzq.PushBack({ 64, 128, 64, 64 });
+	AtackAnimIzq.PushBack({ 128, 128, 64, 64 });
+	AtackAnimIzq.PushBack({ 192, 128, 64, 64 });
+	AtackAnimIzq.PushBack({ 256, 128, 64, 64 });	
+	AtackAnimIzq.PushBack({ 320, 128, 64, 64 });
+	AtackAnimIzq.PushBack({ 384, 128, 64, 64 });
+	AtackAnimIzq.PushBack({ 448, 128, 64, 64 });
+	AtackAnimIzq.PushBack({ 512, 128, 64, 64 });
+	AtackAnimIzq.PushBack({ 576, 128, 64, 64 });
+	AtackAnimIzq.PushBack({ 640, 128, 64, 64 });
+	AtackAnimIzq.PushBack({ 704, 128, 64, 64 });
+	AtackAnimIzq.PushBack({ 768, 128, 64, 64 });
+	AtackAnimIzq.PushBack({ 832, 128, 64, 64 });
+	AtackAnimIzq.PushBack({ 896, 128, 64, 64 });
+	AtackAnimIzq.PushBack({ 960, 128, 64, 64 });
+	AtackAnimIzq.PushBack({ 1024, 128, 64, 64 });
+	AtackAnimIzq.PushBack({ 1088, 128, 64, 64 });
+	AtackAnimIzq.PushBack({ 1152, 128, 64, 64 });
 	AtackAnimIzq.speed = 0.3f;
 	AtackAnimIzq.loop = true;
 
-	AtackAnimDer.PushBack({ 175, 75, 25, 25 });
-	AtackAnimDer.PushBack({ 150, 75, 25, 25 });
-	AtackAnimDer.PushBack({ 125, 75, 25, 25 });
-	AtackAnimDer.PushBack({ 100, 75, 25, 25 });	
-	AtackAnimDer.PushBack({ 75, 75, 25, 25 });	
-	AtackAnimDer.PushBack({ 50, 75, 25, 25 });
-	AtackAnimDer.PushBack({ 25, 75, 25, 25 });
-	AtackAnimDer.PushBack({ 0,  75, 25, 25 });
+	AtackAnimDer.PushBack({ 0, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 64, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 128, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 192, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 256, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 320, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 384, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 448, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 512, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 576, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 640, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 704, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 768, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 832, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 896, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 960, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 1024, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 1088, 192, 64, 64 });
+	AtackAnimDer.PushBack({ 1152, 192, 64, 64 });
 	AtackAnimDer.speed = 0.3f;
 	AtackAnimDer.loop = true;
 
-	DeathAnim.PushBack({ 0, 100, 25, 25 });
-	DeathAnim.PushBack({ 25, 100, 25, 25 });
-	DeathAnim.PushBack({ 50, 100, 25, 25 });
-	DeathAnim.PushBack({ 75, 100, 30, 25 });
-	DeathAnim.PushBack({ 105, 100, 25, 25 });
+	DeathAnim.PushBack({ 0, 100, 64, 64 });
+	DeathAnim.PushBack({ 25, 100, 64, 64 });
+	DeathAnim.PushBack({ 50, 100, 64, 64 });
+	DeathAnim.PushBack({ 75, 100, 64, 64 });
+	DeathAnim.PushBack({ 105, 100, 64, 64 });
 	DeathAnim.speed = 0.3f;
 	DeathAnim.loop = false;
 }
