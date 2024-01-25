@@ -13,7 +13,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Entity.h"
-
+#include "Bullet.h"
 Boss::Boss() : Entity(EntityType::BOSS)
 {
 	name.Create("boss");
@@ -187,6 +187,9 @@ bool Boss::Update(float dt) {
 
 		}
 
+		if (phase2 == true) {
+			//app->entityManager->CreateEntity();
+		}
 			if (vel.x < 0) {
 				currentAnimation = &WalkAnimIzq;
 			}

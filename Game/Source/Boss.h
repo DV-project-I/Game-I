@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "SDL/include/SDL.h"
 #include "Animation.h"
+#include "Bullet.h"
 
 
 struct SDL_Texture;
@@ -45,6 +46,7 @@ public:
 	PhysBody* pbody;
 	//int pickCoinFxId;
 
+	Bullet* bullet;
 	float timertoplay;
 	
 	uint torrentesound;

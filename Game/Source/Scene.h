@@ -51,6 +51,7 @@ public:
 
 	iPoint GetPLayerPosition();
 
+	Boss* boss;
 	Player* player;
 	float volumen = 90;
 	GuiControlButton* pause;
@@ -80,7 +81,7 @@ private:
 	Bat* bat;
 	PhysBody* pbody;
 	Item* item;
-	Boss* boss;
+	
 	Poty* poty;
 	
 	GuiControlButton* exit;

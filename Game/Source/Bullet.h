@@ -1,5 +1,5 @@
 #ifndef __BULLET_H__
-#define __BULLET__
+#define __BULLET_H__
 
 #include "Entity.h"
 #include "Point.h"
@@ -32,8 +32,10 @@ public:
 private:
 
 	SDL_Texture* texture;
-	Animation alma;
 	
+	int movX = 0;
+	int movY = 0;
+	int timer = 0;
 	const char* texturePath;
 	PhysBody* pbody;
 };

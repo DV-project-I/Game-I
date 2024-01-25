@@ -9,18 +9,11 @@
 #include "Point.h"
 #include "Physics.h"
 #include "Animation.h"
+#include "Boss.h"
 
 Bullet::Bullet() : Entity(EntityType::BULLET)
 {
-	name.Create("bullet");	
-	alma.PushBack({ 0, 0, 16, 16 });
-	alma.PushBack({ 16, 0, 16, 16 });
-	alma.PushBack({ 32, 0, 16, 16 });
-	alma.PushBack({ 48, 0, 16, 16 });
-	alma.PushBack({ 64, 0, 16, 16 });
-	alma.PushBack({ 80, 0, 16, 16 });
-	alma.speed = 0.2f;
-	alma.loop = true;
+	name.Create("bullet");
 }
 
 Bullet::~Bullet() {}
@@ -28,9 +21,8 @@ Bullet::~Bullet() {}
 bool Bullet::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
-	position.y = parameters.attribute("y").as_int();
-	texturePath = parameters.attribute("texturepath").as_string();
-	currentanim = &alma;
+	position.y = parameters.attribute("y").as_int();	
+	
 	
 	return true;
 }
@@ -38,7 +30,7 @@ bool Bullet::Awake() {
 bool Bullet::Start() {
 	
 	//initilize textures
-	texture = app->tex->Load(texturePath);
+	texture = app->tex->Load("Assets/personajes/Boss/BloodBall.png");
 	pbody = app->physics->CreateCircle(position.x + 8, position.y + 8, 8, bodyType::STATIC);
 	pbody->ctype = ColliderType::ITEM;
 	
@@ -49,12 +41,30 @@ bool Bullet::Start() {
 
 bool Bullet::Update(float dt)
 {
+	movY = 0;
 	
+	b2Vec2 vel;
+	if (app->scene->player->position.x < app->scene->boss->position.x) {
+
+		movX = -30;
+	}
+	if (app->scene->player->position.x > app->scene->boss->position.x) {
+
+		movX = 30;
+	}
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
-	currentanim = &alma;
-	app->render->DrawTexture(texture, position.x +8, position.y +8, &currentanim->GetCurrentFrame());
 	
+
+	vel.x = movX;
+	vel.y = movY;
+	
+	pbody->body->SetLinearVelocity(vel);
+	if (timer >= 2000) {
+		app->entityManager->DestroyEntity(this);
+	}
+	app->render->DrawTexture(texture, position.x +8, position.y +8);
+	timer++;
 	return true;
 }
 
