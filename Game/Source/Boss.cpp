@@ -124,6 +124,7 @@ bool Boss::Start() {
 
 bool Boss::Update(float dt) {
 	movX = 0;
+
 	b2Vec2 vel;
 	vel.y = -GRAVITY_Y - 25.2f;
 
@@ -142,38 +143,39 @@ bool Boss::Update(float dt) {
 	}
 	else {
 		
-
-		iPoint origin = iPoint(this->position.x, this->position.y);
-		iPoint origin2 = iPoint(app->scene->player->position.x, app->scene->player->position.y);
+		if (phase2 == false) {
 
 
-		if (position.DistanceTo(app->scene->player->position) < 120) {
+			iPoint origin = iPoint(this->position.x, this->position.y);
+			iPoint origin2 = iPoint(app->scene->player->position.x, app->scene->player->position.y);
 
 
-			if (position.DistanceTo(app->scene->player->position) < 150 && timertoplay > 500) {
+			if (position.DistanceTo(app->scene->player->position) < 120) {
 
-				app->audio->PlayFx(torrentesound, 0);
-				timertoplay = 0;
+				if (position.DistanceTo(app->scene->player->position) < 150 && timertoplay > 500) {
+
+					app->audio->PlayFx(torrentesound, 0);
+					timertoplay = 0;
+
+				}
+				timertoplay++;
+
+				//COSAS DEL PATHFINDING
+				app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
+				// DIBUJAR EL PATH
+
+				if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
+					pathmode = !pathmode;
+				}
 
 			}
-			timertoplay++;
 
-			//COSAS DEL PATHFINDING
-			app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
-			// DIBUJAR EL PATH
 
-			if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
-				pathmode = !pathmode;
-			}
-
-		}
-
-		
 
 			const DynArray<iPoint>* path = app->map->pathfinding->GetLastPath();
 			for (uint i = 0; i < path->Count(); ++i)
 			{
-				
+
 				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
 				if (pathmode == true) {
 					app->render->DrawTexture(camino, pos.x, pos.y);
@@ -182,21 +184,22 @@ bool Boss::Update(float dt) {
 				vel.x = movX;
 
 			}
-		
-	
-		
-		if (vel.x < 0) {
-			currentAnimation = &WalkAnimIzq;
+
 		}
-		else	if (vel.x > 0) {
-			currentAnimation = &WalkAnimDer;
-		}
-		else	if (vel.y == 0 && vel.x == 0 && currentAnimation == &WalkAnimIzq) {
-			currentAnimation = &IdleAnimIzq;
-		}
-		else if (vel.y == 0 && vel.x == 0 && currentAnimation == &WalkAnimDer) {
-			currentAnimation = &IdleAnimDer;
-		}
+
+			if (vel.x < 0) {
+				currentAnimation = &WalkAnimIzq;
+			}
+			else	if (vel.x > 0) {
+				currentAnimation = &WalkAnimDer;
+			}
+			else	if (vel.y == 0 && vel.x == 0 && currentAnimation == &WalkAnimIzq) {
+				currentAnimation = &IdleAnimIzq;
+			}
+			else if (vel.y == 0 && vel.x == 0 && currentAnimation == &WalkAnimDer) {
+				currentAnimation = &IdleAnimDer;
+			}
+	}
 		//Ataque
 		if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimDer) {
 			
@@ -227,7 +230,7 @@ bool Boss::Update(float dt) {
 			}
 
 		}
-	}
+	
 	if (position.DistanceTo(app->scene->player->position) > 50)
 	{
 		b2Vec2 ResetPos(PIXEL_TO_METERS(0), PIXEL_TO_METERS(0));
@@ -235,12 +238,23 @@ bool Boss::Update(float dt) {
 		timerataque = 0;
 
 	}
-
+	
 	vel.x = movX;
-
+	if (punch == true && currentAnimation == &WalkAnimDer || punch == true && currentAnimation == &AtackAnimDer) {
+		vel.x = -PUNCHVELOCITY;
+		punch = false;
+	}
+	if (punch == true && currentAnimation == &WalkAnimIzq || punch == true && currentAnimation == &AtackAnimIzq) {
+		vel.x = PUNCHVELOCITY;
+		punch = false;
+	}
 	currentAnimation->Update();
 
 	pbody->body->SetLinearVelocity(vel);
+
+	if (hp <= 0) {
+		IsDeath = true;
+	}
 
 	this->position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	this->position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
@@ -275,7 +289,9 @@ void Boss::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision INSTAKILL");
 		break;
 	case ColliderType::PLAYERATTACK:
-		IsDeath = true;
+		punch = true;
+		phase2 = !phase2;
+		hp--;
 		LOG("Collision PLAYERATTACK");
 		break;
 	}

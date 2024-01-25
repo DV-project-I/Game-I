@@ -46,7 +46,7 @@ public:
 	//int pickCoinFxId;
 
 	float timertoplay;
-
+	
 	uint torrentesound;
 	uint torrentesound2;
 
@@ -60,7 +60,11 @@ public:
 	float velY;	
 	bool IsDeath = false;
 	bool pathmode = false;
+	bool punch = false;
 
+	const float PUNCHVELOCITY = 200.0f;
+
+	bool phase2 = false;
 	bool Ataca;
 	bool ganaste = false;
 

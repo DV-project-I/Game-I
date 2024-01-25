@@ -98,7 +98,7 @@ public:
 	GuiManager* guiManager;
 	Scene2* scene2;
 	List<Module *> modules;
-
+	bool Vsync = false;
 private:
 
 	int argc;
