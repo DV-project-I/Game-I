@@ -64,6 +64,8 @@ bool Scene2::Start()
 			intro = app->tex->Load("Assets/UI/introscreen.png");
 			//Music is commented so that you can add your own music
 			app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.wav");
+			buttonsound = app->audio->LoadFx("Assets/Audio/Fx/button.wav");
+			
 
 			//Get the size of the window
 			app->win->GetWindowSize(windowW, windowH);
@@ -146,6 +148,8 @@ bool Scene2::Update(float dt)
 
 		if (play->state == GuiControlState::PRESSED)
 		{
+			app->audio->PlayFx(buttonsound, 0);
+			
 			app->scene->active = true;
 			app->map->active = true;
 			app->physics->active = true;
@@ -158,6 +162,7 @@ bool Scene2::Update(float dt)
 			active = false;
 		}
 		if (options->state == GuiControlState::PRESSED) {
+			app->audio->PlayFx(buttonsound, 0);
 			pause = true;
 			//QUITO LOS BOTONES 
 			play->state = GuiControlState::DISABLED;
@@ -170,10 +175,12 @@ bool Scene2::Update(float dt)
 			fullscreen->state = GuiControlState::NORMAL;
 		}
 		if (exit->state == GuiControlState::PRESSED) {
+			app->audio->PlayFx(buttonsound, 0);
 			return false;
 		}
 		//MENU DE PAUSE BOTONES
 		if (back->state == GuiControlState::PRESSED) {
+			app->audio->PlayFx(buttonsound, 0);
 			pause = false;
 			//QUITO LOS BOTONES 
 			play->state = GuiControlState::NORMAL;

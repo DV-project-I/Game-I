@@ -18,6 +18,7 @@ public:
 	bool Update(float dt);
 
 private:
+	
 
 	int mouseX, mouseY;
 	unsigned int click;

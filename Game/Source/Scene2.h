@@ -56,7 +56,10 @@ private:
 	SDL_Texture* vol;
 	SDL_Texture* novol;
 	SDL_Texture* intro;
-	
+
+	uint buttonsound;
+
+
 
 	float textPosX, textPosY = 0;
 	uint texW, texH;

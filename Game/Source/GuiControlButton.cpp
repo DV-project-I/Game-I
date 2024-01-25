@@ -5,6 +5,8 @@
 
 GuiControlButton::GuiControlButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
+	
+
 	this->bounds = bounds;
 	this->text = text;
 
@@ -19,6 +21,8 @@ GuiControlButton::~GuiControlButton()
 
 bool GuiControlButton::Update(float dt)
 {
+
+
 	if (state != GuiControlState::DISABLED)
 	{
 		// L15: DONE 3: Update the state of the GUiButton according to the mouse position
@@ -30,10 +34,12 @@ bool GuiControlButton::Update(float dt)
 			state = GuiControlState::FOCUSED;
 
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT) {
+				
 				state = GuiControlState::PRESSED;
 			}
 
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
+				
 				NotifyObserver();
 			}
 		}
@@ -54,6 +60,7 @@ bool GuiControlButton::Update(float dt)
 			app->render->DrawRectangle(bounds, 0, 20, 0, 55, true, false);
 			break;
 		case GuiControlState::PRESSED:
+			
 			app->render->DrawRectangle(bounds, 0, 0, 255, 55, true, false);
 			break;
 		}
