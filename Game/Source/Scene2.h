@@ -45,7 +45,7 @@ public:
 	bool OnGuiMouseClickEvent(GuiControl* control);
 	float volumen = 90;
 	bool pause;
-	
+	bool introdusion = true;
 private:
 
 	SDL_Texture* img;
@@ -55,7 +55,9 @@ private:
 	SDL_Texture* patras;
 	SDL_Texture* vol;
 	SDL_Texture* novol;
+	SDL_Texture* intro;
 	
+
 	float textPosX, textPosY = 0;
 	uint texW, texH;
 	uint windowW, windowH;	

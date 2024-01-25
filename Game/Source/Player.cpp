@@ -374,8 +374,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	switch (physB->ctype)
 	{
 	case ColliderType::ITEM:
-	/*	hp++;		
-		app->audio->PlayFx(pickCoinFxId, 0);*/
+		hp++;		
+		app->audio->PlayFx(pickCoinFxId, 0);
 		LOG("Collision ITEM");
 		break;
 	case ColliderType::PLATFORM:

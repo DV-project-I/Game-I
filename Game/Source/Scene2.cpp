@@ -61,6 +61,7 @@ bool Scene2::Start()
 			patras = app->tex->Load("Assets/UI/cross.png");
 			vol = app->tex->Load("Assets/UI/volumeup.png");
 			novol = app->tex->Load("Assets/UI/novolume.png");
+			intro = app->tex->Load("Assets/UI/introscreen.png");
 			//Music is commented so that you can add your own music
 			app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.wav");
 
@@ -92,10 +93,13 @@ bool Scene2::Start()
 			//TITLE SCREEN
 			SDL_Rect btPos = { windowW / 2 - 210  , windowH / 2 -115 ,410,80 };
 			play = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos, this);
+			play->state = GuiControlState::DISABLED;
 			SDL_Rect btPos1 = { windowW / 2 - 210  , windowH / 2 - 115 +105 ,410,70 };
 			options = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos1, this);
+			options->state = GuiControlState::DISABLED;
 			SDL_Rect btPos2 = { windowW / 2 - 210  , windowH / 2 - 115 +190 ,410,60 };
 			exit = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos2, this);
+			exit->state = GuiControlState::DISABLED;
 			//OPTIONS
 			SDL_Rect btPos3 = { windowW / 2 - 450  , windowH / 2 - 350 ,64,64 };
 			back = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "MyButton", btPos3, this);
@@ -128,7 +132,16 @@ bool Scene2::Update(float dt)
 {
 
 	if (active == true) {
+		
 
+		if (introdusion == false && play->state == GuiControlState::DISABLED && options->state == GuiControlState::DISABLED && exit->state == GuiControlState::DISABLED && back->state == GuiControlState::DISABLED) {
+			play->state = GuiControlState::NORMAL;
+			options->state = GuiControlState::NORMAL;
+			exit->state = GuiControlState::NORMAL;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+			introdusion = false;
+		}
 		app->scene->pause->state = GuiControlState::DISABLED;
 
 		if (play->state == GuiControlState::PRESSED)
@@ -189,8 +202,9 @@ bool Scene2::Update(float dt)
 			if (volumen > 0) {
 				app->render->DrawTexture(vol, 412, 184);
 			}
-		}
-
+			}
+		if(introdusion == true)
+		app->render->DrawTexture(intro, 0, 0);
 	}
 	return true;
 }
