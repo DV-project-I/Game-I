@@ -97,6 +97,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::TREE:
 		entity = new Tree();
 		break;
+	case EntityType::BOSS:
+		entity = new Boss();
+		break;
 	default:
 		break;
 	}

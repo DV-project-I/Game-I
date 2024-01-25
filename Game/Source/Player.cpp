@@ -372,6 +372,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision INSTAKILL");
 		break;
 	case ColliderType::ENEMY:
+		if(God ==false)
 		hp --;
 		
 		app->audio->PlayFx(grito, 0);

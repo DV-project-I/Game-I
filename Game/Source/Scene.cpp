@@ -13,6 +13,7 @@
 #include "../bat.h"
 #include "Tree.h"
 #include "Item.h"
+#include "Boss.h"
 
 #include "GuiControl.h"
 #include "GuiManager.h"
@@ -52,9 +53,10 @@ bool Scene::Awake(pugi::xml_node& config)
 			item->parameters = config.child("item");
 		}
 
-		if (config.child("testTree")) {
-			tree = (Tree*)app->entityManager->CreateEntity(EntityType::TREE);
-			tree->parameters = config.child("testTree");
+
+		if (config.child("boss")) {
+			boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
+			boss->parameters = config.child("boss");
 		}
 
 		if (config.child("enemy0")) {

@@ -7,6 +7,7 @@
 #include "Item.h"
 #include "../bat.h"
 #include "Tree.h"
+#include "Boss.h"
 
 #include "GuiControl.h"
 #include "GuiControlButton.h"
@@ -74,7 +75,7 @@ private:
 	Bat* bat;
 	PhysBody* pbody;
 	Item* item;
-
+	Boss* boss;
 	
 	GuiControlButton* exit;
 	GuiControlButton* volume;
