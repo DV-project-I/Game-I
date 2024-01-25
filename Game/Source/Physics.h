@@ -79,7 +79,7 @@ public:
 	
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
-
+	void DestroyObject(PhysBody* physBody);
 // Box2D World
 b2World* world;
 
