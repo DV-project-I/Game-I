@@ -390,6 +390,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		}
 		else {
 			bossfight = true;
+			app->win->scale = 2;
+			pasaste2 = true;
 		}		
 		LOG("Collision UNKNOWN");
 		break;
@@ -425,11 +427,21 @@ void Player :: PlayerDeath()
 {			
 	currentAnimation = &DeathAnim;
 	
-	if (currentAnimation->HasFinished() == true) {		
+	if (currentAnimation->HasFinished() == true && pasaste == false) {		
 		SetPosition(parameters.attribute("x").as_int(), parameters.attribute("y").as_int());
 		hp = 10;
 	}
-	
+	if (currentAnimation->HasFinished() == true && pasaste == true && bossfight == false) {		
+		SetPosition(1657, 640);
+		hp = 10;
+	}
+	if (currentAnimation->HasFinished() == true && pasaste == true && pasaste2 == true) {
+		SetPosition(3990, 1304);
+		bossfight = false;
+		hp = 10;
+	}
+
+	//550" y="532"
 }
 
 

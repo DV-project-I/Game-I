@@ -50,6 +50,7 @@ public:
 	bool lvl2 = false;
 	bool bossfight = false;
 	bool pasaste = false;
+	bool pasaste2 = false;
 	bool left;
 	bool God;
 	bool IsDeath = false;
