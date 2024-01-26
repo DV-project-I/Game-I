@@ -8,9 +8,9 @@
 	<:anonymous />
 	<scene2 />
 	<scene>
-		<player x="1930" y="1279" />
-		<enemy x="1736" y="1287" />
-		<bat x="1770" y="980" />
+		<player x="482" y="1567" />
+		<enemy x="4008" y="856" />
+		<bat x="1504" y="1559" />
 	</scene>
 	<entitymanager />
 	<guiManager />
