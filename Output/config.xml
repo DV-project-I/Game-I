@@ -39,14 +39,15 @@
 		<galleta11 x="4872" y="872" texturepath="Assets/cosas/galleta.png"/>
 		<galleta12 x="4872" y="1000" texturepath="Assets/cosas/galleta.png"/>
 
-		<enemy0 x="1602" y="902" texturepath="Assets/cosas/Torrente/torrenteSpritesheet.png"/>
-		<enemy1 x="1602" y="902" texturepath="Assets/cosas/Torrente/torrenteSpritesheet.png"/>
-		<enemy2 x="1602" y="902" texturepath="Assets/cosas/Torrente/torrenteSpritesheet.png"/>
-		<enemy3 x="1602" y="902" texturepath="Assets/cosas/Torrente/torrenteSpritesheet.png"/>
-		<enemy4 x="1602" y="902" texturepath="Assets/cosas/Torrente/torrenteSpritesheet.png"/>
-		<enemy5 x="1602" y="902" texturepath="Assets/cosas/Torrente/torrenteSpritesheet.png"/>
-		<enemy6 x="1602" y="902" texturepath="Assets/cosas/Torrente/torrenteSpritesheet.png"/>
-		<enemy7 x="1602" y="902" texturepath="Assets/cosas/Torrente/torrenteSpritesheet.png"/>
+		<enemy0 x="1600" y="700" texturepath="Assets/personajes/Torrente/torrenteSpritesheet.png"/>
+		<enemy1 x="2000" y="700" texturepath="Assets/personajes/Torrente/torrenteSpritesheet.png"/>
+		<enemy2 x="3800" y="700" texturepath="Assets/personajes/Torrente/torrenteSpritesheet.png"/>
+		<enemy3 x="2800" y="700" texturepath="Assets/personajes/Torrente/torrenteSpritesheet.png"/>
+		<enemy4 x="4200" y="700" texturepath="Assets/personajes/Torrente/torrenteSpritesheet.png"/>
+		<enemy5 x="3600" y="700" texturepath="Assets/personajes/Torrente/torrenteSpritesheet.png"/>
+		<enemy6 x="4000" y="700" texturepath="Assets/personajes/Torrente/torrenteSpritesheet.png"/>
+		<enemy7 x="4400" y="700" texturepath="Assets/personajes/Torrente/torrenteSpritesheet.png"/>
+		
 
 		<boss x ="3400" y="1744" texturepath ="Assets/personajes/Boss/bossspritesheet.png"/>
 
