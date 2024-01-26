@@ -266,20 +266,23 @@ bool Boss::Update(float dt) {
 	
 	vel.x = movX;
 	if (punch == true && app->scene->player->position.x < position.x) {
-		vel.x = PUNCHVELOCITY;
-		
+		vel.x = PUNCHVELOCITY;		
 		punch = false;
 	}
 	if (punch == true && app->scene->player->position.x >= position.x) {
-		vel.x = -PUNCHVELOCITY;
-		
+		vel.x = -PUNCHVELOCITY;		
 		punch = false;
 	}
+	//--------------TP-------------
 	if (salto >= 200 && phase2 == true) {
+		//currentAnimation = &desapareceranim;
+		if(currentAnimation->HasFinished())
 		SetPosition(2700, 1674);
 		salto = 0;
 	}
 	if (salto >= 200 && phase2 == false) {
+		//currentAnimation = &desapareceranim;
+		if (currentAnimation->HasFinished())
 		SetPosition(3450, 1674);
 		salto = 0;
 	}
