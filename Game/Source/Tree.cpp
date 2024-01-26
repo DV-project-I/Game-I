@@ -109,6 +109,7 @@ bool Tree::Update(float dt) {
 	}
 
 	if (IsDeath == true) {
+		
 		currentAnimation = &DeathAnim;
 		pbody->height = 32;		
 		pbody->ctype = ColliderType::ITEM;
@@ -182,6 +183,7 @@ void Tree::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::PLAYERATTACK:
 		IsDeath = true;
+		app->scene->player->contadorcookies++;
 		LOG("Collision PLAYERATTACK");
 		break;
 	}

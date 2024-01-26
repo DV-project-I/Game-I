@@ -14,6 +14,7 @@
 #include "Tree.h"
 #include "Item.h"
 #include "Boss.h"
+#include "Galleta.h"
 
 #include "GuiControl.h"
 #include "GuiManager.h"
@@ -56,6 +57,11 @@ bool Scene::Awake(pugi::xml_node& config)
 		if (config.child("poty")) {
 			poty = (Poty*)app->entityManager->CreateEntity(EntityType::POTION);
 			poty->parameters = config.child("poty");
+		}
+
+		if (config.child("galleta")) {
+			galleta = (Galleta*)app->entityManager->CreateEntity(EntityType::GALLETA);
+			galleta->parameters = config.child("galleta");
 		}
 
 		if (config.child("boss")) {
@@ -167,6 +173,9 @@ bool Scene::Start()
 		fuera = app->tex->Load("Assets/UI/exit.png");
 		diescreen = app->tex->Load("Assets/UI/youlose.png");
 		winscreen = app->tex->Load("Assets/UI/youwin.png");
+
+		cookies = app->tex->Load("Assets/UI/youwin.png");
+
 		//Music is commented so that you can add your own music
 		app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.wav");
 
@@ -242,7 +251,156 @@ bool Scene::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 			app->render->camera.x += (int)ceil(camSpeed * dt);
 
-
+		if (player->contadorcookies == 1) {
+			cookies = app->tex->Load("Assets/Numeros/el1.png");
+		}
+		else if (player->contadorcookies == 2) {
+			cookies = app->tex->Load("Assets/Numeros/el2.png");
+		}
+		else if (player->contadorcookies == 3) {
+			cookies = app->tex->Load("Assets/Numeros/el3.png");
+		}
+		else if (player->contadorcookies == 4) {
+			cookies = app->tex->Load("Assets/Numeros/el4.png");
+		}
+		else if (player->contadorcookies == 5) {
+			cookies = app->tex->Load("Assets/Numeros/el5.png");
+		}
+		else if (player->contadorcookies == 6) {
+			cookies = app->tex->Load("Assets/Numeros/el6.png");
+		}
+		else if (player->contadorcookies == 7) {
+			cookies = app->tex->Load("Assets/Numeros/el7.png");
+		}
+		else if (player->contadorcookies == 8) {
+			cookies = app->tex->Load("Assets/Numeros/el8.png");
+		}
+		else if (player->contadorcookies == 9) {
+			cookies = app->tex->Load("Assets/Numeros/el9.png");
+		}
+		else if (player->contadorcookies == 10) {
+			cookies = app->tex->Load("Assets/Numeros/el10.png");
+		}
+		else if (player->contadorcookies == 11) {
+			cookies = app->tex->Load("Assets/Numeros/el11.png");
+		}
+		else if (player->contadorcookies == 12) {
+			cookies = app->tex->Load("Assets/Numeros/el12.png");
+		}
+		else if (player->contadorcookies == 13) {
+			cookies = app->tex->Load("Assets/Numeros/el13.png");
+		}
+		else if (player->contadorcookies == 14) {
+			cookies = app->tex->Load("Assets/Numeros/el14.png");
+		}
+		else if (player->contadorcookies == 15) {
+			cookies = app->tex->Load("Assets/Numeros/el15.png");
+		}
+		else if (player->contadorcookies == 16) {
+			cookies = app->tex->Load("Assets/Numeros/el16.png");
+		}
+		else if (player->contadorcookies == 17) {
+			cookies = app->tex->Load("Assets/Numeros/el17.png");
+		}
+		else if (player->contadorcookies == 18) {
+			cookies = app->tex->Load("Assets/Numeros/el18.png");
+		}
+		else if (player->contadorcookies == 19) {
+			cookies = app->tex->Load("Assets/Numeros/el19.png");
+		}
+		else if (player->contadorcookies == 20) {
+			cookies = app->tex->Load("Assets/Numeros/el20.png");
+		}
+		else if (player->contadorcookies == 21) {
+			cookies = app->tex->Load("Assets/Numeros/el21.png");
+		}
+		else if (player->contadorcookies == 22) {
+			cookies = app->tex->Load("Assets/Numeros/el22.png");
+		}
+		else if (player->contadorcookies == 23) {
+			cookies = app->tex->Load("Assets/Numeros/el23.png");
+		}
+		else if (player->contadorcookies == 24) {
+			cookies = app->tex->Load("Assets/Numeros/el24.png");
+		}
+		else if (player->contadorcookies == 25) {
+			cookies = app->tex->Load("Assets/Numeros/el25.png");
+		}
+		else if (player->contadorcookies == 26) {
+			cookies = app->tex->Load("Assets/Numeros/el26.png");
+		}
+		else if (player->contadorcookies == 27) {
+			cookies = app->tex->Load("Assets/Numeros/el27.png");
+		}
+		else if (player->contadorcookies == 28) {
+			cookies = app->tex->Load("Assets/Numeros/el28.png");
+		}
+		else if (player->contadorcookies == 29) {
+			cookies = app->tex->Load("Assets/Numeros/el29.png");
+		}
+		else if (player->contadorcookies == 30) {
+			cookies = app->tex->Load("Assets/Numeros/el30.png");
+		}
+		else if (player->contadorcookies == 31) {
+			cookies = app->tex->Load("Assets/Numeros/el31.png");
+		}
+		else if (player->contadorcookies == 32) {
+			cookies = app->tex->Load("Assets/Numeros/el32.png");
+		}
+		else if (player->contadorcookies == 33) {
+			cookies = app->tex->Load("Assets/Numeros/el33.png");
+		}
+		else if (player->contadorcookies == 34) {
+			cookies = app->tex->Load("Assets/Numeros/el34.png");
+		}
+		else if (player->contadorcookies == 35) {
+		cookies = app->tex->Load("Assets/Numeros/el35.png");
+		}
+		else if (player->contadorcookies == 36) {
+		cookies = app->tex->Load("Assets/Numeros/el36.png");
+		}
+		else if (player->contadorcookies == 37) {
+		cookies = app->tex->Load("Assets/Numeros/el37.png");
+		}
+		else if (player->contadorcookies == 38) {
+		cookies = app->tex->Load("Assets/Numeros/el38.png");
+		}
+		else if (player->contadorcookies == 39) {
+		cookies = app->tex->Load("Assets/Numeros/el39.png");
+		}
+		else if (player->contadorcookies == 40) {
+		cookies = app->tex->Load("Assets/Numeros/el40.png");
+		}
+		else if (player->contadorcookies == 41) {
+		cookies = app->tex->Load("Assets/Numeros/el41.png");
+		}
+		else if (player->contadorcookies == 42) {
+		cookies = app->tex->Load("Assets/Numeros/el42.png");
+		}
+		else if (player->contadorcookies == 43) {
+		cookies = app->tex->Load("Assets/Numeros/el43.png");
+		}
+		else if (player->contadorcookies == 44) {
+		cookies = app->tex->Load("Assets/Numeros/el44.png");
+		}
+		else if (player->contadorcookies == 45) {
+		cookies = app->tex->Load("Assets/Numeros/el45.png");
+		}
+		else if (player->contadorcookies == 46) {
+		cookies = app->tex->Load("Assets/Numeros/el46.png");
+		}
+		else if (player->contadorcookies == 47) {
+		cookies = app->tex->Load("Assets/Numeros/el47.png");
+		}
+		else if (player->contadorcookies == 48) {
+		cookies = app->tex->Load("Assets/Numeros/el48.png");
+		}
+		else if (player->contadorcookies == 49) {
+		cookies = app->tex->Load("Assets/Numeros/el49.png");
+		}
+		else if (player->contadorcookies == 50) {
+		cookies = app->tex->Load("Assets/Numeros/el50.png");
+		}
 		if (player->hp == 10) {
 			img = app->tex->Load("Assets/UI/10hp.png");
 		}
@@ -329,10 +487,12 @@ bool Scene::Update(float dt)
 			if (app->win->scale == 3) {
 			app->render->DrawTexture(conf, player->position.x + 133, player->position.y -117 - 33);
 			app->render->DrawTexture(img, player->position.x - 160, player->position.y - 120 - 33);
+			app->render->DrawTexture(cookies, player->position.x - 100, player->position.y - 120 - 33);
 			}
 			else if (app->win->scale == 2) {
 				app->render->DrawTexture(conf, player->position.x + 133 +66, player->position.y - 117 - 109);
 				app->render->DrawTexture(img, player->position.x - 160 -66, player->position.y - 120 - 66);
+				app->render->DrawTexture(cookies, player->position.x - 100 - 66, player->position.y - 120 - 66);
 			}
 			
 		}

@@ -19,7 +19,8 @@ enum class EntityType
 	TREE,
 	BOSS,
 	POTION,
-	BULLET
+	BULLET,
+	GALLETA
 };
 
 class Entity

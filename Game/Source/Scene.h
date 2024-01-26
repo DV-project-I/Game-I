@@ -9,6 +9,7 @@
 #include "Tree.h"
 #include "Boss.h"
 #include "Poty.h"
+#include "Galleta.h"
 
 #include "GuiControl.h"
 #include "GuiControlButton.h"
@@ -68,6 +69,7 @@ private:
 	SDL_Texture* vol;
 	SDL_Texture* novol;
 	SDL_Texture* fuera;
+	SDL_Texture* cookies;
 	
 
 
@@ -81,6 +83,7 @@ private:
 	Bat* bat;
 	PhysBody* pbody;
 	Item* item;
+	Galleta* galleta;
 	
 	Poty* poty;
 	

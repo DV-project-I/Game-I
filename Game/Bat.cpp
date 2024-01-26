@@ -94,6 +94,7 @@ bool Bat::Update(float dt) {
 	}
 
 	if (IsDeath == true) {
+		
 		currentAnimation = &DeathBat;
 		movX = 0;
 		movY = -GRAVITY_Y + 25.2f;
@@ -213,6 +214,7 @@ void Bat::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::PLAYERATTACK:
 		IsDeath = true;
+		app->scene->player->contadorcookies++;
 		LOG("Collision PLAYERATTACK");
 		break;
 	}

@@ -6,6 +6,7 @@
 #include "SDL/include/SDL.h"
 #include "Animation.h"
 #include "Bullet.h"
+#include "Player.h"
 
 
 struct SDL_Texture;

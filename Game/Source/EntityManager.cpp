@@ -104,6 +104,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::POTION:
 		entity = new Poty();
 		break;
+	case EntityType::GALLETA:
+		entity = new Galleta();
+		break;
 	default:
 		break;
 	}

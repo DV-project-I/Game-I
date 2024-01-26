@@ -133,6 +133,7 @@ bool Enemy::Update(float dt) {
 	}
 
 	if (IsDeath == true) {
+		
 		currentAnimation = &DeathAnim;
 		pbody->ctype = ColliderType::ITEM;
 		movX = 0;
@@ -275,6 +276,7 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::PLAYERATTACK:
 		IsDeath = true;
+		app->scene->player->contadorcookies++;
 		LOG("Collision PLAYERATTACK");
 		break;
 	}

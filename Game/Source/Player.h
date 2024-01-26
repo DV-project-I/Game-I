@@ -60,6 +60,8 @@ public:
 	float acc;
 	float timertoplay;
 
+	int contadorcookies = 0;
+
 	const float JUMP_INITIAL_VELOCITY = 200.0f;
 	bool isJumping;
 	bool isOnGround;
