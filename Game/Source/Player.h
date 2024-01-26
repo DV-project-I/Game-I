@@ -69,7 +69,7 @@ public:
 	bool isPlayingAtack = false;
 	float JUMP_FORCE = 10.0f;
 
-	int vidas = 2;
+	int vidas = 5;
 
 	uint walkingsound;
 	uint grito;

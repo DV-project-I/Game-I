@@ -52,7 +52,7 @@ Boss::Boss() : Entity(EntityType::BOSS)
 	AtackAnimIzq.PushBack({ 1024, 128, 64, 64 });
 	AtackAnimIzq.PushBack({ 1088, 128, 64, 64 });
 	AtackAnimIzq.PushBack({ 1152, 128, 64, 64 });
-	AtackAnimIzq.speed = 0.15f;
+	AtackAnimIzq.speed = 0.3f;
 	AtackAnimIzq.loop = true;
 
 	AtackAnimDer.PushBack({ 0, 192, 64, 64 });
@@ -74,7 +74,7 @@ Boss::Boss() : Entity(EntityType::BOSS)
 	AtackAnimDer.PushBack({ 1024, 192, 64, 64 });
 	AtackAnimDer.PushBack({ 1088, 192, 64, 64 });
 	AtackAnimDer.PushBack({ 1152, 192, 64, 64 });
-	AtackAnimDer.speed = 0.15f;
+	AtackAnimDer.speed = 0.3f;
 	AtackAnimDer.loop = true;
 
 	DeathAnim.PushBack({ 0, 100, 64, 64 });
@@ -116,11 +116,11 @@ bool Boss::Start() {
 	hp = 10;
 	//texture = app->tex->Load("Assets/personajes/Spritesheet Parca/parca.png");
 
-	pbody = app->physics->CreateRectangle(position.x, position.y, 20, 50, bodyType::DYNAMIC);
+	pbody = app->physics->CreateRectangle(position.x +10, position.y, 20, 50, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
-	ataque = app->physics->CreateRectangle(0, 0, 30, 10, bodyType::STATIC);
+	ataque = app->physics->CreateRectangle(0, 0, 64, 32, bodyType::STATIC);
 	ataque->ctype = ColliderType::ENEMY;
 	ataque->body->GetFixtureList()->SetSensor(true);
 	
@@ -246,11 +246,12 @@ bool Boss::Update(float dt) {
 			int y = position.y + 15;
 			b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 			ataque->body->SetTransform(newPos, ataque->body->GetAngle());
+			cooldown = 0;
 
 		}
 
 	}
-	if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimIzq) {
+	if (position.DistanceTo(app->scene->player->position) < 150 && app->scene->player->position.x < position.x) {
 		currentAnimation = &AtackAnimIzq;
 		if (timertoplay > 250) {
 
@@ -265,7 +266,7 @@ bool Boss::Update(float dt) {
 			int y = position.y + 15;
 			b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 			ataque->body->SetTransform(newPos, ataque->body->GetAngle());
-
+			cooldown = 0;
 		}
 
 
@@ -290,10 +291,11 @@ bool Boss::Update(float dt) {
 		
 		punch = false;
 	}
-	if (salto >= 100) {
-		vel.y = -PUNCHVELOCITY -400;
+	/*if (salto >= 100) {
+		vel.y = 0;
+		vel.y += -PUNCHVELOCITY -300;
 		salto = 0;
-	}
+	}*/
 	currentAnimation->Update();
 
 	pbody->body->SetLinearVelocity(vel);
