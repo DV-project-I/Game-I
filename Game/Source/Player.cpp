@@ -328,7 +328,7 @@ bool Player::Update(float dt)
 	}
 
 	if (lvl2 == true) {
-		SetPosition(1600, 824);
+		SetPosition(1700, 824);
 		lvl2 = false;
 		vidas++;
 	}
