@@ -98,9 +98,34 @@ bool Scene::Awake(pugi::xml_node& config)
 			galleta->parameters = config.child("galleta12");
 		}
 
-		if (config.child("poty")) {
+		if (config.child("poty0")) {
 			poty = (Poty*)app->entityManager->CreateEntity(EntityType::POTION);
-			poty->parameters = config.child("poty");
+			poty->parameters = config.child("poty0");
+		}
+
+		if (config.child("poty1")) {
+			poty = (Poty*)app->entityManager->CreateEntity(EntityType::POTION);
+			poty->parameters = config.child("poty1");
+		}
+
+		if (config.child("poty2")) {
+			poty = (Poty*)app->entityManager->CreateEntity(EntityType::POTION);
+			poty->parameters = config.child("pot2");
+		}
+
+		if (config.child("poty3")) {
+			poty = (Poty*)app->entityManager->CreateEntity(EntityType::POTION);
+			poty->parameters = config.child("poty3");
+		}
+
+		if (config.child("poty4")) {
+			poty = (Poty*)app->entityManager->CreateEntity(EntityType::POTION);
+			poty->parameters = config.child("poty4");
+		}
+
+		if (config.child("poty5")) {
+			poty = (Poty*)app->entityManager->CreateEntity(EntityType::POTION);
+			poty->parameters = config.child("poty5");
 		}
 
 		if (config.child("boss")) {
@@ -163,6 +188,11 @@ bool Scene::Awake(pugi::xml_node& config)
 		if (config.child("bat2")) {
 			bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
 			bat->parameters = config.child("bat2");
+		}
+
+		if (config.child("bat10")) {
+			bat = (Bat*)app->entityManager->CreateEntity(EntityType::BAT);
+			bat->parameters = config.child("bat10");
 		}
 
 		if (config.child("tree0")) {

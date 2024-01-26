@@ -47,6 +47,15 @@
 		<enemy5 x="3600" y="700" texturepath="Assets/personajes/Torrente/torrenteSpritesheet.png"/>
 		<enemy6 x="4000" y="700" texturepath="Assets/personajes/Torrente/torrenteSpritesheet.png"/>
 		<enemy7 x="4400" y="700" texturepath="Assets/personajes/Torrente/torrenteSpritesheet.png"/>
+
+		<poty0 x="944" y="1616" texturepath="Assets/cosas/almaflotante.png"/>
+		<poty1 x="4496" y="1328" texturepath="Assets/cosas/almaflotante.png"/>
+		<poty2 x="1088" y="1344" texturepath="Assets/cosas/almaflotante.png"/>
+		<poty3 x="432" y="1008" texturepath="Assets/cosas/almaflotante.png"/>
+		<poty4 x="1072" y="672" texturepath="Assets/cosas/almaflotante.png"/>
+		<poty5 x="368" y="1536" texturepath="Assets/cosas/almaflotante.png"/>
+		<poty6 x="2016" y="1104" texturepath="Assets/cosas/almaflotante.png"/>
+
 		
 
 		<boss x ="3400" y="1744" texturepath ="Assets/personajes/Boss/bossspritesheet.png"/>
@@ -65,6 +74,7 @@
 		<bat6 x ="1520" y="1520" texturepath ="Assets/personajes/MurcielagoYArbol.png"/>
 		<tree5 x ="1936" y="1264" texturepath ="Assets/personajes/MurcielagoYArbol.png"/>
 		<bat7 x ="1872" y="1040" texturepath ="Assets/personajes/MurcielagoYArbol.png"/>
+		<bat10 x ="4128" y="1248" texturepath ="Assets/personajes/MurcielagoYArbol.png"/>
 
 	</scene>
 
