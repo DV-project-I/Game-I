@@ -159,15 +159,8 @@ bool Boss::Update(float dt) {
 			iPoint origin2 = iPoint(app->scene->player->position.x, app->scene->player->position.y);
 
 
-			if (position.DistanceTo(app->scene->player->position) < 120) {
-
-				if (position.DistanceTo(app->scene->player->position) < 150 && timertoplay > 500) {
-
-					app->audio->PlayFx(torrentesound, 0);
-					timertoplay = 0;
-
-				}
-				timertoplay++;
+			if (position.DistanceTo(app->scene->player->position) < 320) {
+						
 
 				//COSAS DEL PATHFINDING
 				app->map->pathfinding->CreatePath(app->map->WorldToMap(origin.x, origin.y), app->map->WorldToMap(origin2.x, origin2.y));
@@ -233,7 +226,7 @@ bool Boss::Update(float dt) {
 		timertoplay++;
 		
 		if (cooldown > 60) {
-			int x = position.x + 30;
+			int x = position.x + 60;
 			int y = position.y + 15;
 			b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 			ataque->body->SetTransform(newPos, ataque->body->GetAngle());
@@ -253,7 +246,7 @@ bool Boss::Update(float dt) {
 		timertoplay++;
 
 		if (cooldown > 60) {
-			int x = position.x - 10;
+			int x = position.x - 20;
 			int y = position.y + 15;
 			b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 			ataque->body->SetTransform(newPos, ataque->body->GetAngle());
@@ -282,12 +275,12 @@ bool Boss::Update(float dt) {
 		
 		punch = false;
 	}
-	if (salto >= 100 && phase2 == true) {
-		SetPosition(3100, 1674);
+	if (salto >= 200 && phase2 == true) {
+		SetPosition(2700, 1674);
 		salto = 0;
 	}
-	if (salto >= 100 && phase2 == false) {
-		SetPosition(3400, 1674);
+	if (salto >= 200 && phase2 == false) {
+		SetPosition(3450, 1674);
 		salto = 0;
 	}
 	currentAnimation->Update();
