@@ -322,17 +322,20 @@ bool Player::Update(float dt)
 
 
 	if (hp <= 0) {
+		
 		IsDeath = true;
 	}
 
 	if (lvl2 == true) {
 		SetPosition(1600, 824);
 		lvl2 = false;
+		vidas++;
 	}
 
 	if (bossfight == true) {
 		SetPosition(3440, 1744);
 		bossfight = false;
+		vidas++;
 	}
 
 	if (IsDeath == true) {
@@ -403,12 +406,14 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::INSTAKILL:
 		IsDeath = true;
+		vidas--;
 		LOG("Collision INSTAKILL");
 		break;
 	case ColliderType::ENEMY:
 		if (God == false) {
 		hp --;		
 		app->audio->PlayFx(grito, 0);
+		
 		}	
 		LOG("Collision ENEMY");
 		break;
@@ -424,7 +429,7 @@ void Player ::SetPosition(int x, int y) {
 	position.y = y;
 	b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 	pbody->body->SetTransform(newPos, pbody->body->GetAngle());	
-	
+	vidas--;
 	IsDeath = false;
 	
 }
@@ -433,7 +438,7 @@ void Player :: PlayerDeath()
 {			
 	currentAnimation = &DeathAnim;
 	
-	vidas--;
+	
 	if (currentAnimation->HasFinished() == true && pasaste == false) {		
 		SetPosition(parameters.attribute("x").as_int(), parameters.attribute("y").as_int());
 		hp = 10;
