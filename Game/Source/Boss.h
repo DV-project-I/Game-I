@@ -69,6 +69,7 @@ public:
 
 	const float PUNCHVELOCITY = 400.0f;
 
+	bool derecha = false;
 	bool phase2 = false;
 	bool Ataca;
 	bool ganaste = false;

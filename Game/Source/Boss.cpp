@@ -116,7 +116,7 @@ bool Boss::Start() {
 	hp = 10;
 	//texture = app->tex->Load("Assets/personajes/Spritesheet Parca/parca.png");
 
-	pbody = app->physics->CreateRectangle(position.x +10, position.y, 20, 50, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x +10, position.y, 15, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
@@ -152,7 +152,7 @@ bool Boss::Update(float dt) {
 	}
 	else {
 		
-		if (phase2 == false) {
+		
 
 
 			iPoint origin = iPoint(this->position.x, this->position.y);
@@ -189,23 +189,14 @@ bool Boss::Update(float dt) {
 				if (pathmode == true) {
 					app->render->DrawTexture(camino, pos.x, pos.y);
 				}
-				movX = (pos.x - this->position.x) / 20;
+				movX = (pos.x - this->position.x) / 30;
 				vel.x = movX;
 
 			}
 
-		}
+		
 
-		if (phase2 == true) {
-			if (cooldown >= 50) {
-			bullet = (Bullet*)app->entityManager->CreateEntity(EntityType::BULLET);
-			bullet->Awake();
-			bullet->Start();
-			
-			cooldown = 0;
-			}
-			
-		}
+		
 			if (vel.x < 0) {
 				currentAnimation = &WalkAnimIzq;
 			}
@@ -291,11 +282,14 @@ bool Boss::Update(float dt) {
 		
 		punch = false;
 	}
-	/*if (salto >= 100) {
-		vel.y = 0;
-		vel.y += -PUNCHVELOCITY -300;
+	if (salto >= 100 && phase2 == true) {
+		SetPosition(3100, 1674);
 		salto = 0;
-	}*/
+	}
+	if (salto >= 100 && phase2 == false) {
+		SetPosition(3400, 1674);
+		salto = 0;
+	}
 	currentAnimation->Update();
 
 	pbody->body->SetLinearVelocity(vel);
@@ -311,7 +305,7 @@ bool Boss::Update(float dt) {
 	cooldown++;
 	salto++;
 
-	app->render->DrawTexture(texture, position.x -16 , position.y - 22, &currentAnimation->GetCurrentFrame());
+	app->render->DrawTexture(texture, position.x -16 , position.y - 32, &currentAnimation->GetCurrentFrame());
 	return true;
 }
 
