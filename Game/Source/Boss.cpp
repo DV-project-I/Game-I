@@ -89,7 +89,7 @@ Boss::Boss() : Entity(EntityType::BOSS)
 	DesaparecerAnim.PushBack({ 576, 256, 64, 64 });
 	DesaparecerAnim.PushBack({ 640, 256, 64, 64 });
 	DesaparecerAnim.speed = 0.2f;
-	DesaparecerAnim.loop = true;
+	DesaparecerAnim.loop = false;
 
 	DeathAnim.PushBack({ 0, 100, 64, 64 });
 	DeathAnim.PushBack({ 25, 100, 64, 64 });
@@ -279,26 +279,34 @@ bool Boss::Update(float dt) {
 	}
 	
 	vel.x = movX;
-	if (punch == true && app->scene->player->position.x < position.x) {
+	/*if (punch == true && app->scene->player->position.x < position.x) {
 		vel.x = PUNCHVELOCITY;		
 		punch = false;
 	}
 	if (punch == true && app->scene->player->position.x >= position.x) {
 		vel.x = -PUNCHVELOCITY;		
 		punch = false;
-	}
+	}*/
 	//--------------TP-------------
 	if (salto >= 200 && phase2 == true) {
 		currentAnimation = &DesaparecerAnim;
-		if(currentAnimation->HasFinished())
+		if (currentAnimation->HasFinished())
+		{
 		SetPosition(2700, 1674);
 		salto = 0;
+		}
+		
 	}
 	if (salto >= 200 && phase2 == false) {
 		currentAnimation = &DesaparecerAnim;
 		if (currentAnimation->HasFinished())
-		SetPosition(3450, 1674);
-		salto = 0;
+		{
+			SetPosition(2700, 1674);
+			salto = 0;
+		}
+	}
+	if (salto >= 0 && salto <= 10) {
+		DesaparecerAnim.Reset();
 	}
 	currentAnimation->Update();
 
