@@ -563,6 +563,19 @@ bool Scene::Update(float dt)
 			}
 			app->render->DrawTexture(fuera, player->position.x - 450, player->position.y + 270 - 100);
 		}
+		if (vsync->state == GuiControlState::SELECTED) {
+			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
+			uint heigth;
+			uint width;
+
+			app->win->GetWindowSize(width, heigth);
+
+			SDL_SetWindowFullscreen(app->win->window, 0);
+			SDL_SetWindowSize(app->win->window, width, heigth);
+		}
+		if (fullscreen->state == GuiControlState::SELECTED) {
+			app->maxFrameDuration = 1000 / 144;
+		}
 		if (onpause == false) {
 			if (app->win->scale == 3) {
 			app->render->DrawTexture(conf, player->position.x + 133, player->position.y -117 - 33);
