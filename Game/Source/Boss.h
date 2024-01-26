@@ -83,6 +83,7 @@ public:
 	Animation AtackAnimIzq;
 	Animation DeathAnim;
 	Animation JumpAnimIzq;
+	Animation DesaparecerAnim;
 
 
 

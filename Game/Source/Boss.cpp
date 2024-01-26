@@ -77,6 +77,20 @@ Boss::Boss() : Entity(EntityType::BOSS)
 	AtackAnimDer.speed = 0.3f;
 	AtackAnimDer.loop = true;
 
+	DesaparecerAnim.PushBack({ 0, 256, 64, 64 });
+	DesaparecerAnim.PushBack({ 64, 256, 64, 64 });
+	DesaparecerAnim.PushBack({ 128, 256, 64, 64 });
+	DesaparecerAnim.PushBack({ 192, 256, 64, 64 });
+	DesaparecerAnim.PushBack({ 256, 256, 64, 64 });
+	DesaparecerAnim.PushBack({ 320, 256, 64, 64 });
+	DesaparecerAnim.PushBack({ 384, 256, 64, 64 });
+	DesaparecerAnim.PushBack({ 448, 256, 64, 64 });
+	DesaparecerAnim.PushBack({ 512, 256, 64, 64 });
+	DesaparecerAnim.PushBack({ 576, 256, 64, 64 });
+	DesaparecerAnim.PushBack({ 640, 256, 64, 64 });
+	DesaparecerAnim.speed = 0.2f;
+	DesaparecerAnim.loop = true;
+
 	DeathAnim.PushBack({ 0, 100, 64, 64 });
 	DeathAnim.PushBack({ 25, 100, 64, 64 });
 	DeathAnim.PushBack({ 50, 100, 64, 64 });
@@ -214,7 +228,7 @@ bool Boss::Update(float dt) {
 		Ataca = false;
 	}
 
-	if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimDer) {
+	if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation != &AtackAnimDer) {
 		
 		currentAnimation = &AtackAnimDer;
 		if (timertoplay > 250) {
@@ -275,13 +289,13 @@ bool Boss::Update(float dt) {
 	}
 	//--------------TP-------------
 	if (salto >= 200 && phase2 == true) {
-		//currentAnimation = &desapareceranim;
+		currentAnimation = &DesaparecerAnim;
 		if(currentAnimation->HasFinished())
 		SetPosition(2700, 1674);
 		salto = 0;
 	}
 	if (salto >= 200 && phase2 == false) {
-		//currentAnimation = &desapareceranim;
+		currentAnimation = &DesaparecerAnim;
 		if (currentAnimation->HasFinished())
 		SetPosition(3450, 1674);
 		salto = 0;
