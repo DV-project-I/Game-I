@@ -112,7 +112,7 @@ bool Scene2::Start()
 			SDL_Rect btPos5 = { 412, 384,64,64 };
 			vsync = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "MyButton", btPos5, this);
 			vsync->state = GuiControlState::DISABLED;
-			////////////////////////////////////PAU SOCORRO ME CORRO/////////////////////////////////////////////
+			
 			SDL_Rect btPos6 = { 412, 284 ,64,64 };
 			fullscreen = (GuiControlButton*)app->guiManager->CreateGuiControl(GuiControlType::CHECKBOX, 1, "MyButton", btPos6, this);
 			fullscreen->state = GuiControlState::DISABLED;
@@ -173,6 +173,19 @@ bool Scene2::Update(float dt)
 			volume->state = GuiControlState::NORMAL;
 			vsync->state = GuiControlState::NORMAL;
 			fullscreen->state = GuiControlState::NORMAL;
+		}
+		if (vsync->state == GuiControlState::SELECTED) { 
+			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
+			uint heigth;
+			uint width;
+			
+			app->win->GetWindowSize(width, heigth);
+
+			SDL_SetWindowFullscreen(app->win->window, 0);
+			SDL_SetWindowSize(app->win->window, width, heigth);
+		}
+		if (fullscreen->state == GuiControlState::SELECTED) {
+			app->maxFrameDuration = 1000 / 144;
 		}
 		if (exit->state == GuiControlState::PRESSED) {
 			app->audio->PlayFx(buttonsound, 0);

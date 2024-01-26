@@ -66,7 +66,7 @@ public:
 	bool pathmode = false;
 	bool punch = false;
 
-	const float PUNCHVELOCITY = 200.0f;
+	const float PUNCHVELOCITY = 400.0f;
 
 	bool phase2 = false;
 	bool Ataca;

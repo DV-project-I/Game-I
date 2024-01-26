@@ -99,6 +99,8 @@ public:
 	Scene2* scene2;
 	List<Module *> modules;
 	bool Vsync = false;
+
+	uint32 maxFrameDuration = 16;
 private:
 
 	int argc;
@@ -128,7 +130,7 @@ private:
 	float averageFps = 0.0f;
 	uint32 secondsSinceStartup = 0;
 
-	uint32 maxFrameDuration = 16;
+	
 
 	bool loadRequest = false;
 	bool saveRequest = false;

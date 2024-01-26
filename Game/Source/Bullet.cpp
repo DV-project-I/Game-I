@@ -20,8 +20,8 @@ Bullet::~Bullet() {}
 
 bool Bullet::Awake() {
 
-	position.x = parameters.attribute("x").as_int();
-	position.y = parameters.attribute("y").as_int();	
+	position.x = app->scene->boss->position.y;
+	position.y = app->scene->boss->position.y;
 	
 	
 	return true;

@@ -92,7 +92,7 @@ Boss::~Boss() {
 
 bool Boss::Awake() {
 
-
+	
 	
 PathFinding path;
 	position.x = parameters.attribute("x").as_int();
@@ -110,9 +110,9 @@ bool Boss::Start() {
 	camino = app->tex->Load("Assets/Textures/camino.png");
 	torrentesound = app->audio->LoadFx("Assets/Audio/Fx/torrente.wav");
 	torrentesound2 = app->audio->LoadFx("Assets/Audio/Fx/ataquemeleboss.wav");
-	
-	
 
+	
+	
 	hp = 10;
 	//texture = app->tex->Load("Assets/personajes/Spritesheet Parca/parca.png");
 
@@ -198,7 +198,10 @@ bool Boss::Update(float dt) {
 
 		if (phase2 == true) {
 			if (cooldown >= 50) {
-			//bullet = (Bullet*)app->entityManager->CreateEntity(EntityType::BULLET);
+			bullet = (Bullet*)app->entityManager->CreateEntity(EntityType::BULLET);
+			bullet->Awake();
+			bullet->Start();
+			
 			cooldown = 0;
 			}
 			
@@ -279,10 +282,12 @@ bool Boss::Update(float dt) {
 	vel.x = movX;
 	if (punch == true && app->scene->player->position.x < position.x) {
 		vel.x = -PUNCHVELOCITY;
+		vel.y = -PUNCHVELOCITY;
 		punch = false;
 	}
 	if (punch == true && app->scene->player->position.x >= position.x) {
 		vel.x = PUNCHVELOCITY;
+		vel.y = -PUNCHVELOCITY;
 		punch = false;
 	}
 	currentAnimation->Update();
