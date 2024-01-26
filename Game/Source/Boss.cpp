@@ -120,7 +120,7 @@ bool Boss::Start() {
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
-	ataque = app->physics->CreateRectangle(0, 0, 64, 32, bodyType::STATIC);
+	ataque = app->physics->CreateRectangle(0, 0, 32, 64, bodyType::STATIC);
 	ataque->ctype = ColliderType::ENEMY;
 	ataque->body->GetFixtureList()->SetSensor(true);
 	
@@ -262,7 +262,7 @@ bool Boss::Update(float dt) {
 		timertoplay++;
 
 		if (cooldown > 60) {
-			int x = position.x + 30;
+			int x = position.x - 10;
 			int y = position.y + 15;
 			b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 			ataque->body->SetTransform(newPos, ataque->body->GetAngle());
