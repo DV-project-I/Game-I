@@ -153,6 +153,7 @@ bool Player::Start() {
 	
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/Heal.wav");
+	galleta = app->audio->LoadFx("Assets/Audio/Fx/galleta.wav");
 
 
 	return true;
@@ -384,8 +385,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision POTION");
 		break;
 	case ColliderType::GALLETA:
-		contadorcookies++;		
-		LOG("Collision ITEM");
+		contadorcookies++;
+		app->audio->PlayFx(galleta, 0);
+		LOG("Collision GALLETA");
 		break;
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");

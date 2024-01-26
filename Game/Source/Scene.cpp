@@ -49,9 +49,53 @@ bool Scene::Awake(pugi::xml_node& config)
 			player->parameters = config.child("player");
 		}
 
-		if (config.child("item")) {
-			item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-			item->parameters = config.child("item");
+		if (config.child("galleta1")) {
+			galleta = (Galleta*)app->entityManager->CreateEntity(EntityType::GALLETA);
+			galleta->parameters = config.child("galleta1");
+		}
+		if (config.child("galleta2")) {
+			galleta = (Galleta*)app->entityManager->CreateEntity(EntityType::GALLETA);
+			galleta->parameters = config.child("galleta2");
+		}
+		if (config.child("galleta3")) {
+			galleta = (Galleta*)app->entityManager->CreateEntity(EntityType::GALLETA);
+			galleta->parameters = config.child("galleta3");
+		}
+		if (config.child("galleta4")) {
+			galleta = (Galleta*)app->entityManager->CreateEntity(EntityType::GALLETA);
+			galleta->parameters = config.child("galleta4");
+		}
+		if (config.child("galleta5")) {
+			galleta = (Galleta*)app->entityManager->CreateEntity(EntityType::GALLETA);
+			galleta->parameters = config.child("galleta5");
+		}
+		if (config.child("galleta6")) {
+			galleta = (Galleta*)app->entityManager->CreateEntity(EntityType::GALLETA);
+			galleta->parameters = config.child("galleta6");
+		}
+		if (config.child("galleta7")) {
+			galleta = (Galleta*)app->entityManager->CreateEntity(EntityType::GALLETA);
+			galleta->parameters = config.child("galleta7");
+		}
+		if (config.child("galleta8")) {
+			galleta = (Galleta*)app->entityManager->CreateEntity(EntityType::GALLETA);
+			galleta->parameters = config.child("galleta8");
+		}
+		if (config.child("galleta9")) {
+			galleta = (Galleta*)app->entityManager->CreateEntity(EntityType::GALLETA);
+			galleta->parameters = config.child("galleta9");
+		}
+		if (config.child("galleta10")) {
+			galleta = (Galleta*)app->entityManager->CreateEntity(EntityType::GALLETA);
+			galleta->parameters = config.child("galleta10");
+		}
+		if (config.child("galleta11")) {
+			galleta = (Galleta*)app->entityManager->CreateEntity(EntityType::GALLETA);
+			galleta->parameters = config.child("galleta11");
+		}
+		if (config.child("galleta12")) {
+			galleta = (Galleta*)app->entityManager->CreateEntity(EntityType::GALLETA);
+			galleta->parameters = config.child("galleta12");
 		}
 
 		if (config.child("poty")) {
@@ -59,19 +103,50 @@ bool Scene::Awake(pugi::xml_node& config)
 			poty->parameters = config.child("poty");
 		}
 
-		if (config.child("galleta")) {
-			galleta = (Galleta*)app->entityManager->CreateEntity(EntityType::GALLETA);
-			galleta->parameters = config.child("galleta");
-		}
-
 		if (config.child("boss")) {
 			boss = (Boss*)app->entityManager->CreateEntity(EntityType::BOSS);
 			boss->parameters = config.child("boss");
 		}
 
+
 		if (config.child("enemy0")) {
 			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-			enemy->parameters = config.child("enemy0");
+			enemy->parameters = config.child("enemy1");
+		}
+
+		if (config.child("enemy1")) {
+			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+			enemy->parameters = config.child("enemy1");
+		}
+
+		if (config.child("enemy2")) {
+			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+			enemy->parameters = config.child("enemy2");
+		}
+
+		if (config.child("enemy3")) {
+			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+			enemy->parameters = config.child("enemy3");
+		}
+
+		if (config.child("enemy4")) {
+			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+			enemy->parameters = config.child("enemy4");
+		}
+
+		if (config.child("enemy5")) {
+			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+			enemy->parameters = config.child("enemy5");
+		}
+
+		if (config.child("enemy6")) {
+			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+			enemy->parameters = config.child("enemy6");
+		}
+
+		if (config.child("enemy7")) {
+			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+			enemy->parameters = config.child("enemy7");
 		}
 
 		if (config.child("bat0")) {
@@ -90,13 +165,18 @@ bool Scene::Awake(pugi::xml_node& config)
 			bat->parameters = config.child("bat2");
 		}
 
-		if (config.child("enemy1")) {
-			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-			enemy->parameters = config.child("enemy1");
+		if (config.child("tree0")) {
+			tree = (Tree*)app->entityManager->CreateEntity(EntityType::TREE);
+			tree->parameters = config.child("tree0");
 		}
-		if (config.child("enemy2")) {
-			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-			enemy->parameters = config.child("enemy2");
+
+		if (config.child("tree1")) {
+			tree = (Tree*)app->entityManager->CreateEntity(EntityType::TREE);
+			tree->parameters = config.child("tree1");
+		}
+		if (config.child("tree2")) {
+			tree = (Tree*)app->entityManager->CreateEntity(EntityType::TREE);
+			tree->parameters = config.child("tree2");
 		}
 
 		if (config.child("bat3")) {
@@ -104,9 +184,9 @@ bool Scene::Awake(pugi::xml_node& config)
 			bat->parameters = config.child("bat3");
 		}
 
-		if (config.child("enemy3")) {
-			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-			enemy->parameters = config.child("enemy3");
+		if (config.child("tree3")) {
+			tree = (Tree*)app->entityManager->CreateEntity(EntityType::TREE);
+			tree->parameters = config.child("tree3");
 		}
 
 		if (config.child("bat4")) {
@@ -119,9 +199,9 @@ bool Scene::Awake(pugi::xml_node& config)
 			bat->parameters = config.child("bat5");
 		}
 
-		if (config.child("enemy4")) {
-			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-			enemy->parameters = config.child("enemy4");
+		if (config.child("tree4")) {
+			tree = (Tree*)app->entityManager->CreateEntity(EntityType::TREE);
+			tree->parameters = config.child("tree4");
 		}
 
 		if (config.child("bat6")) {
@@ -129,9 +209,9 @@ bool Scene::Awake(pugi::xml_node& config)
 			bat->parameters = config.child("bat6");
 		}
 
-		if (config.child("enemy5")) {
-			enemy = (Enemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-			enemy->parameters = config.child("enemy5");
+		if (config.child("tree5")) {
+			tree = (Tree*)app->entityManager->CreateEntity(EntityType::TREE);
+			tree->parameters = config.child("tree5");
 		}
 
 		/*if (config.child("bat7")) {

@@ -74,6 +74,7 @@ public:
 	uint walkingsound;
 	uint grito;
 	uint ataquesonido;
+	uint galleta;
 
 	float timerataque;
 
