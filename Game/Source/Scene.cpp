@@ -174,7 +174,7 @@ bool Scene::Start()
 		diescreen = app->tex->Load("Assets/UI/youlose.png");
 		winscreen = app->tex->Load("Assets/UI/youwin.png");
 
-		cookies = app->tex->Load("Assets/UI/youwin.png");
+
 
 		//Music is commented so that you can add your own music
 		app->audio->PlayMusic("Assets/Audio/Music/soundtracktorrente.wav");

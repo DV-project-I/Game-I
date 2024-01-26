@@ -52,7 +52,7 @@ Boss::Boss() : Entity(EntityType::BOSS)
 	AtackAnimIzq.PushBack({ 1024, 128, 64, 64 });
 	AtackAnimIzq.PushBack({ 1088, 128, 64, 64 });
 	AtackAnimIzq.PushBack({ 1152, 128, 64, 64 });
-	AtackAnimIzq.speed = 0.3f;
+	AtackAnimIzq.speed = 0.15f;
 	AtackAnimIzq.loop = true;
 
 	AtackAnimDer.PushBack({ 0, 192, 64, 64 });
@@ -74,7 +74,7 @@ Boss::Boss() : Entity(EntityType::BOSS)
 	AtackAnimDer.PushBack({ 1024, 192, 64, 64 });
 	AtackAnimDer.PushBack({ 1088, 192, 64, 64 });
 	AtackAnimDer.PushBack({ 1152, 192, 64, 64 });
-	AtackAnimDer.speed = 0.3f;
+	AtackAnimDer.speed = 0.15f;
 	AtackAnimDer.loop = true;
 
 	DeathAnim.PushBack({ 0, 100, 64, 64 });
@@ -109,14 +109,14 @@ bool Boss::Start() {
 	texture = app->tex->Load(texturePath);
 	camino = app->tex->Load("Assets/Textures/camino.png");
 	torrentesound = app->audio->LoadFx("Assets/Audio/Fx/torrente.wav");
-	torrentesound2 = app->audio->LoadFx("Assets/Audio/Fx/punchtorrente.wav");
+	torrentesound2 = app->audio->LoadFx("Assets/Audio/Fx/ataquemeleboss.wav");
 	
 	
 
 	hp = 10;
 	//texture = app->tex->Load("Assets/personajes/Spritesheet Parca/parca.png");
 
-	pbody = app->physics->CreateCircle(position.x, position.y, 8, bodyType::DYNAMIC);
+	pbody = app->physics->CreateRectangle(position.x, position.y, 20, 50, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 
@@ -189,7 +189,7 @@ bool Boss::Update(float dt) {
 				if (pathmode == true) {
 					app->render->DrawTexture(camino, pos.x, pos.y);
 				}
-				movX = (pos.x - this->position.x) / 25;
+				movX = (pos.x - this->position.x) / 20;
 				vel.x = movX;
 
 			}
@@ -217,35 +217,56 @@ bool Boss::Update(float dt) {
 			}
 	}
 		//Ataque
-		if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimDer) {
-			
-			currentAnimation = &AtackAnimDer;
-			app->audio->PlayFx(torrentesound2, 0);
-			
-			if (cooldown > 60) {
-				int x = position.x + 30;
-				int y = position.y + 15;
-				b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
-				ataque->body->SetTransform(newPos, ataque->body->GetAngle());
-				
-			}
 
-			if (AtackAnimDer.HasFinished()) {
-				AtackAnimDer.Reset();
-				Ataca = false;
-			}
+	if (AtackAnimDer.HasFinished() || currentAnimation != &AtackAnimDer) {
+		AtackAnimDer.Reset();
+		Ataca = false;
+	}
+	if (AtackAnimIzq.HasFinished() || currentAnimation != &AtackAnimIzq) {
+		AtackAnimIzq.Reset();
+		Ataca = false;
+	}
+
+	if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimDer) {
+		
+		currentAnimation = &AtackAnimDer;
+		if (timertoplay > 250) {
+
+			app->audio->PlayFx(torrentesound2, 0);
+			timertoplay = 0;
 
 		}
-		if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimIzq) {
-			currentAnimation = &AtackAnimIzq;
-			app->audio->PlayFx(torrentesound2, 0);
-
-			if (AtackAnimIzq.HasFinished()) {
-				AtackAnimIzq.Reset();
-				Ataca = false;
-			}
+		timertoplay++;
+		
+		if (cooldown > 60) {
+			int x = position.x + 30;
+			int y = position.y + 15;
+			b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+			ataque->body->SetTransform(newPos, ataque->body->GetAngle());
 
 		}
+
+	}
+	if (position.DistanceTo(app->scene->player->position) < 50 && currentAnimation == &WalkAnimIzq) {
+		currentAnimation = &AtackAnimIzq;
+		if (timertoplay > 250) {
+
+			app->audio->PlayFx(torrentesound2, 0);
+			timertoplay = 0;
+
+		}
+		timertoplay++;
+
+		if (cooldown > 60) {
+			int x = position.x + 30;
+			int y = position.y + 15;
+			b2Vec2 newPos(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+			ataque->body->SetTransform(newPos, ataque->body->GetAngle());
+
+		}
+
+
+	}
 	
 	if (position.DistanceTo(app->scene->player->position) > 50)
 	{
@@ -256,11 +277,11 @@ bool Boss::Update(float dt) {
 	}
 	
 	vel.x = movX;
-	if (punch == true && currentAnimation == &WalkAnimDer || punch == true && currentAnimation == &AtackAnimDer) {
+	if (punch == true && app->scene->player->position.x < position.x) {
 		vel.x = -PUNCHVELOCITY;
 		punch = false;
 	}
-	if (punch == true && currentAnimation == &WalkAnimIzq || punch == true && currentAnimation == &AtackAnimIzq) {
+	if (punch == true && app->scene->player->position.x >= position.x) {
 		vel.x = PUNCHVELOCITY;
 		punch = false;
 	}
@@ -278,7 +299,7 @@ bool Boss::Update(float dt) {
 	timerataque++;
 	cooldown++;
 
-	app->render->DrawTexture(texture, position.x +3 , position.y, &currentAnimation->GetCurrentFrame());
+	app->render->DrawTexture(texture, position.x -16 , position.y - 22, &currentAnimation->GetCurrentFrame());
 	return true;
 }
 
