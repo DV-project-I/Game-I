@@ -58,6 +58,7 @@ public:
 	PhysBody* ataque;
 	float timerataque = 0;
 	float cooldown = 0;
+	float salto = 0;
 
 	float movX;
 	float movY;

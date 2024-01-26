@@ -281,14 +281,18 @@ bool Boss::Update(float dt) {
 	
 	vel.x = movX;
 	if (punch == true && app->scene->player->position.x < position.x) {
-		vel.x = -PUNCHVELOCITY;
-		vel.y = -PUNCHVELOCITY;
+		vel.x = PUNCHVELOCITY;
+		
 		punch = false;
 	}
 	if (punch == true && app->scene->player->position.x >= position.x) {
-		vel.x = PUNCHVELOCITY;
-		vel.y = -PUNCHVELOCITY;
+		vel.x = -PUNCHVELOCITY;
+		
 		punch = false;
+	}
+	if (salto >= 100) {
+		vel.y = -PUNCHVELOCITY -400;
+		salto = 0;
 	}
 	currentAnimation->Update();
 
@@ -303,6 +307,7 @@ bool Boss::Update(float dt) {
 	
 	timerataque++;
 	cooldown++;
+	salto++;
 
 	app->render->DrawTexture(texture, position.x -16 , position.y - 22, &currentAnimation->GetCurrentFrame());
 	return true;
