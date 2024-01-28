@@ -279,34 +279,26 @@ bool Boss::Update(float dt) {
 	}
 	
 	vel.x = movX;
-	/*if (punch == true && app->scene->player->position.x < position.x) {
+	if (punch == true && app->scene->player->position.x < position.x) {
 		vel.x = PUNCHVELOCITY;		
 		punch = false;
 	}
 	if (punch == true && app->scene->player->position.x >= position.x) {
 		vel.x = -PUNCHVELOCITY;		
 		punch = false;
-	}*/
+	}
 	//--------------TP-------------
 	if (salto >= 200 && phase2 == true) {
 		currentAnimation = &DesaparecerAnim;
-		if (currentAnimation->HasFinished())
-		{
+		if(currentAnimation->HasFinished())
 		SetPosition(2700, 1674);
 		salto = 0;
-		}
-		
 	}
 	if (salto >= 200 && phase2 == false) {
 		currentAnimation = &DesaparecerAnim;
 		if (currentAnimation->HasFinished())
-		{
-			SetPosition(2700, 1674);
-			salto = 0;
-		}
-	}
-	if (salto >= 0 && salto <= 10) {
-		DesaparecerAnim.Reset();
+		SetPosition(3450, 1674);
+		salto = 0;
 	}
 	currentAnimation->Update();
 
